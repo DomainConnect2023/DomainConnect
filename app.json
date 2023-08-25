@@ -1,0 +1,11 @@
+{
+  "name": "DomainProject",
+  "displayName": "DomainProject",
+  "expo": {
+    "extra": {
+      "eas": {
+        "projectId": "cecbaef2-b081-4b79-b295-0fbc52e3520f"
+      }
+    }
+  }
+}
