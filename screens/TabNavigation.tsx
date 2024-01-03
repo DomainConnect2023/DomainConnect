@@ -1,26 +1,8 @@
 import * as React from 'react';
-import { Text, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { useIsFocused, useNavigation } from '@react-navigation/native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import Dashboard from './DashboardPage';
-
-
-  function SettingsScreen() {
-    return (
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <Text>Setting Page</Text>
-      </View>
-    );
-  }
-
-  // function DashboardScreen() {
-  //   return (
-  //     <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-  //       <Text>Dashboard Page</Text>
-  //     </View>
-  //   );
-  // }
+import DashboardScreen from './DashboardPage';
+import ProfileScreen from './Profile';
 
 const Tab = createBottomTabNavigator();
 
@@ -33,8 +15,10 @@ const TabNavigation = () => {
 
             if (route.name === 'Dashboard') {
               iconName = focused ? 'home' : 'home-outline';
-            } else if (route.name === 'Settings') {
-              iconName = focused ? 'list' : 'list-outline';
+            } else if (route.name === 'Profile') {
+              iconName = focused ? 'person-circle' : 'person-circle-outline';
+            } else if (route.name === 'Dashboardtest') {
+              iconName = focused ? 'eye-outline' : 'eye-off-outline';
             } 
 
             return <Ionicons  name={iconName ?? ""} size={size} color={color} />;
@@ -44,8 +28,9 @@ const TabNavigation = () => {
           headerShown: false
         })}
       >
-        <Tab.Screen name="Dashboard" component={Dashboard} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
+        <Tab.Screen options={{ unmountOnBlur: true, }} name="Dashboard" component={DashboardScreen} />
+        {/* <Tab.Screen options={{ unmountOnBlur: true, }} name="Dashboardtest" component={DashboardtestScreen} /> */}
+        <Tab.Screen options={{ unmountOnBlur: true, }} name="Profile" component={ProfileScreen} />
       </Tab.Navigator>
   );
 }

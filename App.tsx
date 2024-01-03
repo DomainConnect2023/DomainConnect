@@ -5,8 +5,10 @@ import { LogBox, SafeAreaView } from 'react-native';
 import Login from './screens/LoginPage';
 import Register from './screens/RegisterPage';
 import { GetFCMToken, NotificationListner, requestUserPermission } from './components/pushNotification';
-import TabNavigation from './screens/TabNavigation';
-import Dashboard from './screens/DashboardPage';
+import TabNavigationScreen from './screens/TabNavigation';
+import DashboardScreen from './screens/DashboardPage';
+import ProfileScreen from './screens/Profile';
+import viewImage from './screens/viewImage';
 
 const Stack = createNativeStackNavigator();
 
@@ -25,8 +27,10 @@ function App(): JSX.Element {
         <Stack.Navigator initialRouteName="Login" screenOptions={{headerShown: false}}>
           <Stack.Screen name="Login" component={Login} />
           <Stack.Screen name="Register" component={Register} />
-          <Stack.Screen name="TabNavigation" component={TabNavigation} />
-          <Stack.Screen name="Dashboard" component={Dashboard} />
+          <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />
+          <Stack.Screen name="Dashboard" component={DashboardScreen} />
+          <Stack.Screen name="viewImage" component={viewImage} />
+          <Stack.Screen name="Profile" component={ProfileScreen} />
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaView>
