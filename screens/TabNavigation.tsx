@@ -3,6 +3,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import DashboardScreen from './DashboardPage';
 import ProfileScreen from './Profile';
+import { Dimensions } from 'react-native';
 
 const Tab = createBottomTabNavigator();
 
@@ -25,7 +26,12 @@ const TabNavigation = () => {
           },
           tabBarActiveTintColor: 'blue',
           tabBarInactiveTintColor: 'gray',
-          headerShown: false
+          headerShown: false,
+          tabBarStyle: { 
+            // position: "absolute",
+            // backgroundColor: 'transparent',
+            height: Dimensions.get("screen").height/100*5,
+          },
         })}
       >
         <Tab.Screen options={{ unmountOnBlur: true, }} name="Dashboard" component={DashboardScreen} />

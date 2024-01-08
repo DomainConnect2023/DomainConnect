@@ -12,6 +12,8 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 import PhoneInput from 'react-native-phone-number-input';
 import Login from './LoginPage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { UpdateUserData } from '../objects/objects';
+import { css, datepickerCSS } from '../objects/commonCSS';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -111,20 +113,6 @@ const ProfileScreen = () => {
         //update database
         if(username!="" || companyName!="" ){
 
-            type UserData = {
-                update: string,
-                userID: string,
-                username: string,
-                companyName: string,
-                vihecleNo: string,
-                email: string,
-                mobile: string,
-                mobileValue: string,
-                mobileCountry: string,
-                birthDate: any,
-                // [key: string]: string;
-            };
-
             if(formattedValue==""){
                 setSubmitMobile("");
             }else{
@@ -133,7 +121,7 @@ const ProfileScreen = () => {
                 setMobile(formattedValue);
             }
 
-            const jsonData: UserData = {
+            const jsonData: UpdateUserData = {
                 "update": "1",
                 "userID": getuserID as string,
                 "username":username as string,
@@ -185,22 +173,28 @@ const ProfileScreen = () => {
 
   return (
     <MainContainer>
-        <View style={styles.mainView}>
-          <View style={styles.HeaderView}>
-            <Text style={styles.PageName}>Personal Profile</Text>
-          </View>
-          <View style={styles.logoutView}>
-            <Ionicons name="log-out-outline" size={34} color="gray" onPress={()=>logout()} style={{marginBottom:5,marginLeft:5}} />
-          </View>
+        <View style={[css.mainView,{marginTop:-20}]}>
+            <View style={css.HeaderView}>
+                <Text style={css.PageName}>Personal Profile</Text>
+            </View>
+            <View style={{flexDirection:'row',}}>
+                <View style={css.listThing}>
+                    <Ionicons 
+                    name="log-out-outline" 
+                    size={30} 
+                    color="#FFF" 
+                    onPress={()=>[logout()]} />
+                </View>
+            </View>
         </View>
 
         {processGetData==true ? (
-        <View style={[styles.container]}>
+        <View style={[css.container]}>
             <ActivityIndicator size="large" />
         </View>
         ) : (
         <KeyboardAvoidWrapper>
-        <View style={styles.container}>
+        <View style={css.container}>
             <Image
             source={ImagesAssets.profileImage}
             style={{width: 200, height: 200, margin:10}}
@@ -208,78 +202,78 @@ const ProfileScreen = () => {
             <Text style={{color:"#404040",fontWeight:"bold",fontSize:20}}>Personal Profile</Text>
 
             {/* User Name Detail */}
-            <View style={styles.row}>
-                <Text style={styles.Title}>User Name:</Text>
+            <View style={css.row}>
+                <Text style={css.Title}>User Name:</Text>
                 {canEditProfile==true ? (
                     <TextInput
-                    style={styles.input}
+                    style={css.input}
                     placeholder="User Name"
                     value={username}
                     onChangeText={setUserName}
                     placeholderTextColor="#11182744"
                     />
                 ) : (
-                    <Text style={styles.subTitle}>{username}</Text>
+                    <Text style={css.subTitle}>{username}</Text>
                 )}
             </View>
             {/* End User Name */}
 
             {/* Company Name */}
-            <View style={styles.row}>
-                <Text style={styles.Title}>Company Name:</Text>
+            <View style={css.row}>
+                <Text style={css.Title}>Company Name:</Text>
                 {canEditProfile==true ? (
                     <TextInput
-                    style={styles.input}
+                    style={css.input}
                     placeholder="Company Name"
                     value={companyName}
                     onChangeText={setCompanyName}
                     placeholderTextColor="#11182744"
                     />
                 ) : (
-                    <Text style={styles.subTitle}>{companyName}</Text>
+                    <Text style={css.subTitle}>{companyName}</Text>
                 )}
             </View>
             {/* End Company Name */}
 
             {/* Vehicle Detail */}
-            <View style={styles.row}>
-                <Text style={styles.Title}>Vehicle No:</Text>
+            <View style={css.row}>
+                <Text style={css.Title}>Vehicle No:</Text>
                 {canEditProfile==true ? (
                     <TextInput
-                    style={styles.input}
+                    style={css.input}
                     placeholder="Vehicle No"
                     value={verhicleNo}
                     onChangeText={setVehicleNo}
                     placeholderTextColor="#11182744"
                     />
                 ) : (
-                    <Text style={styles.subTitle}>{verhicleNo}</Text>
+                    <Text style={css.subTitle}>{verhicleNo}</Text>
                 )}
             </View>
             {/* End Vehicle */}
 
             {/* Email Detail */}
-            <View style={styles.row}>
-                <Text style={styles.Title}>Email: </Text>
+            <View style={css.row}>
+                <Text style={css.Title}>Email: </Text>
                 {canEditProfile==true ? (
                     <TextInput
-                    style={styles.input}
+                    style={css.input}
                     placeholder="Email"
                     value={email}
                     onChangeText={setEmail}
                     placeholderTextColor="#11182744"
                     />
                 ) : (
-                    <Text style={styles.subTitle}>{email}</Text>
+                    <Text style={css.subTitle}>{email}</Text>
                 )}
             </View>
             {/* End Email Detail */}
             
             {/* Mobile Detail */}
-            <View style={styles.row}>
-                <Text style={styles.Title}>Mobile: </Text>
+            <View style={css.row}>
+                <Text style={css.Title}>Mobile: </Text>
                 {canEditProfile==true ? (
-                    <View style={[styles.subTitle,{borderWidth: 1,borderColor: '#ccc'}]}>
+                    <View style={[css.subTitle,{borderWidth: 1,borderColor: '#ccc'}]}>
                     <PhoneInput
                         containerStyle={{marginLeft:-10,width:"110%",backgroundColor:"transparent"}}
                         textContainerStyle={{marginLeft:-20,}}
@@ -301,21 +295,21 @@ const ProfileScreen = () => {
                     />
                     </View>
                 ) : (
-                    <Text style={styles.subTitle}>{mobile}</Text>
+                    <Text style={css.subTitle}>{mobile}</Text>
                 )}
 
             </View>
             {/* End Mobile */}
 
             {/* BirthDate Detail */}
-            <View style={styles.row}>
-                <Text style={styles.Title}>BirthDate: </Text>
+            <View style={css.row}>
+                <Text style={css.Title}>BirthDate: </Text>
                 {showPicker && <DateTimePicker 
                     mode="date"
                     display="spinner"
                     value={date}
                     onChange={onChange}
-                    style={styles.datePicker}
+                    style={datepickerCSS.datePicker}
                 />}
 
                 {showPicker && Platform.OS==="ios" &&(
@@ -323,16 +317,16 @@ const ProfileScreen = () => {
                     style={{flexDirection:"row",justifyContent:"space-around"}}
                 >
                     <TouchableOpacity 
-                        style={[styles.cancelButton,{backgroundColor:"#11182711",paddingHorizontal:20}]}
+                        style={[datepickerCSS.cancelButton,{backgroundColor:"#11182711",paddingHorizontal:20}]}
                         onPress={tonggleDatePicker}
                     >
-                        <Text style={[styles.cancelButtonText,{color:"#075985"}]}>Cancel</Text>
+                        <Text style={[datepickerCSS.cancelButtonText,{color:"#075985"}]}>Cancel</Text>
                     </TouchableOpacity>
                     <TouchableOpacity 
-                        style={[styles.cancelButton,{paddingHorizontal:20}]}
+                        style={[datepickerCSS.cancelButton,{paddingHorizontal:20}]}
                         onPress={confirmIOSDate}
                     >
-                        <Text style={[styles.cancelButtonText]}>Confirm</Text>
+                        <Text style={[datepickerCSS.cancelButtonText]}>Confirm</Text>
                     </TouchableOpacity>
                 </View>
                 )}
@@ -356,13 +350,13 @@ const ProfileScreen = () => {
                     />
                 </Pressable>
                 ) : (
-                    <Text style={styles.subTitle}>{birthDate}</Text>
+                    <Text style={css.subTitle}>{birthDate}</Text>
                 )}
             </View>
             {/* End BirthDate Detail */}
 
             {canEditProfile==true ? (
-            <View style={styles.row}>    
+            <View style={css.row}>    
             <Pressable style={[styles.button,{backgroundColor: '#A0D6B4',margin:10}]} onPress={()=>{editProfile("yes")}}>
                 <Text style={[styles.text,{backgroundColor: '#A0D6B4',}]}>Save</Text>
             </Pressable>
@@ -384,67 +378,6 @@ const ProfileScreen = () => {
 };
 
 const styles = StyleSheet.create({
-    mainView:{
-        width: '100%',
-        height: 80, 
-        flexDirection: 'row',
-        alignItems: 'center', 
-        backgroundColor: "#666699",
-    },
-    HeaderView :{
-        flex: 1, 
-        padding: 10,
-        gap: 4, 
-        justifyContent: 'flex-start', 
-        alignItems: 'flex-start', 
-        marginHorizontal: 4,
-    },
-    PageName: {
-        color: "#FFFFFF",
-        fontSize: 22,
-    },
-    logoutView: {
-        width: 40,
-        height: 40, 
-        backgroundColor: '#FFFFFF', 
-        justifyContent: 'flex-end', 
-        alignItems: 'flex-end',
-        borderRadius: 20,
-        marginRight: 20
-    },
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    row: {
-        flex: 1,
-        flexDirection: "row",
-        justifyContent: 'center',
-        alignItems: 'center',
-        // borderWidth:1,
-        // marginBottom:10,
-    },
-    Title: {
-        width: "35%",
-        color:"#404040",
-        padding:10,
-        fontSize:14,
-    },
-    subTitle: {
-        width: "60%",
-        color:"#404040",
-        padding:10,
-        fontWeight:"bold",
-        fontSize: 14,
-    },
-    input : {
-        width: "60%",
-        color:"#404040",
-        padding:10,
-        borderColor:"#11182744",
-        borderWidth: 1,
-    },
     button: {
         alignItems: 'center',
         justifyContent: 'center',
@@ -462,24 +395,6 @@ const styles = StyleSheet.create({
         letterSpacing: 0.25,
         color: 'white',
     },
-    datePicker: {
-        height: 120,
-        marginTop: -10,
-    },
-    cancelButton: {
-        height: 50,
-        justifyContent: "center",
-        alignItems: "center",
-        borderRadius: 50,
-        marginTop: 10,
-        marginBottom: 15,
-        backgroundColor: "#075985"
-    },
-    cancelButtonText: {
-        fontSize: 14,
-        fontWeight: "500",
-        color: "#FFF",
-    }
 });
 
 export default ProfileScreen;

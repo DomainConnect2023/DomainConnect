@@ -234,7 +234,7 @@ const Login = () => {
             <View style={styles.container}>
                 <Image
                 source={ImagesAssets.logoImage}
-                style={{width: 300, height: 300}}
+                style={{width: 250, height: 250}}
                 />
                 {/* <Text style={{color:"black",fontWeight:"bold",fontSize:20}}>Login</Text> */}
                 <View style={styles.subcontainer}>

@@ -6,6 +6,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import Ionicons from 'react-native-vector-icons/Ionicons'; 
 import { URLAccess } from '../objects/URLAccess';
 import QRCode from 'react-native-qrcode-svg';
+import { css } from '../objects/commonCSS';
 
 
 const viewImage = () => {
@@ -26,8 +27,16 @@ const viewImage = () => {
 
     return (
     <MainContainer>
-        <View style={styles.mainView}>
-            <Ionicons name="arrow-back-circle-outline" size={34} color="gray" onPress={()=>goBack()} style={{marginBottom:5,marginLeft:20}} />
+        <View style={css.mainView}>
+            <View style={{flexDirection:'row',marginBottom:5,marginLeft:20}}>
+                <View style={css.listThing}>
+                    <Ionicons 
+                    name="arrow-back-circle-outline" 
+                    size={30} 
+                    color="#FFF" 
+                    onPress={()=>[navigation.goBack()]} />
+                </View>
+            </View>
         </View>
         <View style={styles.container}>
             {qrText=="" ? (
@@ -49,13 +58,6 @@ const viewImage = () => {
 };
 
 const styles = StyleSheet.create({
-    mainView:{
-        width: '100%',
-        height: 55, 
-        flexDirection: 'row',
-        alignItems: 'center', 
-        // backgroundColor: "gray",
-    },
     container: {
         flex: 1,
         justifyContent: 'center',
