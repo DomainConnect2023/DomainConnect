@@ -27,7 +27,7 @@ const viewImage = () => {
 
     return (
     <MainContainer>
-        <View style={css.mainView}>
+        <View style={[css.mainView,{marginTop:-20}]}>
             <View style={{flexDirection:'row',marginBottom:5,marginLeft:20}}>
                 <View style={css.listThing}>
                     <Ionicons 
