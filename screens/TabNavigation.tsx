@@ -30,7 +30,7 @@ const TabNavigation = () => {
           tabBarStyle: { 
             // position: "absolute",
             // backgroundColor: 'transparent',
-            height: Dimensions.get("screen").height/100*5,
+            height: Dimensions.get("screen").height/100*7,
           },
         })}
       >

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Dimensions, Image, Linking, Modal, Platform, Pressable, TouchableOpacity } from 'react-native';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import MainContainer from '../components/MainContainer';
 import { useNavigation } from '@react-navigation/native';
@@ -17,6 +17,7 @@ import Snackbar from 'react-native-snackbar';
 import { URLAccess } from '../objects/URLAccess';
 import {requestNotifications} from 'react-native-permissions';
 import ReactNativeBiometrics from 'react-native-biometrics'
+import { TextInput } from 'react-native-paper';
 
 type UserData = {
     username: string;
@@ -39,6 +40,7 @@ const Login = () => {
         setModalVisible(!isModalVisible); 
     }; 
 
+
     useEffect(()=> {
         (async()=> {
             if(Platform.OS==="android"){
@@ -59,6 +61,9 @@ const Login = () => {
         const token = await AsyncStorage.getItem('fcmtoken');
         const credentials = await getGenericPassword();
         const formData = new FormData();
+
+        // console.log(URLAccess.userFunction);
+        console.log(username+" "+password+" "+token);
         
         const jsonData: UserData = {
             "read": "1",
@@ -71,8 +76,10 @@ const Login = () => {
             formData.append(key, jsonData[key]);
         }
         
+        
         await axios.post(URLAccess.userFunction, 
         jsonData).then(async response => {
+            console.log(response.data);
             if(response.data.status=="1"){
                 if (credentials) {
                     if(credentials.username!=username){
@@ -237,12 +244,15 @@ const Login = () => {
                 style={{width: 250, height: 250}}
                 />
                 {/* <Text style={{color:"black",fontWeight:"bold",fontSize:20}}>Login</Text> */}
+                {/* <View style={styles.subcontainer}> */}
                 <View style={styles.subcontainer}>
                     <TextInput
+                        mode='outlined'
                         style={styles.nameInput}
-                        placeholder="User Name"
+                        placeholder=""
                         value={username}
                         onChangeText={setUserName}
+                        label="User Name"
                     />
                     <TouchableOpacity style={{width:"20%", padding:"3%"}} onPress={() => checkValue()}>
                         <View>
@@ -252,11 +262,13 @@ const Login = () => {
                 </View>
                 <View style={styles.subcontainer}>
                     <TextInput
+                        mode='outlined'
                         style={styles.passInput}
-                        placeholder="Password"
+                        // placeholder="Password"
                         secureTextEntry
                         value={password}
                         onChangeText={setPassword}
+                        label="Password"
                     />
                     {/* <TouchableOpacity style={{width:"20%", padding:"3%"}} onPress={() => faceLoginAPI()}>
                         <View>
@@ -285,8 +297,8 @@ const Login = () => {
 
                 <Modal animationType="slide" 
                    transparent visible={isModalVisible}  
-                   presentationStyle="overFullScreen" 
-                   onDismiss={toggleModalVisibility}> 
+                   presentationStyle="overFullScreen" >
+                {/*     onDismiss={toggleModalVisibility}>  */}
                     {processData==true ? (
                     <View style={[styles.viewWrapper]}>
                         <ActivityIndicator size="large" />
@@ -294,11 +306,14 @@ const Login = () => {
                     ) : (
                     <View style={styles.viewWrapper}> 
                         <View style={styles.modalView}> 
-                            <Text style={styles.emailText}>Your user Email: </Text>
-                            <TextInput placeholder="Enter your email" 
-                                    value={userEmail} style={styles.textInput}  
-                                    onChangeText={(value) => setUserEmail(value)} /> 
-    
+                            <Text style={styles.emailText}>Forgot Password </Text>
+                            <TextInput 
+                                value={userEmail} 
+                                style={styles.textInput}  
+                                onChangeText={(value) => setUserEmail(value)}
+                                mode='outlined'
+                                label="Email"
+                            /> 
                             {/** This button is responsible to close the modal */} 
                             <View style={styles.row}>
                                 <Pressable style={styles.button} onPress={()=>resetPassword(userEmail)}>
@@ -336,16 +351,15 @@ const styles = StyleSheet.create({
         width: '70%',
         marginBottom: 10,
         padding: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#fff',
         color: "#000",
+        height: 30,
     },
     passInput: {
         width: '70%',
         marginBottom: 10,
         paddingLeft: 10,
-        borderWidth: 1,
-        borderColor: '#ccc',
+        borderColor: '#fff',
         color: "#000",
     },
     registerFont: {
@@ -395,7 +409,6 @@ const styles = StyleSheet.create({
         paddingVertical: 8, 
         paddingHorizontal: 16, 
         borderColor: "rgba(0, 0, 0, 0.2)", 
-        borderWidth: 1, 
     }, 
     row: {
         flex: 1,

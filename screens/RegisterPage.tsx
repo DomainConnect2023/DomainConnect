@@ -13,6 +13,7 @@ import PhoneInput from 'react-native-phone-number-input';
 import LoginScreen from './LoginPage';
 import { css, datepickerCSS } from '../objects/commonCSS';
 import { InsertUserData } from '../objects/objects';
+import DateTimePickerModal from 'react-native-modal-datetime-picker';
 
 const Register = () => {
   const navigation = useNavigation();
@@ -44,8 +45,25 @@ const Register = () => {
   const [date, setDate] = useState(new Date());
   const [showPicker, setShowPicker] = useState(false);
 
+
+  //IOS Date Setup
+  const [selectedIOSDate, setSelectedIOSDate] = useState(new Date());
+
+
+  // IOS Date picker modal setup
+  const [datePickerVisible, setDatePickerVisible] = useState(false);
+  const hideIOSDatePicker = () => {
+      setDatePickerVisible(false);
+  };
+  // END IOS Date Picker modal setup
+
   const tonggleDatePicker = () => {
-    setShowPicker(!showPicker);
+    if (Platform.OS === 'android') {
+        setShowPicker(!showPicker);
+    }
+    else if (Platform.OS === 'ios') {
+        setDatePickerVisible(true);
+    }
   }
 
   const onChange = ({type}: any, selectedDate: any) => {
@@ -62,10 +80,16 @@ const Register = () => {
     }
   }
 
-  const confirmIOSDate = () => {
-    setBirthDate(date.toDateString());
-    tonggleDatePicker();
-  }
+  const confirmIOSDate = async(date:any) => {
+    
+    const currentDate=date;
+    console.log(currentDate)
+    setBirthDate(currentDate.toDateString());
+    setKeepDatetoDatabase(currentDate.toISOString().split('T')[0]);
+    // tonggleDatePicker();
+    setDatePickerVisible(false);
+    // await fetchDataApi(currentDate.toISOString().split('T')[0]);
+}
 
   const goBack = () => {
     navigation.goBack();
@@ -134,7 +158,7 @@ const Register = () => {
 
   return (
     <MainContainer>
-        <View style={[css.mainView,{marginTop:-20}]}>
+        <View style={[css.mainView,{marginTop:-0}]}>
             <View style={{flexDirection:'row',marginLeft:20}}>
                 <View style={css.listThing}>
                     <Ionicons 
@@ -390,7 +414,16 @@ const Register = () => {
                         style={datepickerCSS.datePicker}
                     />}
 
-                    {showPicker && Platform.OS==="ios" &&(
+                    {Platform.OS === "ios" && (<DateTimePickerModal
+                    date={selectedIOSDate}
+                    isVisible={datePickerVisible}
+                    mode="date"
+                    display='inline'
+                    onConfirm={confirmIOSDate}
+                    onCancel={hideIOSDatePicker}
+                    />)}
+
+                    {/* {showPicker && Platform.OS==="ios" &&(
                     <View
                         style={{flexDirection:"row",justifyContent:"space-around"}}
                     >
@@ -407,7 +440,7 @@ const Register = () => {
                             <Text style={[datepickerCSS.cancelButtonText]}>Confirm</Text>
                         </TouchableOpacity>
                     </View>
-                    )}
+                    )} */}
                     
                     <Pressable
                         style={{width: '60%',

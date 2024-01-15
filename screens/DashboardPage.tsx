@@ -165,7 +165,7 @@ const DashboardScreen = () => {
 
   return (
     <MainContainer>
-        <View style={[css.mainView,{marginTop:-20}]}>
+        <View style={[css.mainView,{marginTop:0}]}>
             <View style={css.HeaderView}>
                 <Text style={css.PageName}>Dashboard</Text>
             </View>
