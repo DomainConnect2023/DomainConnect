@@ -13,6 +13,7 @@ import { firebase } from '@react-native-firebase/messaging';
 import messaging from '@react-native-firebase/messaging';
 import DeviceInfo from 'react-native-device-info';
 import { PaperProvider } from 'react-native-paper';
+import whiteTheme from './objects/commonCSS';
 
 const Stack = createNativeStackNavigator();
 const isSimulator = DeviceInfo.isEmulatorSync();
@@ -42,7 +43,7 @@ function App(): JSX.Element {
   }, []);
   
   return (
-    <PaperProvider>
+    <PaperProvider theme={whiteTheme}>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
           <Stack.Navigator initialRouteName="Login" screenOptions={{ headerShown: false }}>

@@ -245,15 +245,18 @@ const Login = () => {
                 />
                 {/* <Text style={{color:"black",fontWeight:"bold",fontSize:20}}>Login</Text> */}
                 {/* <View style={styles.subcontainer}> */}
+
                 <View style={styles.subcontainer}>
-                    <TextInput
+                    <TextInput 
                         mode='outlined'
                         style={styles.nameInput}
+                        
                         placeholder=""
                         value={username}
                         onChangeText={setUserName}
                         label="User Name"
                     />
+                
                     <TouchableOpacity style={{width:"20%", padding:"3%"}} onPress={() => checkValue()}>
                         <View>
                             <Ionicons  name={"finger-print-sharp" ?? ""} size={40} color={"gray"} />
@@ -350,10 +353,9 @@ const styles = StyleSheet.create({
     nameInput: {
         width: '70%',
         marginBottom: 10,
-        padding: 10,
+        paddingLeft: 10,
         borderColor: '#fff',
         color: "#000",
-        height: 30,
     },
     passInput: {
         width: '70%',
@@ -406,7 +408,7 @@ const styles = StyleSheet.create({
     textInput: { 
         width: "80%", 
         borderRadius: 5, 
-        paddingVertical: 8, 
+        // paddingVertical: 8, 
         paddingHorizontal: 16, 
         borderColor: "rgba(0, 0, 0, 0.2)", 
     }, 

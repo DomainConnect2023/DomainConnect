@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
+import { DefaultTheme } from 'react-native-paper';
 
 export const css = StyleSheet.create({
     container: {
@@ -12,6 +13,7 @@ export const css = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center', 
         backgroundColor: "#666699",
+        
     },
     HeaderView :{
         flex: 1, 
@@ -234,3 +236,14 @@ export const dropdownCSS = StyleSheet.create({
         borderRadius: 12,
     },
 });
+
+
+const whiteTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: 'white',
+    },
+  };
+  
+  export default whiteTheme;

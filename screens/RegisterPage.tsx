@@ -158,6 +158,21 @@ const Register = () => {
 
   return (
     <MainContainer>
+        {Platform.OS === "android"? (        
+        <View style={[css.mainView,{marginTop:-20}]}>
+            <View style={{flexDirection:'row',marginLeft:20}}>
+                <View style={css.listThing}>
+                    <Ionicons 
+                    name="arrow-back-circle-outline" 
+                    size={30} 
+                    color="#FFF" 
+                    onPress={()=>[navigation.goBack()]} />
+                </View>
+            </View>
+            <View style={css.HeaderView}>
+                <Text numberOfLines={2} style={css.PageName}>Register</Text>
+            </View>
+        </View>):(        
         <View style={[css.mainView,{marginTop:-0}]}>
             <View style={{flexDirection:'row',marginLeft:20}}>
                 <View style={css.listThing}>
@@ -171,7 +186,8 @@ const Register = () => {
             <View style={css.HeaderView}>
                 <Text numberOfLines={2} style={css.PageName}>Register</Text>
             </View>
-        </View>
+        </View>) }
+
         <KeyboardAvoidWrapper>
             <View style={css.container}>
                 <Image

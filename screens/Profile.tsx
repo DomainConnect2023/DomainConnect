@@ -196,20 +196,35 @@ const ProfileScreen = () => {
 
   return (
     <MainContainer>
-        <View style={[css.mainView,{marginTop:0}]}>
-            <View style={css.HeaderView}>
-                <Text style={css.PageName}>Personal Profile</Text>
-            </View>
-            <View style={{flexDirection:'row',}}>
-                <View style={css.listThing}>
-                    <Ionicons 
-                    name="log-out-outline" 
-                    size={30} 
-                    color="#FFF" 
-                    onPress={()=>[logout()]} />
-                </View>
-            </View>
-        </View>
+            {Platform.OS === "android"?(                
+            <View style={[css.mainView, { marginTop: -20 }]}>
+                    <View style={css.HeaderView}>
+                        <Text style={css.PageName}>Personal Profile</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', }}>
+                        <View style={css.listThing}>
+                            <Ionicons
+                                name="log-out-outline"
+                                size={30}
+                                color="#FFF"
+                                onPress={() => [logout()]} />
+                        </View>
+                    </View>
+                </View>):(            
+                <View style={[css.mainView, { marginTop: 0 }]}>
+                    <View style={css.HeaderView}>
+                        <Text style={css.PageName}>Personal Profile</Text>
+                    </View>
+                    <View style={{ flexDirection: 'row', }}>
+                        <View style={css.listThing}>
+                            <Ionicons
+                                name="log-out-outline"
+                                size={30}
+                                color="#FFF"
+                                onPress={() => [logout()]} />
+                        </View>
+                    </View>
+                </View>)}
 
         {processGetData==true ? (
         <View style={[css.container]}>
