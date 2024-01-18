@@ -10,9 +10,11 @@ export async function requestUserPermission() {
   if (enabled) {
     console.log('Authorization status:', authStatus);
   }
+  GetFCMToken();
 }
 
 export async function GetFCMToken(){
+    console.log("run token step");
     let FCMToken = await AsyncStorage.getItem("fcmtoken");
     console.log(FCMToken,"old token");
     if(!FCMToken){
