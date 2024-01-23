@@ -83,6 +83,7 @@ const Register = () => {
   const confirmIOSDate = async(date:any) => {
     
     const currentDate=date;
+    setSelectedIOSDate(date);
     console.log(currentDate)
     setBirthDate(currentDate.toDateString());
     setKeepDatetoDatabase(currentDate.toISOString().split('T')[0]);
