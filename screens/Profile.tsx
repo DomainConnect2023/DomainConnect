@@ -192,6 +192,15 @@ const ProfileScreen = () => {
                 duration: Snackbar.LENGTH_SHORT,
             });
         }
+    }else{
+        setUserName(username);
+        setCompanyName(companyName);
+        setVehicleNo(verhicleNo);
+        setEmail(email);
+        setMobile(mobile);
+        setMobileValue(mobileValue);
+        setMobileCountry(mobileCountry);
+        setBirthDate(birthDate);
     }
   }
 
