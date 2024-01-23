@@ -76,6 +76,7 @@ const ProfileScreen = () => {
   const confirmIOSDate = async(date:any) => {
     
     const currentDate=date;
+    setSelectedIOSDate(date);
     console.log("date");
     setBirthDate(currentDate.toDateString().split('T')[0]);
     setKeepDatetoDatabase(currentDate.toISOString().split('T')[0]);
