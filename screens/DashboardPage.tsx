@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Dimensions, Platform } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Dimensions, Platform, AppState } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -12,6 +12,7 @@ import Snackbar from 'react-native-snackbar';
 import viewImage from './viewImage';
 import { NotificationData } from '../objects/objects';
 import { css } from '../objects/commonCSS';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 const DashboardScreen = () => {
     const navigation = useNavigation();
@@ -27,6 +28,9 @@ const DashboardScreen = () => {
     const [itemPerPage, setItemPerPage] = useState<number>(10);
     const [refreshing, setRefreshing] = useState(false);
 
+    //appState
+    const appState = useRef(AppState.currentState);
+
     useEffect(() => {
         (async () => {
             setProcessGetData(true);
@@ -35,7 +39,23 @@ const DashboardScreen = () => {
             await fetchUserDetailApi();
             await fetchNotificationLogApi(currentPage);
         })();
+        PushNotificationIOS.setApplicationIconBadgeNumber(0);
+        
     }, [])
+
+    //AppState :Check app in foreground or background
+   const appcheck=AppState.addEventListener('change', nextAppState => {
+    
+    console.log("APPSTATE START")
+        if (appState.current==='inactive'&&nextAppState === 'inactive') {
+            
+            PushNotificationIOS.setApplicationIconBadgeNumber(0);
+            console.log("Final app stage",appState.current);
+            
+        }
+        
+        appcheck.remove();
+    })
 
     // logout
     const logout = () => {
@@ -165,8 +185,8 @@ const DashboardScreen = () => {
 
     return (
         <MainContainer>
-            {Platform.OS === "android"?(                
-            <View style={[css.mainView, { marginTop: -20 }]}>
+            {Platform.OS === "android" ? (
+                <View style={[css.mainView, { marginTop: -20 }]}>
                     <View style={css.HeaderView}>
                         <Text style={css.PageName}>Dashboard</Text>
                     </View>
@@ -179,7 +199,7 @@ const DashboardScreen = () => {
                                 onPress={() => [logout()]} />
                         </View>
                     </View>
-                </View>):(            
+                </View>) : (
                 <View style={[css.mainView, { marginTop: 0 }]}>
                     <View style={css.HeaderView}>
                         <Text style={css.PageName}>Dashboard</Text>
