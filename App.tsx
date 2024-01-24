@@ -14,6 +14,7 @@ import messaging from '@react-native-firebase/messaging';
 import DeviceInfo from 'react-native-device-info';
 import { PaperProvider } from 'react-native-paper';
 import whiteTheme from './objects/commonCSS';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Stack = createNativeStackNavigator();
 const isSimulator = DeviceInfo.isEmulatorSync();
@@ -29,6 +30,8 @@ const initializeFirebase = async () => {
       await messaging().setAPNSToken('74657374696E67746F6B656E', 'unknown');
       console.log('Set APNS token for Intel Mac simulator');
     }
+
+    await AsyncStorage.setItem('badgeCount',"0");
   // }
 };
 
@@ -40,6 +43,7 @@ function App(): JSX.Element {
     initializeFirebase();
     GetFCMToken();
     NotificationListner();
+
   }, []);
   
   return (

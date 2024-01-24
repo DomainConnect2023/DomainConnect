@@ -1,5 +1,6 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
+import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -52,4 +53,8 @@ export const NotificationListner=()=>{
     messaging().onMessage(async remoteMessage => {
         console.log("notification on froground state....",remoteMessage);
     })
+
+    
+ 
 }
+
