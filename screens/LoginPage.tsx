@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Dimensions, Image, Linking, Modal, Platform, Pressable, TouchableOpacity } from 'react-native';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, TextInput as TextInputs, StyleSheet } from 'react-native';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import MainContainer from '../components/MainContainer';
 import { useNavigation } from '@react-navigation/native';
@@ -30,6 +30,8 @@ const { width } = Dimensions.get("window");
 const Login = () => {
     const navigation = useNavigation();
         
+    const inputRef = React.createRef<TextInputs>();
+
     const [username, setUserName] = useState('');
     const [password, setPassword] = useState('');
     const [processData, setProcessData] = useState(false);
@@ -39,7 +41,6 @@ const Login = () => {
     const toggleModalVisibility = () => { 
         setModalVisible(!isModalVisible); 
     }; 
-
 
     useEffect(()=> {
         (async()=> {
@@ -81,6 +82,8 @@ const Login = () => {
         jsonData).then(async response => {
             console.log(response.data);
             if(response.data.status=="1"){
+                setUserName("");
+                setPassword("");
                 if (credentials) {
                     if(credentials.username!=username){
                         Alert.alert('Set the finger Print?', 'Seems your user name is different. Do you want to set to the new one? ', [
@@ -250,7 +253,7 @@ const Login = () => {
                     <TextInput 
                         mode='outlined'
                         style={styles.nameInput}
-                        
+                        onSubmitEditing={() => inputRef.current?.focus()}
                         placeholder=""
                         value={username}
                         onChangeText={setUserName}
@@ -268,6 +271,7 @@ const Login = () => {
                         mode='outlined'
                         style={styles.passInput}
                         // placeholder="Password"
+                        ref={inputRef}
                         secureTextEntry
                         value={password}
                         onChangeText={setPassword}
