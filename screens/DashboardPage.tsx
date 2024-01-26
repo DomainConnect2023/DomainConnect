@@ -1,8 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Dimensions, Platform, AppState } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Dimensions, Platform, AppState, Alert } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import QRCode from 'react-native-qrcode-svg';
 import Login from './LoginPage';
@@ -29,7 +29,9 @@ const DashboardScreen = () => {
     const [refreshing, setRefreshing] = useState(false);
 
     //appState
-    const appState = useRef(AppState.currentState);
+    const appState=useRef(AppState.currentState);
+    
+
 
     useEffect(() => {
         (async () => {
@@ -39,23 +41,26 @@ const DashboardScreen = () => {
             await fetchUserDetailApi();
             await fetchNotificationLogApi(currentPage);
         })();
-        PushNotificationIOS.setApplicationIconBadgeNumber(0);
-        
-    }, [])
+        if (Platform.OS === 'ios') {
+            const listener=AppState.addEventListener('change',appcheck);
+            PushNotificationIOS.setApplicationIconBadgeNumber(2);
 
-    //AppState :Check app in foreground or background
-   const appcheck=AppState.addEventListener('change', nextAppState => {
-    
-    console.log("APPSTATE START")
-        if (appState.current==='inactive'&&nextAppState === 'inactive') {
-            
-            PushNotificationIOS.setApplicationIconBadgeNumber(0);
-            console.log("Final app stage",appState.current);
+            return()=>{
+                listener.remove();
+            }
             
         }
-        
-        appcheck.remove();
-    })
+
+
+    }, [])
+
+    // AppState :Check app in foreground or background
+    const appcheck = (nextAppState:any)=> {
+        if (nextAppState !='active') {
+            PushNotificationIOS.setApplicationIconBadgeNumber(0);
+
+        }
+    }
 
     // logout
     const logout = () => {
