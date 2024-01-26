@@ -43,7 +43,7 @@ const DashboardScreen = () => {
         })();
         if (Platform.OS === 'ios') {
             const listener=AppState.addEventListener('change',appcheck);
-            PushNotificationIOS.setApplicationIconBadgeNumber(2);
+            PushNotificationIOS.setApplicationIconBadgeNumber(0);
 
             return()=>{
                 listener.remove();
