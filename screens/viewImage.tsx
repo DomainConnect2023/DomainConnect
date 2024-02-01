@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { View, StyleSheet, Image, Modal, TouchableOpacity, Text, ActivityIndicator } from 'react-native';
+import { View, StyleSheet, Image, Modal, TouchableOpacity, Text, ActivityIndicator ,Platform} from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -27,7 +27,8 @@ const viewImage = () => {
 
     return (
     <MainContainer>
-        <View style={[css.mainView,{marginTop: 0}]}>
+        {Platform.OS === "android"? (
+        <View style={[css.mainView,{marginTop: -20}]}>
             <View style={{flexDirection:'row',marginBottom:5,marginLeft:20}}>
                 <View style={css.listThing}>
                     <Ionicons 
@@ -38,6 +39,18 @@ const viewImage = () => {
                 </View>
             </View>
         </View>
+        ):(         <View style={[css.mainView,{marginTop: -20}]}>
+            <View style={{flexDirection:'row',marginBottom:5,marginLeft:20}}>
+                <View style={css.listThing}>
+                    <Ionicons 
+                    name="arrow-back-circle-outline" 
+                    size={30} 
+                    color="#FFF" 
+                    onPress={()=>[navigation.goBack()]} />
+                </View>
+            </View>
+        </View>
+        )}
         <View style={styles.container}>
             {qrText=="" ? (
             <View style={[styles.container]}>

@@ -14,6 +14,7 @@ import { NotificationData } from '../objects/objects';
 import { css } from '../objects/commonCSS';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 
+
 const DashboardScreen = () => {
     const navigation = useNavigation();
     const [processGetData, setProcessGetData] = useState(false);
@@ -29,8 +30,8 @@ const DashboardScreen = () => {
     const [refreshing, setRefreshing] = useState(false);
 
     //appState
-    const appState=useRef(AppState.currentState);
-    
+    const appState = useRef(AppState.currentState);
+
 
 
     useEffect(() => {
@@ -42,24 +43,42 @@ const DashboardScreen = () => {
             await fetchNotificationLogApi(currentPage);
         })();
         if (Platform.OS === 'ios') {
-            const listener=AppState.addEventListener('change',appcheck);
+            const listener = AppState.addEventListener('change', appcheck);
             PushNotificationIOS.setApplicationIconBadgeNumber(0);
 
-            return()=>{
+            return () => {
                 listener.remove();
             }
-            
+
+        }
+        else {
+            const listener = AppState.addEventListener('change', appcheck);
+
+            return () => {
+                listener.remove();
+                console.log("APPSTATE REMOVE");
+            }
         }
 
 
     }, [])
 
     // AppState :Check app in foreground or background
-    const appcheck = (nextAppState:any)=> {
-        if (nextAppState !='active') {
-            PushNotificationIOS.setApplicationIconBadgeNumber(0);
-
+    const appcheck = async (nextAppState: any) => {
+        if (Platform.OS === "ios") {
+            if (nextAppState != 'active') {
+                console.log("APPSTATE OPEN IOS");
+                PushNotificationIOS.setApplicationIconBadgeNumber(0);
+                onRefresh();
+            }
         }
+        else{
+            if (nextAppState != 'active') {
+                console.log("APPSTATE OPEN ANDROID");
+                onRefresh();
+            }
+        }
+
     }
 
     // logout

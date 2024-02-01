@@ -1,5 +1,10 @@
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import messaging from '@react-native-firebase/messaging';
+import Login from '../screens/LoginPage';
+import { useNavigation } from '@react-navigation/native';
+import TabNavigation from '../screens/TabNavigation';
+
+
 
 export async function requestUserPermission() {
   const authStatus = await messaging().requestPermission();
@@ -30,12 +35,21 @@ export async function GetFCMToken(){
     }
 }
 
-export const NotificationListner=()=>{
-    messaging().onNotificationOpenedApp(remoteMessage => {
+export const NotificationListner=async()=>{
+    messaging().onNotificationOpenedApp(async remoteMessage => {
         console.log(
           'Notification caused app to open from background state:',
           remoteMessage.notification,
         );
+        const navigation = useNavigation();
+        if (await AsyncStorage.getItem('userID')==""){
+            navigation.navigate(Login as never);
+        }
+        else{
+            navigation.navigate(TabNavigation as never);
+        }
+
+
     });
 
     messaging()
@@ -44,8 +58,8 @@ export const NotificationListner=()=>{
     if (remoteMessage) {
         console.log(
         'Notification caused app to open from quit state:',
-        remoteMessage.notification,
-        );
+        remoteMessage.notification,);
+
     }
     });
 

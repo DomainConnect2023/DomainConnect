@@ -19,6 +19,7 @@ import { requestNotifications } from 'react-native-permissions';
 import ReactNativeBiometrics from 'react-native-biometrics'
 import { TextInput } from 'react-native-paper';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
+import PushNotification from "react-native-push-notification";
 
 
 type UserData = {
@@ -70,6 +71,7 @@ const Login = () => {
                     listener.remove();
                 }
             }
+            // PushNotification.removeAllDeliveredNotifications();
         })();
     }, [])
 
