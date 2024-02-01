@@ -66,14 +66,17 @@ const DashboardScreen = () => {
     // AppState :Check app in foreground or background
     const appcheck = async (nextAppState: any) => {
         if (Platform.OS === "ios") {
-            if (nextAppState != 'active') {
+            if (nextAppState == 'active') {
                 console.log("APPSTATE OPEN IOS");
-                PushNotificationIOS.setApplicationIconBadgeNumber(0);
                 onRefresh();
+            }
+            else if (nextAppState != 'Active')
+            {
+                PushNotificationIOS.setApplicationIconBadgeNumber(0);
             }
         }
         else{
-            if (nextAppState != 'active') {
+            if (nextAppState == 'active') {
                 console.log("APPSTATE OPEN ANDROID");
                 onRefresh();
             }
