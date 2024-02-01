@@ -19,11 +19,7 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
     {
         PushNotificationIOS.setApplicationIconBadgeNumber(parseInt(await AsyncStorage.getItem('badgeCount')));
     }
-    else
-    {
-        var BadgeAndroid=require('react-native-android-badge');
-        BadgeAndroid.setBadge(parseInt(await AsyncStorage.getItem('badgeCount')))
-    }
+
     
     
 });
