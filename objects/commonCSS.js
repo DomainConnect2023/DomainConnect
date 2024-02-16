@@ -314,7 +314,7 @@ export const styles = StyleSheet.create({
     },
     Textinput:{
         alignSelf:"center",
-        margin:20,
+        marginTop:20,
         width:"90%",
         borderRadius:5,
     },
@@ -324,9 +324,10 @@ export const styles = StyleSheet.create({
         marginBottom:10,
         borderRadius:5,
         width:"80%",
-        height:"12%",
+        height:"10%",
         alignItems:"center",
         justifyContent:"center",
+        marginTop:40,
     },
     
 })
