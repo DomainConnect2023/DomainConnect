@@ -4,6 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import DashboardScreen from './DashboardPage';
 import ProfileScreen from './Profile';
 import { Dimensions } from 'react-native';
+import i18n from '../assets/language/i18n';
 
 const Tab = createBottomTabNavigator();
 
@@ -34,9 +35,9 @@ const TabNavigation = () => {
           },
         })}
       >
-        <Tab.Screen options={{ unmountOnBlur: true, }} name="Dashboard" component={DashboardScreen} />
+        <Tab.Screen options={{ unmountOnBlur: true, }} name={i18n.t("navigation.Dashboard")} component={DashboardScreen} />
         {/* <Tab.Screen options={{ unmountOnBlur: true, }} name="Dashboardtest" component={DashboardtestScreen} /> */}
-        <Tab.Screen options={{ unmountOnBlur: true, }} name="Profile" component={ProfileScreen} />
+        <Tab.Screen options={{ unmountOnBlur: true, }} name={i18n.t("navigation.Profile")} component={ProfileScreen} />
       </Tab.Navigator>
   );
 }

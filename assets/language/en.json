@@ -1,0 +1,45 @@
+{
+    "login": {
+        "username": "User Name",
+        "password": "Password",
+        "register": "Register",
+        "forgotPassword": "Forgot Password",
+        "login": "Login",
+        "error": "Login Failed, Your email or password is incorrect!",
+        "loginFailed": "Login failed",
+        "re-enter": "Please type your email or password manually again."
+    },
+    "fingerPrint": {
+        "SetFingerprint": "Set the finger Print?",
+        "Reset": "Seems your user name is different. Do you want to set to the new one?",
+        "New": "Do you want to use the finger print function?",
+        "FingerprintNotObtained": "You have not been accessed the fingerprint yet."
+    },
+    "email": {
+        "email": "Email",
+        "VerificationEmail": "Verification Email",
+        "SentEmail": "An email has sent to your email already. Please verify it.",
+        "DoubleCheckEmail": "Please double check your email is typing correctly"
+    },
+    "operate": {
+        "submit": "Submit",
+        "back": "Back",
+        "edit":"Edit",
+        "save":"Save",
+        "cancel":"Cancel"
+    },
+    "profile": {
+        "personalProfile": "Personal Profile",
+        "dataError": "Something is wrong. Can not get the data from server!",
+        "updateSuccessfully": "Update Successfully",
+        "updateFailed": "Update Fail",
+        "serverError":"Server Error",
+        "user&companyCan'tBeEmpty": "User and Company Name can't be empty!"
+    },
+    "detail":{
+        "CompanyName": "Company Name",
+        "VehicleNo":"Vehicle No",
+        "Mobile":"Mobile",
+        "BirthDate":"BirthDate"
+    }
+}

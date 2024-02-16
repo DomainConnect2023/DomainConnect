@@ -1,5 +1,5 @@
-import React, { useEffect, useState ,useRef} from 'react';
-import { ActivityIndicator, Alert, Dimensions, Image, Linking, Modal, Platform, Pressable, TouchableOpacity ,AppState} from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { ActivityIndicator, Alert, Dimensions, Image, Linking, Modal, Platform, Pressable, TouchableOpacity, AppState } from 'react-native';
 import { View, Text, TextInput as TextInputs, StyleSheet } from 'react-native';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import MainContainer from '../components/MainContainer';
@@ -20,7 +20,7 @@ import ReactNativeBiometrics from 'react-native-biometrics'
 import { TextInput } from 'react-native-paper';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
-
+import i18n from '../assets/language/i18n';
 
 type UserData = {
     username: string;
@@ -40,7 +40,7 @@ const Login = () => {
     const [processData, setProcessData] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [userEmail, setUserEmail] = useState("");
-    
+
 
     //appState
     const appState = useRef(AppState.currentState);
@@ -51,7 +51,7 @@ const Login = () => {
 
     useEffect(() => {
         (async () => {
-            await AsyncStorage.setItem('badgeCount',"0");
+            await AsyncStorage.setItem('badgeCount', "0");
             if (Platform.OS === "android") {
                 requestNotifications(['alert', 'sound']).then(({ status, settings }) => {
                     if (status !== "granted") {
@@ -63,11 +63,11 @@ const Login = () => {
                 });
             }
             if (Platform.OS === "ios") {
-                const listener=AppState.addEventListener('change',appcheck);
+                const listener = AppState.addEventListener('change', appcheck);
                 PushNotificationIOS.setApplicationIconBadgeNumber(0);
-                
 
-                return()=>{
+
+                return () => {
                     listener.remove();
                 }
             }
@@ -80,7 +80,7 @@ const Login = () => {
     const appcheck = (nextAppState: any) => {
         if (nextAppState != 'active') {
             PushNotificationIOS.setApplicationIconBadgeNumber(0);
-            AsyncStorage.setItem('badgeCount',"0");
+            AsyncStorage.setItem('badgeCount', "0");
 
         }
     }
@@ -114,7 +114,7 @@ const Login = () => {
                     setPassword("");
                     if (credentials) {
                         if (credentials.username != username) {
-                            Alert.alert('Set the finger Print?', 'Seems your user name is different. Do you want to set to the new one? ', [
+                            Alert.alert(i18n.t("fingerPrint.SetFingerprint"), i18n.t("fingerPrint.Reset"), [
                                 { text: 'OK', onPress: () => setCredentials(username, password) },
                                 { text: 'No', onPress: () => console.log('nothing happened.') },
                             ]);
@@ -122,7 +122,7 @@ const Login = () => {
                         AsyncStorage.setItem('userID', response.data.userID);
                         navigation.navigate(TabNavigation as never);
                     } else {
-                        Alert.alert('Set the finger Print?', 'Do you want to use the finger print function? ', [
+                        Alert.alert(i18n.t("fingerPrint.SetFingerprint"), i18n.t("fingerPrint.New"), [
                             { text: 'OK', onPress: () => setCredentials(username, password) },
                             { text: 'No', onPress: () => console.log('nothing happened.') },
                         ]);
@@ -131,7 +131,7 @@ const Login = () => {
                     }
                 } else {
                     Snackbar.show({
-                        text: 'Login Failed, Your email or password is incorrect!',
+                        text: i18n.t("login.error"),
                         duration: Snackbar.LENGTH_SHORT,
                     });
                 }
@@ -166,7 +166,7 @@ const Login = () => {
                         navigation.navigate(TabNavigation as never);
                     } else {
                         Snackbar.show({
-                            text: 'Login Failed, Your email or password is incorrect!',
+                            text: i18n.t("login.error"),
                             duration: Snackbar.LENGTH_INDEFINITE,
                         });
                     }
@@ -176,7 +176,6 @@ const Login = () => {
                         duration: Snackbar.LENGTH_SHORT,
                     });
                 });
-
         }
     };
 
@@ -215,12 +214,12 @@ const Login = () => {
                 if (checkResult == true) {
                     fingerLoginAPI();
                 } else {
-                    Alert.alert('Login failed', 'Please type your email or password manually again. ', [
+                    Alert.alert(i18n.t('login.loginFailed'), i18n.t('login.re-enter'), [
                         { text: 'OK', onPress: () => console.log('') },
                     ]);
                 }
             } else {
-                Alert.alert('Login failed', 'You have not been accessed the fingerprint yet. ', [
+                Alert.alert(i18n.t('login.loginFailed'), i18n.t('fingerPrint.FingerprintNotObtained'), [
                     { text: 'OK', onPress: () => console.log('') },
                 ]);
             }
@@ -242,7 +241,7 @@ const Login = () => {
             .then(response => {
                 if (response.data.status == "1") {
                     setModalVisible(false);
-                    Alert.alert('Verification Email', 'An email has sent to your email already. Please verify it.', [
+                    Alert.alert(i18n.t('email.VerificationEmail'), i18n.t("email.SentEmail"), [
                         {
                             text: 'OK', onPress: async () => [
                                 // setUserEmail(""),
@@ -254,7 +253,7 @@ const Login = () => {
 
                 } else {
                     Snackbar.show({
-                        text: 'Please double check your email is typing correctly',
+                        text: i18n.t("email.DoubleCheckEmail"),
                         duration: Snackbar.LENGTH_SHORT,
                     });
                     setProcessData(false);
@@ -287,7 +286,7 @@ const Login = () => {
                             placeholder=""
                             value={username}
                             onChangeText={setUserName}
-                            label="User Name"
+                            label= {i18n.t("login.username")}
                         />
 
                         <TouchableOpacity style={{ width: "20%", padding: "3%" }} onPress={() => checkValue()}>
@@ -305,7 +304,7 @@ const Login = () => {
                             secureTextEntry
                             value={password}
                             onChangeText={setPassword}
-                            label="Password"
+                            label={i18n.t("login.password")}
                         />
                         {/* <TouchableOpacity style={{width:"20%", padding:"3%"}} onPress={() => faceLoginAPI()}>
                         <View>
@@ -320,16 +319,16 @@ const Login = () => {
                     </View>
                     <TouchableOpacity style={{ width: "85%" }} onPress={() => { navigation.navigate(RegisterScreen as never) }}>
                         <View>
-                            <Text style={styles.registerFont}>Register</Text>
+                            <Text style={styles.registerFont}>{i18n.t("login.register")}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ width: "85%", marginTop: 20, marginBottom: 20 }} onPress={() => { toggleModalVisibility() }}>
                         <View>
-                            <Text style={styles.registerFont}>Forgot Password</Text>
+                            <Text style={styles.registerFont}>{i18n.t("login.forgotPassword")}</Text>
                         </View>
                     </TouchableOpacity>
                     <Pressable style={styles.button} onPress={() => loginAPI()}>
-                        <Text style={styles.bttnText}>Login</Text>
+                        <Text style={styles.bttnText}>{i18n.t("login.login")}</Text>
                     </Pressable>
 
                     <Modal animationType="slide"
@@ -343,21 +342,21 @@ const Login = () => {
                         ) : (
                             <View style={styles.viewWrapper}>
                                 <View style={styles.modalView}>
-                                    <Text style={styles.emailText}>Forgot Password </Text>
+                                    <Text style={styles.emailText}>{i18n.t("login.forgotPassword")} </Text>
                                     <TextInput
                                         value={userEmail}
                                         style={styles.textInput}
                                         onChangeText={(value) => setUserEmail(value)}
                                         mode='outlined'
-                                        label="Email"
+                                        label={i18n.t("email.email")}
                                     />
                                     {/** This button is responsible to close the modal */}
                                     <View style={styles.row}>
                                         <Pressable style={styles.button} onPress={() => resetPassword(userEmail)}>
-                                            <Text style={styles.bttnText}>Submit</Text>
+                                            <Text style={styles.bttnText}>{i18n.t("operate.submit")}</Text>
                                         </Pressable>
                                         <Pressable style={styles.button} onPress={() => toggleModalVisibility()}>
-                                            <Text style={styles.bttnText}>Back</Text>
+                                            <Text style={styles.bttnText}>{i18n.t("operate.back")}</Text>
                                         </Pressable>
                                     </View>
                                 </View>
@@ -463,3 +462,7 @@ const styles = StyleSheet.create({
 });
 
 export default Login;
+function useTranslation(): { t: any; } {
+    throw new Error('Function not implemented.');
+}
+

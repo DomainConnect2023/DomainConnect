@@ -1,0 +1,49 @@
+{
+    "login": {
+        "username": "用户名",
+        "password": "密码",
+        "register": "注册账户",
+        "forgotPassword": "忘记密码",
+        "login": "登录",
+        "error": "登录失败，您的邮箱或密码不正确！",
+        "loginFailed": "登录失败",
+        "re-enter": "请再次手动输入您的电子邮件或密码"
+    },
+    "fingerPrint": {
+        "SetFingerprint": "设置指纹？",
+        "Reset": "看来您的用户名不同。 您想设置为新的吗？",
+        "New": "您想使用指纹功能吗？",
+        "FingerprintNotObtained": "尚未获取您的指纹。"
+    },
+    "email": {
+        "email": "电子邮件",
+        "VerificationEmail": "验证邮箱",
+        "SentEmail": "一封电子邮件已发送至您的电子邮箱。 请确认一下。",
+        "DoubleCheckEmail": "请仔细检查您的电子邮件是否输入正确"
+    },
+    "operate": {
+        "submit": "提交",
+        "back": "返回",
+        "edit": "编辑",
+        "save": "保存",
+        "cancel": "取消"
+    },
+    "profile": {
+        "personalProfile": "个人简介",
+        "dataError": "出了问题。 无法从服务器获取数据！",
+        "updateSuccessfully": "更新成功",
+        "updateFailed": "更新失败",
+        "serverError": "服务器错误",
+        "user&companyCan'tBeEmpty": "用户名和公司名不能为空！"
+    },
+    "detail": {
+        "CompanyName": "公司名",
+        "VehicleNo": "车辆号码",
+        "Mobile": "手机号码",
+        "BirthDate": "出生日期"
+    },
+    "navigation":{
+        "Dashboard": "仪表盘",
+        "Profile": "个人资料"
+    }
+}
