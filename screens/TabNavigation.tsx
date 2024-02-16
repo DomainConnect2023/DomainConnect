@@ -32,6 +32,7 @@ const TabNavigation = () => {
             // backgroundColor: 'transparent',
             height: Dimensions.get("screen").height/100*7,
           },
+          tabBarActiveBackgroundColor: 'yellow',
         })}
       >
         <Tab.Screen options={{ unmountOnBlur: true, }} name="Dashboard" component={DashboardScreen} />

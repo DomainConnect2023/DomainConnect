@@ -19,9 +19,9 @@ export async function requestUserPermission() {
 }
 
 export async function GetFCMToken(){
-    console.log("run token step");
+    // console.log("run token step");
     let FCMToken = await AsyncStorage.getItem("fcmtoken");
-    console.log(FCMToken,"old token");
+    // console.log(FCMToken,"old token");
     if(!FCMToken){
         try {
             const FCMToken= await messaging().getToken();
