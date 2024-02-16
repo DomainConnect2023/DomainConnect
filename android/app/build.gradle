@@ -82,7 +82,7 @@ android {
         applicationId "com.domainproject"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 20
+        versionCode 25
         versionName "1.3"
     }
     signingConfigs {
