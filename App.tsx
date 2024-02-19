@@ -4,6 +4,9 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LogBox, Platform, SafeAreaView } from 'react-native';
 import Login from './newscreens/LoginPage';
 import Register from './newscreens/RegisterPage';
+import TestDashboardScreen from './newscreens/TestDashboard';
+import TestSettingScreen from './newscreens/TestSetting';
+import TestTabNavigation from './newscreens/TestNavigation';
 import { GetFCMToken, NotificationListner, requestUserPermission } from './components/pushNotification';
 import TabNavigationScreen from './screens/TabNavigation';
 import DashboardScreen from './screens/DashboardPage';
@@ -49,6 +52,12 @@ function App(): JSX.Element {
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="Register" component={Register}/>
+            <Stack.Group screenOptions={{navigationBarColor:"#d9d9d9"}}>
+            <Stack.Screen name="TestTabNavigation" component={TestTabNavigation}/>
+            <Stack.Screen name="TestDashboardScreen" component={TestDashboardScreen}/>
+            <Stack.Screen name="TestSettingScreen" component={TestSettingScreen}/>
+            <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />
+            </Stack.Group>
             {/* <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />

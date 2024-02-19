@@ -198,9 +198,9 @@ const Register = () => {
                                 <Text style={styles.fonth2}>
                                     Back
                                 </Text>
-                            </TouchableOpacity><TouchableOpacity style={styles.ButtonLogin} onPress={() => { setstage(1); }}>
+                            </TouchableOpacity><TouchableOpacity style={styles.ButtonLogin} onPress={() => { navigation.navigate(Login as never); }}>
                                 <Text style={styles.fonth2}>
-                                    Next
+                                    Sign Up
                                 </Text>
                             </TouchableOpacity>
 

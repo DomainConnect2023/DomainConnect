@@ -8,6 +8,11 @@ import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons'
 import Register from './RegisterPage';
+import DashboardScreen from '../screens/DashboardPage';
+import TestDashboardScreen from './TestDashboard';
+import TestSettingScreen from './TestSetting';
+import TestTabNavigation from './TestNavigation';
+import TabNavigation from '../screens/TabNavigation';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -65,7 +70,7 @@ const Login = () => {
                         <TouchableOpacity onPress={() => { }}>
                             <Text style={{ textAlign: "right", width: "95%", fontWeight: "bold", fontSize: 14, }}>Forgot Password?</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => { }}>
+                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => {navigation.navigate(TestTabNavigation as never) }}>
                             <Text style={styles.fonth2}>
                                 Log In
                             </Text>
@@ -73,7 +78,7 @@ const Login = () => {
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                             <Text style={{ fontWeight: "bold", fontSize: 14, }}>Or Login With</Text>
                             <View>
-                                <TouchableOpacity onPress={() => { }}>
+                                <TouchableOpacity onPress={() => {navigation.navigate(TestTabNavigation as never) }}>
                                     <MaterialIcons name="fingerprint" size={65} style={{ marginTop: 20 }} />
                                 </TouchableOpacity>
                             </View>
