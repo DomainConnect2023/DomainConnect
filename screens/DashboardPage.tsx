@@ -13,7 +13,7 @@ import viewImage from './viewImage';
 import { NotificationData } from '../objects/objects';
 import { css } from '../objects/commonCSS';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
-
+import i18n from '../language/i18n';
 
 const DashboardScreen = () => {
     const navigation = useNavigation();
@@ -70,12 +70,11 @@ const DashboardScreen = () => {
                 console.log("APPSTATE OPEN IOS");
                 onRefresh();
             }
-            else if (nextAppState != 'Active')
-            {
+            else if (nextAppState != 'Active') {
                 PushNotificationIOS.setApplicationIconBadgeNumber(0);
             }
         }
-        else{
+        else {
             if (nextAppState == 'active') {
                 console.log("APPSTATE OPEN ANDROID");
                 onRefresh();
@@ -112,8 +111,8 @@ const DashboardScreen = () => {
                             )}
                         </View>
                         <View style={{ alignItems: 'flex-start', justifyContent: 'center', flex: 1, flexGrow: 1, }}>
-                            <Text style={css.textHeader}>Msg: {item.textValue}</Text>
-                            <Text style={css.textDescription}>Time: {item.createdTime}</Text>
+                            <Text style={css.textHeader}>{i18n.t("dashboard.Msg")}: {item.textValue}</Text>
+                            <Text style={css.textDescription}>{i18n.t("dashboard.Time")}: {item.createdTime}</Text>
                         </View>
                     </View>
                 </View>
@@ -125,7 +124,7 @@ const DashboardScreen = () => {
     const noitem = () => {
         return (
             <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#e0e0eb', padding: 10, borderRadius: 10, height: 70, marginVertical: 2, marginHorizontal: 5, }}>
-                <Text>No Notification</Text>
+                <Text>{i18n.t("dashboard.NoNotification")}</Text>
             </View>
         );
     };
@@ -133,7 +132,7 @@ const DashboardScreen = () => {
     function viewFullImage(qrText: string) {
         if (qrText == null) {
             Snackbar.show({
-                text: "No QR Code in this log.",
+                text: i18n.t("dashboard.NoQRCode"),
                 duration: Snackbar.LENGTH_SHORT,
             });
         } else {
@@ -152,7 +151,7 @@ const DashboardScreen = () => {
                     setUserName(response.data.data[0].userName);
                 } else {
                     Snackbar.show({
-                        text: 'Something is wrong. Can not get the data from server!',
+                        text: i18n.t("dashboard.Error"),
                         duration: Snackbar.LENGTH_SHORT,
                     });
                 }
@@ -182,7 +181,7 @@ const DashboardScreen = () => {
                     setItemFinish(true);
                 } else {
                     Snackbar.show({
-                        text: 'Something is wrong. Can not get the data from server!',
+                        text: i18n.t("dashboard.Error"),
                         duration: Snackbar.LENGTH_SHORT,
                     });
                 }
@@ -215,7 +214,7 @@ const DashboardScreen = () => {
             {Platform.OS === "android" ? (
                 <View style={[css.mainView, { marginTop: -20 }]}>
                     <View style={css.HeaderView}>
-                        <Text style={css.PageName}>Dashboard</Text>
+                        <Text style={css.PageName}>{i18n.t("navigation.Dashboard")}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', }}>
                         <View style={css.listThing}>
@@ -229,7 +228,7 @@ const DashboardScreen = () => {
                 </View>) : (
                 <View style={[css.mainView, { marginTop: 0 }]}>
                     <View style={css.HeaderView}>
-                        <Text style={css.PageName}>Dashboard</Text>
+                        <Text style={css.PageName}>{i18n.t("navigation.Dashboard")}</Text>
                     </View>
                     <View style={{ flexDirection: 'row', }}>
                         <View style={css.listThing}>
@@ -251,11 +250,11 @@ const DashboardScreen = () => {
                 <View>
                     <View style={[css.container, { height: Dimensions.get("screen").height / 100 * 20 }]}>
                         <QRCode value={userID !== null ? userID : undefined} />
-                        <Text style={[css.textTitle, { fontSize: 14 }]}><Text style={{ fontWeight: "normal" }}>Name:</Text> {userName ?? "null"}</Text>
+                        <Text style={[css.textTitle, { fontSize: 14 }]}><Text style={{ fontWeight: "normal" }}>{i18n.t("dashboard.Name")}:</Text> {userName ?? "null"}</Text>
                     </View>
                     <View style={{ height: Dimensions.get("screen").height / 100 * 53 }}>
                         <View style={css.subContainer}>
-                            <Text style={css.textTitle}>Notification:</Text>
+                            <Text style={css.textTitle}>{i18n.t("dashboard.Notification")}:</Text>
                         </View>
                         <View>
                             <FlatList
@@ -269,7 +268,7 @@ const DashboardScreen = () => {
                                     <View style={[css.listItem]}>
                                         <View style={css.cardBody}>
                                             <Text style={[css.textHeader, { textAlign: 'center', fontWeight: "normal" }]}>
-                                                No more Data
+                                                {i18n.t("dashboard.NoData")}
                                             </Text>
                                         </View>
                                     </View>

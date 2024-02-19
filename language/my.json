@@ -1,0 +1,80 @@
+{
+    "register": {
+        "Successful": "Daftar Berjaya",
+        "UserNameDuplicated": "Nama pengguna diduakan. Sila tukar nama dan cuba lagi",
+        "Failed": "Daftar gagal",
+        "WrongPassword": "Kata laluan salah",
+        "Empty": "Nama Pengguna atau Kata Laluan tidak boleh kosong",
+        "Register": "Daftar",
+        "Can'tBeEmpty": "Tidak boleh kosong!",
+        "CompanyName": "Nama Syarikat",
+        "VehicleNo": "No. Kenderaan",
+        "UserName": "Nama Pengguna",
+        "Password": "Kata laluan",
+        "RetypePassword": "Tulis semula kata laluan",
+        "PasswordEmtpy": "Kata laluan tidak boleh kosong!",
+        "PasswordNoMatch": "Kata laluan tidak sepadan!",
+        "Email": "E-mel",
+        "Mobile": "Telefon",
+        "NumberInvalid": "Nombor tidak sah!",
+        "BirthDate": "Tarikh lahir",
+        "SelectBirthDate": "Pilih Tarikh Lahir"
+    },
+    "login": {
+        "username": "Nama Pengguna",
+        "password": "Kata laluan",
+        "register": "Daftar",
+        "forgotPassword": "Lupa kata laluan",
+        "login": "Log masuk",
+        "error": "Log Masuk Gagal, E-mel atau kata laluan anda salah!",
+        "loginFailed": "Daftar masuk gagal",
+        "re-enter": "Sila taip e-mel atau kata laluan anda secara manual sekali lagi."
+    },
+    "fingerPrint": {
+        "SetFingerprint": "Tetapkan Cetakan jari?",
+        "Reset": "Nampaknya nama pengguna anda berbeza. Adakah anda mahu menetapkan kepada yang baharu?",
+        "New": "Adakah anda ingin menggunakan fungsi cap jari?",
+        "FingerprintNotObtained": "Anda masih belum mengakses cap jari."
+    },
+    "email": {
+        "email": "E-mel",
+        "VerificationEmail": "E-mel Pengesahan",
+        "SentEmail": "E-mel telah dihantar ke e-mel anda. Sila sahkan.",
+        "DoubleCheckEmail": "Sila semak semula e-mel anda menaip dengan betul"
+    },
+    "operate": {
+        "submit": "Hantar",
+        "back": "Kembali",
+        "edit": "Sunting",
+        "save": "Simpan",
+        "cancel": "Batal"
+    },
+    "profile": {
+        "personalProfile": "Profil peribadi",
+        "dataError": "Ada yang tak kena. Tidak boleh mendapatkan data daripada pelayan!",
+        "updateSuccessfully": "Kemas kini Berjaya",
+        "updateFailed": "Kemas Kini Gagal",
+        "serverError": "Ralat Pelayan",
+        "user&companyCan'tBeEmpty": "Nama Pengguna dan Syarikat tidak boleh kosong!"
+    },
+    "detail": {
+        "CompanyName": "Nama Syarikat",
+        "VehicleNo": "No. Kenderaan",
+        "Mobile": "Telefon",
+        "BirthDate": "Tarikh lahir"
+    },
+    "navigation": {
+        "Dashboard": "Papan pemuka",
+        "Profile": "Profil"
+    },
+    "dashboard": {
+        "Msg": "Msg",
+        "Time": "Masa",
+        "NoNotification": "Tiada Pemberitahuan",
+        "Name": "Nama",
+        "Notification": "Pemberitahuan",
+        "NoData": "Tiada Data Lagi",
+        "NoQRCode": "Tiada Kod QR dalam log ini",
+        "Error": "Ada yang tak kena. Tidak boleh mendapatkan data daripada pelayan!"
+    }
+}

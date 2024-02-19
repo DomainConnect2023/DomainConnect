@@ -1,5 +1,27 @@
 {
+    "register": {
+        "Successful": "注册成功",
+        "UserNameDuplicated": "用户名重复。 请更改名称并再次测试",
+        "Failed": "注册失败",
+        "WrongPassword": "密码错误",
+        "Empty": "用户名和密码不能为空",
+        "Register": "注册",
+        "Can'tBeEmpty": "不能为空",
+        "CompanyName": "公司名",
+        "VehicleNo": "车辆号码",
+        "UserName": "用户名",
+        "Password": "密码",
+        "RetypePassword": "重复密码",
+        "PasswordEmtpy": "密码不能为空！",
+        "PasswordNoMatch": "密码和重复密码不匹配",
+        "Email": "邮箱",
+        "Mobile": "手机号码",
+        "NumberInvalid": "号码无效！",
+        "BirthDate": "出生日期",
+        "SelectBirthDate": "选择出生日期"
+    },
     "login": {
+        "NotAllowed": "不允许",
         "username": "用户名",
         "password": "密码",
         "register": "注册账户",
@@ -42,8 +64,18 @@
         "Mobile": "手机号码",
         "BirthDate": "出生日期"
     },
-    "navigation":{
+    "navigation": {
         "Dashboard": "仪表盘",
         "Profile": "个人资料"
+    },
+    "dashboard": {
+        "Msg": "信息",
+        "Time": "时间",
+        "NoNotification": "没有通知",
+        "Name": "姓名",
+        "Notification": "通知",
+        "NoData": "没有数据",
+        "NoQRCode": "此日志中没有二维码",
+        "Error": "出现问题。 无法从服务器获取数据！"
     }
 }

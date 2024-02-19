@@ -15,7 +15,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UpdateUserData } from '../objects/objects';
 import { css, datepickerCSS } from '../objects/commonCSS';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import i18n from '../assets/language/i18n';
+import i18n from '../language/i18n';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();

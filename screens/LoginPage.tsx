@@ -20,7 +20,7 @@ import ReactNativeBiometrics from 'react-native-biometrics'
 import { TextInput } from 'react-native-paper';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
-import i18n from '../assets/language/i18n';
+import i18n from '../language/i18n';
 
 type UserData = {
     username: string;
@@ -56,7 +56,7 @@ const Login = () => {
                 requestNotifications(['alert', 'sound']).then(({ status, settings }) => {
                     if (status !== "granted") {
                         Snackbar.show({
-                            text: "Not Allowed",
+                            text: i18n.t("LoginPage.Not-Allowed"),
                             duration: Snackbar.LENGTH_SHORT,
                         });
                     }
@@ -65,8 +65,6 @@ const Login = () => {
             if (Platform.OS === "ios") {
                 const listener = AppState.addEventListener('change', appcheck);
                 PushNotificationIOS.setApplicationIconBadgeNumber(0);
-
-
                 return () => {
                     listener.remove();
                 }
@@ -114,7 +112,7 @@ const Login = () => {
                     setPassword("");
                     if (credentials) {
                         if (credentials.username != username) {
-                            Alert.alert(i18n.t("fingerPrint.SetFingerprint"), i18n.t("fingerPrint.Reset"), [
+                            Alert.alert(i18n.t("FingerPrint.SetFingerPrint"), i18n.t("FingerPrint.Reset"), [
                                 { text: 'OK', onPress: () => setCredentials(username, password) },
                                 { text: 'No', onPress: () => console.log('nothing happened.') },
                             ]);
@@ -122,7 +120,7 @@ const Login = () => {
                         AsyncStorage.setItem('userID', response.data.userID);
                         navigation.navigate(TabNavigation as never);
                     } else {
-                        Alert.alert(i18n.t("fingerPrint.SetFingerprint"), i18n.t("fingerPrint.New"), [
+                        Alert.alert(i18n.t("FingerPrint.SetFingerPrint"), i18n.t("FingerPrint.New"), [
                             { text: 'OK', onPress: () => setCredentials(username, password) },
                             { text: 'No', onPress: () => console.log('nothing happened.') },
                         ]);
@@ -166,7 +164,7 @@ const Login = () => {
                         navigation.navigate(TabNavigation as never);
                     } else {
                         Snackbar.show({
-                            text: i18n.t("login.error"),
+                            text: i18n.t("LoginPage.UserName-Password-Error"),
                             duration: Snackbar.LENGTH_INDEFINITE,
                         });
                     }
@@ -214,12 +212,12 @@ const Login = () => {
                 if (checkResult == true) {
                     fingerLoginAPI();
                 } else {
-                    Alert.alert(i18n.t('login.loginFailed'), i18n.t('login.re-enter'), [
+                    Alert.alert(i18n.t('LoginPage.Login-Failed'), i18n.t('LoginPage.Re-Enter'), [
                         { text: 'OK', onPress: () => console.log('') },
                     ]);
                 }
             } else {
-                Alert.alert(i18n.t('login.loginFailed'), i18n.t('fingerPrint.FingerprintNotObtained'), [
+                Alert.alert(i18n.t('LoginPage.Login-Failed'), i18n.t('FingerPrint.Fingerprint-Not-Obtained'), [
                     { text: 'OK', onPress: () => console.log('') },
                 ]);
             }
@@ -241,7 +239,7 @@ const Login = () => {
             .then(response => {
                 if (response.data.status == "1") {
                     setModalVisible(false);
-                    Alert.alert(i18n.t('email.VerificationEmail'), i18n.t("email.SentEmail"), [
+                    Alert.alert(i18n.t('EmailVerify.VerificationEmail'), i18n.t("EmailVerify.SentEmail"), [
                         {
                             text: 'OK', onPress: async () => [
                                 // setUserEmail(""),
@@ -250,10 +248,9 @@ const Login = () => {
                             ]
                         },
                     ]);
-
                 } else {
                     Snackbar.show({
-                        text: i18n.t("email.DoubleCheckEmail"),
+                        text: i18n.t("EmailVerify.DoubleCheckEmail"),
                         duration: Snackbar.LENGTH_SHORT,
                     });
                     setProcessData(false);
@@ -286,7 +283,7 @@ const Login = () => {
                             placeholder=""
                             value={username}
                             onChangeText={setUserName}
-                            label= {i18n.t("login.username")}
+                            label={i18n.t("LoginPage.UserName")}
                         />
 
                         <TouchableOpacity style={{ width: "20%", padding: "3%" }} onPress={() => checkValue()}>
@@ -304,7 +301,7 @@ const Login = () => {
                             secureTextEntry
                             value={password}
                             onChangeText={setPassword}
-                            label={i18n.t("login.password")}
+                            label={i18n.t("LoginPage.Password")}
                         />
                         {/* <TouchableOpacity style={{width:"20%", padding:"3%"}} onPress={() => faceLoginAPI()}>
                         <View>
@@ -319,16 +316,16 @@ const Login = () => {
                     </View>
                     <TouchableOpacity style={{ width: "85%" }} onPress={() => { navigation.navigate(RegisterScreen as never) }}>
                         <View>
-                            <Text style={styles.registerFont}>{i18n.t("login.register")}</Text>
+                            <Text style={styles.registerFont}>{i18n.t("LoginPage.Don't-Have-Account")}</Text>
                         </View>
                     </TouchableOpacity>
                     <TouchableOpacity style={{ width: "85%", marginTop: 20, marginBottom: 20 }} onPress={() => { toggleModalVisibility() }}>
                         <View>
-                            <Text style={styles.registerFont}>{i18n.t("login.forgotPassword")}</Text>
+                            <Text style={styles.registerFont}>{i18n.t("LoginPage.Forgot-Password")}</Text>
                         </View>
                     </TouchableOpacity>
                     <Pressable style={styles.button} onPress={() => loginAPI()}>
-                        <Text style={styles.bttnText}>{i18n.t("login.login")}</Text>
+                        <Text style={styles.bttnText}>{i18n.t("LoginPage.Title")}</Text>
                     </Pressable>
 
                     <Modal animationType="slide"
@@ -342,21 +339,21 @@ const Login = () => {
                         ) : (
                             <View style={styles.viewWrapper}>
                                 <View style={styles.modalView}>
-                                    <Text style={styles.emailText}>{i18n.t("login.forgotPassword")} </Text>
+                                    <Text style={styles.emailText}>{i18n.t("LoginPage.Forgot-Password")} </Text>
                                     <TextInput
                                         value={userEmail}
                                         style={styles.textInput}
                                         onChangeText={(value) => setUserEmail(value)}
                                         mode='outlined'
-                                        label={i18n.t("email.email")}
+                                        label={i18n.t("RegisterPage.Email")}
                                     />
                                     {/** This button is responsible to close the modal */}
                                     <View style={styles.row}>
                                         <Pressable style={styles.button} onPress={() => resetPassword(userEmail)}>
-                                            <Text style={styles.bttnText}>{i18n.t("operate.submit")}</Text>
+                                            <Text style={styles.bttnText}>{i18n.t("Operate.Submit")}</Text>
                                         </Pressable>
                                         <Pressable style={styles.button} onPress={() => toggleModalVisibility()}>
-                                            <Text style={styles.bttnText}>{i18n.t("operate.back")}</Text>
+                                            <Text style={styles.bttnText}>{i18n.t("Operate.Back")}</Text>
                                         </Pressable>
                                     </View>
                                 </View>
