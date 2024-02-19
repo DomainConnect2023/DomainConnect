@@ -302,7 +302,7 @@ export const styles = StyleSheet.create({
         marginLeft:10,
         marginTop:10,
         fontWeight:"bold",
-        fontSize:16,
+        fontSize:12,
         alignSelf:"flex-start"
     },
     blackline:{
@@ -312,10 +312,14 @@ export const styles = StyleSheet.create({
         alignSelf: 'center',
         marginBottom:5,
     },
+    InputRange:{
+        width:"90%",
+        alignSelf:"center"
+    },
     Textinput:{
         alignSelf:"center",
         marginTop:20,
-        width:"90%",
+        width:"100%",
         borderRadius:5,
     },
     ButtonLogin:{
@@ -327,7 +331,7 @@ export const styles = StyleSheet.create({
         height:"10%",
         alignItems:"center",
         justifyContent:"center",
-        marginTop:40,
+        marginTop:20,
     },
     
 })

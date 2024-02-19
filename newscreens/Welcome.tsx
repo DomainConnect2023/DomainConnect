@@ -4,6 +4,7 @@ import { View, Text, TouchableOpacity, StatusBar, Image } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { styles } from '../objects/commonCSS';
 import Login from '../screens/LoginPage';
+import Register from './RegisterPage';
 
 
 const Welcome = () => {
@@ -33,7 +34,7 @@ const Welcome = () => {
                     </Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.Button} >
+                <TouchableOpacity style={styles.Button} onPress={() => { navigation.navigate(Register as never) }}>
                     <Text style={styles.fonth2}>
                         Create Account
                     </Text>

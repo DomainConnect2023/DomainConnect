@@ -3,7 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LogBox, Platform, SafeAreaView } from 'react-native';
 import Login from './newscreens/LoginPage';
-import Register from './screens/RegisterPage';
+import Register from './newscreens/RegisterPage';
 import { GetFCMToken, NotificationListner, requestUserPermission } from './components/pushNotification';
 import TabNavigationScreen from './screens/TabNavigation';
 import DashboardScreen from './screens/DashboardPage';
@@ -38,7 +38,6 @@ function App(): JSX.Element {
   useEffect(()=> {
     requestUserPermission();
     initializeFirebase();
-    GetFCMToken();
     NotificationListner();
   }, []);
   
@@ -49,6 +48,7 @@ function App(): JSX.Element {
           <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false ,navigationBarColor:"white"}}>
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Login" component={Login}/>
+            <Stack.Screen name="Register" component={Register}/>
             {/* <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />
