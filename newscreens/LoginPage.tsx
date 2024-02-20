@@ -13,6 +13,7 @@ import TestDashboardScreen from './TestDashboard';
 import TestSettingScreen from './TestSetting';
 import TestTabNavigation from './TestNavigation';
 import TabNavigation from '../screens/TabNavigation';
+import i18n from '../language/i18n';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -31,15 +32,15 @@ const Login = () => {
                     {/*End Header */}
                     <View style={{ flex: 1 }}>
                         <View style={{ justifyContent: "flex-end", width: "90%", alignSelf: "center", marginTop: 30 }}>
-                            <Text style={styles.fontLogin}>Login</Text>
-                            <Text style={styles.fontsmall}>Enter Your Credential to Log in</Text>
+                            <Text style={styles.fontLogin}>{i18n.t('LoginPage.Title')}</Text>
+                            <Text style={styles.fontsmall}>{i18n.t('LoginPage.SubTitle')}</Text>
                         </View>
                         {/* Login Information */}
                         <View style={styles.InputRange}>
                             <TextInput
                                 style={styles.Textinput}
                                 mode="outlined"
-                                label="username"
+                                label={i18n.t('LoginPage.UserName')}
                             />
                         </View>
                         <View style={styles.InputRange}>
@@ -63,22 +64,22 @@ const Login = () => {
                                 style={styles.Textinput}
                                 secureTextEntry={ishide}
                                 mode="outlined"
-                                label="password"
+                                label={i18n.t('LoginPage.Password')}
                             />
 
                         </View>
                         <TouchableOpacity onPress={() => { }}>
                             <Text style={{ textAlign: "right", width: "95%", fontWeight: "bold", fontSize: 14, }}>Forgot Password?</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => {navigation.navigate(TestTabNavigation as never) }}>
+                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => { navigation.navigate(TestTabNavigation as never) }}>
                             <Text style={styles.fonth2}>
-                                Log In
+                                {i18n.t('LoginPage.Login-Button')}
                             </Text>
                         </TouchableOpacity>
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-                            <Text style={{ fontWeight: "bold", fontSize: 14, }}>Or Login With</Text>
+                            <Text style={{ fontWeight: "bold", fontSize: 14, }}>{i18n.t('LoginPage.Or-Login-With')}</Text>
                             <View>
-                                <TouchableOpacity onPress={() => {navigation.navigate(TestTabNavigation as never) }}>
+                                <TouchableOpacity onPress={() => { navigation.navigate(TestTabNavigation as never) }}>
                                     <MaterialIcons name="fingerprint" size={65} style={{ marginTop: 20 }} />
                                 </TouchableOpacity>
                             </View>
@@ -90,7 +91,7 @@ const Login = () => {
                     <View style={{ justifyContent: "flex-end" }}>
                         <View style={styles.blackline} />
                         <TouchableOpacity onPress={() => { navigation.navigate(Register as never) }}>
-                            <Text style={styles.fonth2}>Don't have an Account? Sign Up</Text>
+                            <Text style={styles.fonth2}>{i18n.t("LoginPage.Don't-Have-Account")}</Text>
                         </TouchableOpacity>
                     </View>
 

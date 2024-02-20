@@ -4,6 +4,7 @@ import MainContainer from '../components/MainContainer';
 import QRCode from 'react-native-qrcode-svg';
 import { NotificationData } from '../objects/objects';
 import { css } from '../objects/commonCSS';
+import i18n from '../language/i18n';
 
 const TestDashboardScreen = () => {
     
@@ -49,8 +50,8 @@ const TestDashboardScreen = () => {
                             )}
                         </View>
                         <View style={{ alignItems: 'flex-start', justifyContent: 'center', flex: 1, flexGrow: 1, }}>
-                            <Text style={css.textHeader}>Msg: {item.textValue}</Text>
-                            <Text style={css.textDescription}>Time: {item.createdTime}</Text>
+                            <Text style={css.textHeader}>{i18n.t('DashboardPage.Msg')}: {item.textValue}</Text>
+                            <Text style={css.textDescription}>{i18n.t('DashboardPage.Time')}: {item.createdTime}</Text>
                         </View>
                     </View>
                 </View>
@@ -64,13 +65,13 @@ const TestDashboardScreen = () => {
             {Platform.OS === "android" ? (
                 <View style={[css.mainView, { marginTop: -20 }]}>
                     <View style={css.HeaderView}>
-                        <Text style={css.PageName}>--- Dashboard</Text>
+                        <Text style={css.PageName}>--- {i18n.t('DashboardPage.Dashboard')}</Text>
                     </View>
                 </View>
             ) : (
                 <View style={[css.mainView, { marginTop: 0 }]}>
                     <View style={css.HeaderView}>
-                        <Text style={css.PageName}>--- Dashboard</Text>
+                        <Text style={css.PageName}>--- {i18n.t('DashboardPage.Dashboard')}</Text>
                     </View>
                 </View>
             )}
@@ -90,8 +91,8 @@ const TestDashboardScreen = () => {
                                     <QRCode value={"aaa123"} />
                                 </View>
                                 <View style={[styles.profileText,]}>
-                                    <Text style={css.textHeader}>Name: AAA</Text>
-                                    <Text style={css.textHeader}>Company: BBB</Text>
+                                    <Text style={css.textHeader}>{i18n.t('DashboardPage.Name')}: AAA</Text>
+                                    <Text style={css.textHeader}>{i18n.t('DashboardPage.Company')}: BBB</Text>
                                 </View>
                             </View>
                         </View>
@@ -99,7 +100,7 @@ const TestDashboardScreen = () => {
 
                     <View>
                         <View style={css.subContainer}>
-                            <Text style={css.textTitle}>Notification:</Text>
+                            <Text style={css.textTitle}>{i18n.t('DashboardPage.Notification')}:</Text>
                         </View>
                     </View>
                     <FlatList

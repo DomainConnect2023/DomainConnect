@@ -10,15 +10,17 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Switch } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import Login from './LoginPage';
+import i18n from '../language/i18n';
 
 const TestSettingScreen = () => {
     const navigation = useNavigation();
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [showLanguage, setShowLanguage] = useState(true);
+    const [selectedLanguage, setSelectedLanguage] = useState(i18n.locale);
 
     useEffect(() => {
         (async () => {
-            
+
         })();
     }, []);
 
@@ -30,101 +32,113 @@ const TestSettingScreen = () => {
         setShowLanguage(!showLanguage);
     };
 
+    const changeLanguage = (language: string) => {
+        i18n.locale = language;
+        setSelectedLanguage(language);
+        setShowLanguage(false)
+    };
+
     return (
         <MainContainer>
             <StatusBar animated={true} backgroundColor="#666699" barStyle={'dark-content'} />
             {Platform.OS === "android" ? (
                 <View style={[css.mainView, { marginTop: -20 }]}>
                     <View style={css.HeaderView}>
-                        <Text style={css.PageName}>--- Setting</Text>
+                        <Text style={css.PageName}>--- {i18n.t('SettingPage.Setting')}</Text>
                     </View>
                 </View>
             ) : (
                 <View style={[css.mainView, { marginTop: 0 }]}>
                     <View style={css.HeaderView}>
-                        <Text style={css.PageName}>--- Setting</Text>
+                        <Text style={css.PageName}>--- {i18n.t('SettingPage.Setting')}</Text>
                     </View>
                 </View>
             )}
 
             <KeyboardAvoidWrapper>
-                <View style={[css.row, {width: Dimensions.get("screen").width, padding:10,justifyContent: 'center',alignItems:"center"}]}>
-                    <View style={{ width:"30%", alignItems:"center", padding:10}}>
+                <View style={[css.row, { width: Dimensions.get("screen").width, padding: 10, justifyContent: 'center', alignItems: "center" }]}>
+                    <View style={{ width: "30%", alignItems: "center", padding: 10 }}>
                         <Image
                             source={ImagesAssets.logoImage}
                             style={{ width: 80, height: 80, backgroundColor: "#666699", borderRadius: 50 }}
                         />
                     </View>
-                    <View style={{width:"50%", padding:10}}>
-                        <Text style={css.textHeader}>User Name</Text>
-                        <Text style={css.textHeader}>Company Name</Text>
+                    <View style={{ width: "50%", padding: 10 }}>
+                        <Text style={css.textHeader}>{i18n.t('SettingPage.UserName')}</Text>
+                        <Text style={css.textHeader}>{i18n.t('SettingPage.Company-Name')}</Text>
                     </View>
-                    <View style={{width:"20%",padding:10,alignItems:"center"}}>
+                    <View style={{ width: "20%", padding: 10, alignItems: "center" }}>
                         <AntDesign name={"right" ?? ""} size={20} color={"black"} />
                     </View>
                 </View>
-                
+
                 <View style={styles.container}>
                     <View style={styles.preferenceContainer}>
                         <View>
-                            <Text style={[css.textHeader, {fontSize:20, color: '#FFF',}]}>Preference</Text>
+                            <Text style={[css.textHeader, { fontSize: 20, color: '#FFF', }]}>{i18n.t('SettingPage.Preference')}</Text>
                         </View>
                     </View>
                 </View>
 
                 <TouchableOpacity onPress={() => onToggleLanguage()}>
-                    <View style={[css.row, {width: Dimensions.get("screen").width, padding:10,justifyContent: 'center',alignItems:"center"}]}>
-                        <View style={{ width:"20%", alignItems:"center", padding:10}}>
+                    <View style={[css.row, { width: Dimensions.get("screen").width, padding: 10, justifyContent: 'center', alignItems: "center" }]}>
+                        <View style={{ width: "20%", alignItems: "center", padding: 10 }}>
                             <Ionicons name={"earth" ?? ""} size={40} color={"black"} />
                         </View>
-                        <View style={{width:"60%", padding:10, flexDirection: "row"}}>
-                            <Text style={[css.textHeader,{flex: 1,}]}>Language</Text>
-                            <View style={{alignItems:"flex-end"}}>
-                                <Text style={{color:"gray"}}>English</Text>
+                        <View style={{ width: "60%", padding: 10, flexDirection: "row" }}>
+                            <Text style={[css.textHeader, { flex: 1, }]}>{i18n.t('SettingPage.Language')}</Text>
+                            <View style={{ alignItems: "flex-end" }}>
+                                <Text style={{ color: "gray" }}>{i18n.t('Language')}</Text>
                             </View>
                         </View>
-                        <View style={{width:"20%",padding:10,alignItems:"center"}}>
+                        <View style={{ width: "20%", padding: 10, alignItems: "center" }}>
                             <AntDesign name={showLanguage ? 'right' : 'down'} size={20} color={"black"} />
                         </View>
                     </View>
                 </TouchableOpacity>
 
-                <Collapsible collapsed={showLanguage}>
+                <Collapsible collapsed={!showLanguage}>
                     <View style={[styles.container]}>
-                        <View style={{padding: 20,margin:5,borderRadius: 10,alignSelf: 'center',backgroundColor: 'lightgray',width: Dimensions.get("screen").width/100*80,borderWidth:1}}>
-                            <Text>Language 1</Text>
-                        </View>
-                        <View style={{padding: 20,margin:5,borderRadius: 10,alignSelf: 'center',backgroundColor: 'lightgray',width: Dimensions.get("screen").width/100*80,borderWidth:1}}>
-                            <Text>Language 2</Text>
-                        </View>
-                        <View style={{padding: 20,margin:5,borderRadius: 10,alignSelf: 'center',backgroundColor: 'lightgray',width: Dimensions.get("screen").width/100*80,borderWidth:1}}>
-                            <Text>Language 3</Text>
-                        </View>
+                        <TouchableOpacity onPress={() => changeLanguage('en')}>
+                            <View style={{ padding: 20, margin: 5, borderRadius: 10, alignSelf: 'center', backgroundColor: 'lightgray', width: Dimensions.get("screen").width / 100 * 80, borderWidth: 1 }}>
+                                <Text>English</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => changeLanguage('zh')}>
+                            <View style={{ padding: 20, margin: 5, borderRadius: 10, alignSelf: 'center', backgroundColor: 'lightgray', width: Dimensions.get("screen").width / 100 * 80, borderWidth: 1 }}>
+                                <Text>中文</Text>
+                            </View>
+                        </TouchableOpacity>
+                        <TouchableOpacity onPress={() => changeLanguage('my')}>
+                            <View style={{ padding: 20, margin: 5, borderRadius: 10, alignSelf: 'center', backgroundColor: 'lightgray', width: Dimensions.get("screen").width / 100 * 80, borderWidth: 1 }}>
+                                <Text>Malay</Text>
+                            </View>
+                        </TouchableOpacity>
                     </View>
                 </Collapsible>
 
-                <View style={[css.row, {width: Dimensions.get("screen").width, padding:10,justifyContent: 'center',alignItems:"center"}]}>
-                    <View style={{ width:"20%", alignItems:"center", padding:10}}>
+                <View style={[css.row, { width: Dimensions.get("screen").width, padding: 10, justifyContent: 'center', alignItems: "center" }]}>
+                    <View style={{ width: "20%", alignItems: "center", padding: 10 }}>
                         <Ionicons name={"moon" ?? ""} size={40} color={"black"} />
                     </View>
-                    <View style={{width:"60%", padding:10}}>
-                        <Text style={css.textHeader}>Dark Mode</Text>
+                    <View style={{ width: "60%", padding: 10 }}>
+                        <Text style={css.textHeader}>{i18n.t('SettingPage.Dark-Mode')}</Text>
                     </View>
-                    <View style={{width:"20%",padding:10,alignItems:"center"}}>
+                    <View style={{ width: "20%", padding: 10, alignItems: "center" }}>
                         <Switch style={styles.switch} value={isDarkMode} onValueChange={onToggleSwitch} />
                     </View>
                 </View>
 
-                <View style={[css.row, {width: Dimensions.get("screen").width, padding:10,justifyContent: 'center',alignItems:"center"}]}>
-                    <View style={{ width:"20%", alignItems:"center", padding:10}}>
+                <View style={[css.row, { width: Dimensions.get("screen").width, padding: 10, justifyContent: 'center', alignItems: "center" }]}>
+                    <View style={{ width: "20%", alignItems: "center", padding: 10 }}>
                         <Ionicons name={"log-out-outline" ?? ""} size={40} color={"black"} />
                     </View>
-                    <View style={{width:"60%", padding:10}}>
-                        <Text style={css.textHeader}>Log Out</Text>
+                    <View style={{ width: "60%", padding: 10 }}>
+                        <Text style={css.textHeader}>{i18n.t('SettingPage.LogOut')}</Text>
                     </View>
-                    <View style={{width:"20%",padding:10,alignItems:"center"}}>
-                        <TouchableOpacity onPress={()=>{navigation.navigate(Login as never)}}>
-                        <AntDesign name={"right" ?? ""} size={20} color={"black"} />
+                    <View style={{ width: "20%", padding: 10, alignItems: "center" }}>
+                        <TouchableOpacity onPress={() => { navigation.navigate(Login as never) }}>
+                            <AntDesign name={"right" ?? ""} size={20} color={"black"} />
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -149,6 +163,6 @@ const styles = StyleSheet.create({
     switch: {
         transform: [{ scaleX: 1.5 }, { scaleY: 1.5 }],
     },
-  });
+});
 
 export default TestSettingScreen;
