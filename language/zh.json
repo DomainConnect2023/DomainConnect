@@ -1,0 +1,142 @@
+{
+    "Language": "中文",
+    "WelcomePage": {
+        "Title": "欢迎来到Domain Connect",
+        "SubTitle": "自 1988 年以来一直是您值得信赖的 IT 合作伙伴。",
+        "Sign-In": "登录",
+        "Create-Account": "创建账户"
+    },
+    "LoginPage": {
+        "Title": "登录",
+        "SubTitle": "输入您的证件进行登录",
+        "UserName": "用户名",
+        "Password": "密码",
+        "Forgot-Password": "忘记密码",
+        "Login-Button": "登录",
+        "Or-Login-With": "或其它登录方式",
+        "Don't-Have-Account": "没有帐户？ 注册",
+        "Login-Failed": "登录失败",
+        "UserName-Password-Error": "登录失败，你的用户名和密码不正确",
+        "Re-Enter": "请重新输入用户名和密码",
+        "Not-Allowed": "不允许"
+    },
+    "EmailVerify": {
+        "VerificationEmail": "验证邮箱",
+        "SentEmail": "一封电子邮件已发送至您的邮箱。 请确认一下。",
+        "DoubleCheckEmail": "请仔细检查您的电子邮件是否输入正确"
+    },
+    "RegisterPage": {
+        "Title": "注册",
+        "SubTitle": "输入您的证件进行注册",
+        "Company-Name": "公司名",
+        "UserName": {
+            "UserName": "用户名",
+            "UserName-Duplicated": "用户名重复。 请更改名称并再次测试"
+        },
+        "Email": "邮箱",
+        "Password": {
+            "Password": "密码",
+            "Retype-Password": "重新输入密码",
+            "Wrong-Password": "密码错误",
+            "Password-Empty": "密码不能空着",
+            "Password-No-Match": "密码不匹配"
+        },
+        "UserName-Password-Empty": "用户名和密码不能空着",
+        "Empty": "不能空着！",
+        "SubTitle-Page2": "您愿意提供一些额外的信息吗",
+        "Mobile": {
+            "Mobile-Number": "手机号码",
+            "Phone-Number-Invalid": "电话号码无效!"
+        },
+        "BirthDate": {
+            "BirthDate": "出生日期",
+            "Select-BirthDate": "选择出生日期"
+        },
+        "Vehicle": "车牌号码",
+        "SubTitle-Page3": "快完成了",
+        "Confirm-Credential": "确认您的证件",
+        "Or": "或者",
+        "Skip": "跳过",
+        "Next-Button": "下一步",
+        "Back-Button": "返回",
+        "Have-Account": "已经有帐户？ 登录",
+        "Register-Success": "注册成功",
+        "Register-Failed": "注册失败"
+    },
+    "FingerPrint": {
+        "SetFingerPrint": "设置指纹解锁",
+        "Reset": "看来您的用户名不同。 您想设置为新的吗？",
+        "New": "您想使用指纹解锁功能吗？",
+        "Fingerprint-Not-Obtained": "尚未访问您的指纹解锁。"
+    },
+    "Operate": {
+        "Submit": "提交",
+        "Back": "返回",
+        "Edit": "编辑",
+        "Save": "保存",
+        "Cancel": "取消"
+    },
+    "DashboardPage": {
+        "Dashboard": "仪表盘",
+        "Name": "名字",
+        "Company": "公司",
+        "Notification": "通知",
+        "Msg": "信息",
+        "Time": "时间",
+        "No-Notification": "没有通知",
+        "No-Data": "没有数据",
+        "No-QR-Code": "此日志中没有二维码",
+        "Error": "出现问题。 无法从服务器获取数据！"
+    },
+    "SettingPage": {
+        "Setting": "设置",
+        "UserName": "用户名",
+        "Company-Name": "公司名",
+        "Preference": "偏好设置",
+        "Language": "语言",
+        "Dark-Mode": "深色模式",
+        "LogOut": "登出"
+    },
+    "Bottom-Navigation": {
+        "Dashboard": "仪表盘",
+        "Setting": "设置"
+    },
+    "Admin": {
+        "Admin": "管理员",
+        "Title": "欢迎回来",
+        "SubTitle": "你是管理员。",
+        "Title2": "每月用户注册",
+        "Check-User-Button": "检查用户",
+        "Modify-Admin-Button": "修改管理员",
+        "Title3": "报告",
+        "Title4": "通知",
+        "Check-Invoice": "检查发票",
+        "Send-Notification": "发送通知"
+    },
+    "Left-Navigation": {
+        "Dashboard": "仪表盘",
+        "Admin": "管理员"
+    },
+    "ProfilePage": {
+        "Title": "个人资料",
+        "Edit-Profile": "编译个人资料",
+        "Title2": "一般信息",
+        "UserName": "用户名",
+        "Display-Name": "显示名称",
+        "Email": "邮箱",
+        "Password": "密码",
+        "Confirm-Password": "确认密码",
+        "Title3": "附加信息",
+        "Vehicle-Number": "车牌号码",
+        "Phone-Number": "手机号码",
+        "Birth-Date": "出生日期",
+        "Save-Changes-Button": "保存更改",
+        "Alert": {
+            "Data-Error": "出现问题。 无法从服务器获取数据",
+            "Update-Successfully": "更新成功",
+            "Update-Failed": "更新失败",
+            "Server-Error": "服务器错误",
+            "User-Company-Empty": "用户名和公司名不能为空"
+        }
+    }
+}

@@ -54,7 +54,7 @@ function App(): JSX.Element {
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="Register" component={Register}/>
-            <Stack.Group screenOptions={{navigationBarColor:"#d9d9d9"}}>
+            <Stack.Group screenOptions={{navigationBarColor:"white"}}>
             <Stack.Screen name="TestTabNavigation" component={TestTabNavigation}/>
             <Stack.Screen name="TestDashboardScreen" component={TestDashboardScreen}/>
             <Stack.Screen name="TestSettingScreen" component={TestSettingScreen}/>

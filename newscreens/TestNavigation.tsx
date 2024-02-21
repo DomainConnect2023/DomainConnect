@@ -4,6 +4,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Dimensions } from 'react-native';
 import TestDashboardScreen from './TestDashboard';
 import TestSettingScreen from './TestSetting';
+import i18n from '../language/i18n';
 
 const Tab = createBottomTabNavigator();
 
@@ -14,9 +15,9 @@ const TestTabNavigation = () => {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === 'Dashboard') {
+            if (route.name === i18n.t('Bottom-Navigation.Dashboard')) {
               iconName = focused ? 'home' : 'home-outline';
-            } else if (route.name === 'Setting') {
+            } else if (route.name === i18n.t('Bottom-Navigation.Setting')) {
               iconName = focused ? 'settings' : 'settings-outline';
             }
 
@@ -32,8 +33,8 @@ const TestTabNavigation = () => {
           },
         })}
       >
-        <Tab.Screen options={{ unmountOnBlur: true, }} name="Dashboard" component={TestDashboardScreen} />
-        <Tab.Screen options={{ unmountOnBlur: true, }} name="Setting" component={TestSettingScreen} />
+        <Tab.Screen options={{ unmountOnBlur: true, }} name={i18n.t('Bottom-Navigation.Dashboard')} component={TestDashboardScreen} />
+        <Tab.Screen options={{ unmountOnBlur: true, }} name={i18n.t('Bottom-Navigation.Setting')} component={TestSettingScreen} />
       </Tab.Navigator>
   );
 }

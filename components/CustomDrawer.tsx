@@ -5,17 +5,26 @@ import { Dimensions, Platform, View } from 'react-native';
 import TestDashboardScreen from '../newscreens/TestDashboard';
 import TestSettingScreen from '../newscreens/TestSetting';
 import Login from '../newscreens/LoginPage';
+import { useNavigation } from '@react-navigation/native';
 
 // Remember install gesturehandler and reanimated
 
 const Drawer = createDrawerNavigator();
 
+
+
+
+
 function CustomDrawerContent(props: any) {
+  const navigation = useNavigation();
+
+
   return (
     <DrawerContentScrollView contentContainerStyle={{flex: 1}} {...props} 
     // style={{backgroundColor:colorThemeDB.colors.primaryContainer}}
     >
       <DrawerItemList {...props} />
+      <DrawerItem label="Log Out" onPress={()=>{navigation.navigate(Login as never)}}/>
     </DrawerContentScrollView>
   );
 };
@@ -63,18 +72,6 @@ export function CustomDrawer() {
         ),
       }} />
 
-<Drawer.Screen name="Log Out" component={Login as never} 
-      options={{
-        headerTitle: 'Log Out',
-        headerRight: () => (
-          <View style={{flex:1,flexDirection: "row",
-          justifyContent: 'center',
-          alignItems: 'center',}}>
-            {/* <Ionicons name="search-circle-sharp" size={35} color="#FFF" style={{marginLeft:5,marginRight:5}} onPress={() => navigation.navigate(TestTabNavigation as never)} /> */}
-            {/* <Ionicons name="log-out-outline" size={35} color="#FFF" style={{marginLeft:5,marginRight:10}} onPress={() => setIsSignedIn(false)} /> */}
-          </View>
-        ),
-      }} />
       
 
       {/* <Drawer.Screen name="Grading" component={GradingScreen} options={{
