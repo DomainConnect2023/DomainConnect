@@ -1,12 +1,5 @@
 {
-    "profile": {
-        "personalProfile": "Personal Profile",
-        "dataError": "Something is wrong. Can not get the data from server!",
-        "updateSuccessfully": "Update Successfully",
-        "updateFailed": "Update Fail",
-        "serverError": "Server Error",
-        "user&companyCan'tBeEmpty": "User and Company Name can't be empty!"
-    },
+    "Language": "English",
     "WelcomePage": {
         "Title": "Welcome to Domain Connect",
         "SubTitle": "Your Reliable I.T. Partner Since 1988.",
@@ -56,13 +49,14 @@
             "Phone-Number-Invalid": "Phone Number is Invalid!"
         },
         "BirthDate": {
-            "BirthDate": "BirthDate",
+            "BirthDate": "Birth Date",
             "Select-BirthDate": "Select BirthDate"
         },
         "Vehicle": "Vehicle No",
         "SubTitle-Page3": "Almost Done",
         "Confirm-Credential": "Confirm your credential",
-        "Skip": "or skip",
+        "Or": "Or",
+        "Skip": "Skip",
         "Next-Button": "Next",
         "Back-Button": "Back",
         "Have-Account": "Already Have an Account? Login",
@@ -105,6 +99,45 @@
     },
     "Bottom-Navigation": {
         "Dashboard": "Dashboard",
-        "Setting": "Setting"
+        "Setting": "Setting",
+        "LogOut": "Log Out"
+    },
+    "Admin": {
+        "Admin": "Admin",
+        "Title": "Welcome Back",
+        "SubTitle": "You are Admin.",
+        "Title2": "User Register Each Month",
+        "Check-User-Button": "Check User",
+        "Modify-Admin-Button": "Modify Admin",
+        "Title3": "Report",
+        "Title4": "Notification",
+        "Check-Invoice": "Check Invoice",
+        "Send-Notification": "Send Notification"
+    },
+    "Left-Navigation": {
+        "Dashboard": "Dashboard",
+        "Admin": "Admin"
+    },
+    "ProfilePage": {
+        "Title": "Profile",
+        "Edit-Profile": "Edit Profile",
+        "Title2": "General Information",
+        "UserName": "User Name",
+        "Display-Name": "Display Name",
+        "Email": "Email",
+        "Password": "Password",
+        "Confirm-Password": "Confirm Password",
+        "Title3": "Additional Information",
+        "Vehicle-Number": "Vehicle Number",
+        "Phone-Number": "Phone Number",
+        "Birth-Date": "Birth Date",
+        "Save-Changes-Button": "Save Changes",
+        "Alert": {
+            "Data-Error": "Something is wrong. Can't get the data from server!",
+            "Update-Successfully": "Update Successfully",
+            "Update-Failed": "Update Fail",
+            "Server-Error": "Server Error",
+            "User-Company-Empty": "User and Company Name can't be empty!"
+        }
     }
 }

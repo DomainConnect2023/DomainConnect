@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet } from "react-native";
+import { Keyboard, Pressable, SafeAreaView, StyleSheet } from "react-native";
 import { IProps } from "../auth-app";
 
 const MainContainer: React.FC<IProps> = ({ children }) => {
@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
   setMainContainer: {
     flex: 1,
     paddingTop: 20,
-    // backgroundColor: '#201520',
+    backgroundColor: '#ffffff',
   }
 })
 

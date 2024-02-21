@@ -9,10 +9,11 @@ export const css = StyleSheet.create({
     },
     mainView:{
         width: '100%',
-        height: 60, 
+        height: Dimensions.get("screen").height/100*8, 
         flexDirection: 'row',
         alignItems: 'center', 
         backgroundColor: "#666699",
+        
         
     },
     HeaderView :{
@@ -51,10 +52,8 @@ export const css = StyleSheet.create({
     cardBody: {
         flexGrow: 1,
         paddingHorizontal: 12,
-        width: "95%",
     },
     textHeader: { 
-        fontStyle: "italic",
         fontSize: 14,
         color: '#000000',
         fontWeight: 'bold',
@@ -70,16 +69,6 @@ export const css = StyleSheet.create({
         fontSize:18, 
         color:"black", 
         fontWeight:"bold"
-    },
-    circle: {
-        width: 20,
-        height: 20,
-        borderRadius: 50, 
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    text: {
-        color: 'white',
     },
     button: {
         width: "85%",
@@ -245,5 +234,92 @@ const whiteTheme = {
       background: 'white',
     },
   };
+
+
+  export const styles = StyleSheet.create({
+    //Welcome Page
+    Test:{
+        flex:1,
+        backgroundColor:"green"
+    },
+    Button:{
+        alignSelf:"center",
+        backgroundColor:"#D9D9D9",
+        marginBottom:10,
+        borderRadius:5,
+        width:"80%",
+        height:"30%",
+        alignItems:"center",
+        justifyContent:"center",
+    },
+    WelcomeView:{
+        flex:4,
+        backgroundColor:"white"
+    },
+    fonth1:{
+        fontWeight:"bold",
+        fontSize:20,
+        alignSelf:"center"
+    },
+    fonth2:{
+        fontWeight:"bold",
+        fontSize:16,
+        alignSelf:"center"
+    },
+    fonth3:{
+        alignSelf:"center",
+        fontSize:12
+    },
+    // Login Page
+    Header:{
+        flex:2,
+        alignSelf:"center",
+        fontWeight:"bold",
+        fontSize:16,
+
+    },
+    fontLogin:{
+        marginLeft:10,
+        fontWeight:"bold",
+        fontSize:20,
+        alignSelf:"flex-start"
+    },
+    fontsmall:{
+        marginLeft:10,
+        marginTop:10,
+        fontWeight:"bold",
+        fontSize:12,
+        alignSelf:"flex-start"
+    },
+    blackline:{
+        width:"90%",
+        height:1,
+        backgroundColor:"black",
+        alignSelf: 'center',
+        marginBottom:5,
+    },
+    InputRange:{
+        width:"90%",
+        alignSelf:"center"
+    },
+    Textinput:{
+        alignSelf:"center",
+        marginTop:20,
+        width:"100%",
+        borderRadius:5,
+    },
+    ButtonLogin:{
+        alignSelf:"center",
+        backgroundColor:"#D9D9D9",
+        marginBottom:10,
+        borderRadius:5,
+        width:"80%",
+        height:"10%",
+        alignItems:"center",
+        justifyContent:"center",
+        marginTop:20,
+    },
+    
+})
   
   export default whiteTheme;

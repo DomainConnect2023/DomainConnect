@@ -15,7 +15,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UpdateUserData } from '../objects/objects';
 import { css, datepickerCSS } from '../objects/commonCSS';
 import DateTimePickerModal from 'react-native-modal-datetime-picker';
-import i18n from '../language/i18n';
 
 const ProfileScreen = () => {
   const navigation = useNavigation();
@@ -116,7 +115,7 @@ const ProfileScreen = () => {
         setProcessGetData(false);
       }else{
         Snackbar.show({
-          text: i18n.t("profile.dataError"),
+          text: 'Something is wrong. Can not get the data from server!',
           duration: Snackbar.LENGTH_SHORT,
         });
       }
@@ -162,17 +161,17 @@ const ProfileScreen = () => {
             await axios.post(URLAccess.userFunction, jsonData,).then(response => {
                 if(response.data.status=="1"){
                     Snackbar.show({
-                        text: i18n.t("profile.updateSuccessfully"),
+                        text: 'Update Successfully',
                         duration: Snackbar.LENGTH_SHORT,
                     });
                 }else if(response.data.status=="2"){
                     Snackbar.show({
-                        text: i18n.t("profile.updateFailed"),
+                        text: 'Update Fail.',
                         duration: Snackbar.LENGTH_SHORT,
                     });
                 }else{
                     Snackbar.show({
-                        text: i18n.t("profile.serverError"),
+                        text: 'Server Error.',
                         duration: Snackbar.LENGTH_SHORT,
                         // action: {
                         //   text: 'UNDO',
@@ -189,7 +188,7 @@ const ProfileScreen = () => {
             });
         }else{
             Snackbar.show({
-                text: i18n.t("profile.user&companyCan'tBeEmpty"),
+                text: "User and Company Name can't be empty!",
                 duration: Snackbar.LENGTH_SHORT,
             });
         }
@@ -210,7 +209,7 @@ const ProfileScreen = () => {
             {Platform.OS === "android"?(                
             <View style={[css.mainView, { marginTop: -20 }]}>
                     <View style={css.HeaderView}>
-                        <Text style={css.PageName}>{i18n.t("profile.personalProfile")}</Text>
+                        <Text style={css.PageName}>Personal Profile</Text>
                     </View>
                     <View style={{ flexDirection: 'row', }}>
                         <View style={css.listThing}>
@@ -224,7 +223,7 @@ const ProfileScreen = () => {
                 </View>):(            
                 <View style={[css.mainView, { marginTop: 0 }]}>
                     <View style={css.HeaderView}>
-                        <Text style={css.PageName}>{i18n.t("profile.personalProfile")}</Text>
+                        <Text style={css.PageName}>Personal Profile</Text>
                     </View>
                     <View style={{ flexDirection: 'row', }}>
                         <View style={css.listThing}>
@@ -248,15 +247,15 @@ const ProfileScreen = () => {
             source={ImagesAssets.profileImage}
             style={{width: 200, height: 200, margin:10}}
             />
-            <Text style={{color:"#404040",fontWeight:"bold",fontSize:20}}>{i18n.t("profile.personalProfile")}</Text>
+            <Text style={{color:"#404040",fontWeight:"bold",fontSize:20}}>Personal Profile</Text>
 
             {/* User Name Detail */}
             <View style={css.row}>
-                <Text style={css.Title}>{i18n.t("login.username")}:</Text>
+                <Text style={css.Title}>User Name:</Text>
                 {canEditProfile==true ? (
                     <TextInput
                     style={css.input}
-                    placeholder={i18n.t("login.username")}
+                    placeholder="User Name"
                     value={username}
                     onChangeText={setUserName}
                     placeholderTextColor="#11182744"
@@ -269,11 +268,11 @@ const ProfileScreen = () => {
 
             {/* Company Name */}
             <View style={css.row}>
-                <Text style={css.Title}>{i18n.t("detail.CompanyName")}:</Text>
+                <Text style={css.Title}>Company Name:</Text>
                 {canEditProfile==true ? (
                     <TextInput
                     style={css.input}
-                    placeholder={i18n.t("detail.CompanyName")}
+                    placeholder="Company Name"
                     value={companyName}
                     onChangeText={setCompanyName}
                     placeholderTextColor="#11182744"
@@ -286,11 +285,11 @@ const ProfileScreen = () => {
 
             {/* Vehicle Detail */}
             <View style={css.row}>
-                <Text style={css.Title}>{i18n.t("detail.VehicleNo")}:</Text>
+                <Text style={css.Title}>Vehicle No:</Text>
                 {canEditProfile==true ? (
                     <TextInput
                     style={css.input}
-                    placeholder={i18n.t("detail.VehicleNo")}
+                    placeholder="Vehicle No"
                     value={verhicleNo}
                     onChangeText={setVehicleNo}
                     placeholderTextColor="#11182744"
@@ -303,11 +302,11 @@ const ProfileScreen = () => {
 
             {/* Email Detail */}
             <View style={css.row}>
-                <Text style={css.Title}>{i18n.t("email.email")}: </Text>
+                <Text style={css.Title}>Email: </Text>
                 {canEditProfile==true ? (
                     <TextInput
                     style={css.input}
-                    placeholder={i18n.t("email.email")}
+                    placeholder="Email"
                     value={email}
                     onChangeText={setEmail}
                     placeholderTextColor="#11182744"
@@ -320,7 +319,7 @@ const ProfileScreen = () => {
             
             {/* Mobile Detail */}
             <View style={css.row}>
-                <Text style={css.Title}>{i18n.t("detail.Mobile")}: </Text>
+                <Text style={css.Title}>Mobile: </Text>
                 {canEditProfile==true ? (
                     <View style={[css.subTitle,{borderWidth: 1,borderColor: '#ccc'}]}>
                     <PhoneInput
@@ -352,7 +351,7 @@ const ProfileScreen = () => {
 
             {/* BirthDate Detail */}
             <View style={css.row}>
-                <Text style={css.Title}>{i18n.t("detail.BirthDate")}: </Text>
+                <Text style={css.Title}>BirthDate: </Text>
                 {Platform.OS === 'android' && showPicker && <DateTimePicker 
                     mode="date"
                     display="spinner"
@@ -418,15 +417,15 @@ const ProfileScreen = () => {
             {canEditProfile==true ? (
             <View style={css.row}>    
             <Pressable style={[styles.button,{backgroundColor: '#A0D6B4',margin:10}]} onPress={()=>{editProfile("yes")}}>
-                <Text style={[styles.text,{backgroundColor: '#A0D6B4',}]}>{i18n.t("operate.save")}</Text>
+                <Text style={[styles.text,{backgroundColor: '#A0D6B4',}]}>Save</Text>
             </Pressable>
             <Pressable style={[styles.button,{backgroundColor: 'gray',margin:10}]} onPress={()=>{editProfile("no")}}>
-                <Text style={[styles.text,{backgroundColor: 'gray',}]}>{i18n.t("operate.cancel")}</Text>
+                <Text style={[styles.text,{backgroundColor: 'gray',}]}>Cancel</Text>
             </Pressable>
             </View>
              ) : (
             <Pressable style={styles.button} onPress={()=>{editProfile("no")}}>
-                <Text style={styles.text}>{i18n.t("operate.edit")}</Text>
+                <Text style={styles.text}>Edit</Text>
             </Pressable> 
             )}
         </View>
