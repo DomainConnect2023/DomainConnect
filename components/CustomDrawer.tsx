@@ -1,11 +1,13 @@
 import * as React from 'react';
 import { DrawerContentScrollView, DrawerItem, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Dimensions, Platform, View } from 'react-native';
+import { Dimensions, Image, Platform, Text, View } from 'react-native';
 import TestDashboardScreen from '../newscreens/TestDashboard';
 import TestSettingScreen from '../newscreens/TestSetting';
 import Login from '../newscreens/LoginPage';
 import { useNavigation } from '@react-navigation/native';
+import { styles } from '../objects/commonCSS';
+
 
 // Remember install gesturehandler and reanimated
 
@@ -20,80 +22,76 @@ function CustomDrawerContent(props: any) {
 
 
   return (
-    <DrawerContentScrollView contentContainerStyle={{flex: 1}} {...props} 
-    // style={{backgroundColor:colorThemeDB.colors.primaryContainer}}
-    >
-      <DrawerItemList {...props} />
-      <DrawerItem label="Log Out" onPress={()=>{navigation.navigate(Login as never)}}/>
-    </DrawerContentScrollView>
+    <><View style={{ height: Dimensions.get("screen").height / 100 * 93 }}>
+      <View style={{ flex: 0.25, flexDirection: "row", paddingTop: 10 }}>
+        <Image source={require('../assets/logo.png')} style={{ flex: 1, height: Dimensions.get("screen").height / 100 * 10, width: 120, resizeMode: 'contain', alignSelf: "center" }} />
+        <Text style={styles.Header}>DOMAIN CONNECT</Text>
+      </View>
+
+      <DrawerContentScrollView contentContainerStyle={{ flex: 1 }} {...props}
+      >
+        <DrawerItemList {...props} />
+        <DrawerItem label="Log Out" onPress={() => { navigation.navigate(Login as never); }} icon={() => <Ionicons name="log-out-sharp" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />} />
+      </DrawerContentScrollView>
+
+      <View style={{ justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+        <Text style={styles.fontsmall}>Develop by Domain Connect @2024</Text>
+
+      </View>
+
+    </View></>
   );
 };
 
 export function CustomDrawer() {
 
-  
+
   return (
+
     <Drawer.Navigator initialRouteName="Dashboard" screenOptions={{
       headerShown: false,
       headerStyle: {
         backgroundColor: "#666699",
       },
-      headerTitleStyle: {color: "#FFF"},
-      headerTintColor: '#fff', 
+      headerTitleStyle: { color: "#FFF" },
+      headerTintColor: '#fff',
       headerTitleAlign: 'left',
       drawerActiveBackgroundColor: "rgb(226, 223, 255)",
-      
+
     }}
-    drawerContent={props => <CustomDrawerContent {...props} />}
+      drawerContent={props => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Dashboard" component={TestDashboardScreen} 
-      options={{
-        headerTitle: 'Dashboard',
-        headerRight: () => (
-          <View style={{flex:1,flexDirection: "row",
-          justifyContent: 'center',
-          alignItems: 'center',}}>
-            {/* <Ionicons name="search-circle-sharp" size={35} color="#FFF" style={{marginLeft:5,marginRight:5}} onPress={() => navigation.navigate(TestTabNavigation as never)} /> */}
-            {/* <Ionicons name="log-out-outline" size={35} color="#FFF" style={{marginLeft:5,marginRight:10}} onPress={() => setIsSignedIn(false)} /> */}
-          </View>
-        ),
-      }} />
+      <Drawer.Screen name="Dashboard" component={TestDashboardScreen}
+        options={{
+          headerTitle: 'Dashboard',
+          headerRight: () => (
+            <View style={{
+              flex: 1, flexDirection: "row",
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+            }}>
+            </View>
+          ),
+          drawerIcon: ({ focused, size }) => (<Ionicons name="home" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
+        }} />
 
-<Drawer.Screen name="Setting" component={TestSettingScreen} 
-      options={{
-        headerTitle: 'Setting',
-        headerRight: () => (
-          <View style={{flex:1,flexDirection: "row",
-          justifyContent: 'center',
-          alignItems: 'center',}}>
-            {/* <Ionicons name="search-circle-sharp" size={35} color="#FFF" style={{marginLeft:5,marginRight:5}} onPress={() => navigation.navigate(TestTabNavigation as never)} /> */}
-            {/* <Ionicons name="log-out-outline" size={35} color="#FFF" style={{marginLeft:5,marginRight:10}} onPress={() => setIsSignedIn(false)} /> */}
-          </View>
-        ),
-      }} />
+      <Drawer.Screen name="Setting" component={TestSettingScreen}
+        options={{
+          headerTitle: 'Setting',
+          headerRight: () => (
+            <View style={{
+              flex: 1, flexDirection: "row",
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            </View>
+          ),
+          drawerIcon: ({ focused, size }) => (<Ionicons name="settings-outline" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
+        }} />
 
-      
 
-      {/* <Drawer.Screen name="Grading" component={GradingScreen} options={{
-        headerTitle: 'Grading',
-        headerRight: () => (
-          <View style={css.row}>
-            <Ionicons name="search-circle-sharp" size={35} color="#FFF" style={{ marginLeft: 5, marginRight: 5 }} onPress={() => navigation.navigate(SearchScreen as never)} />
-             <Ionicons name="log-out-outline" size={35} color="#FFF" style={{ marginLeft: 5, marginRight: 10 }} onPress={() => setIsSignedIn(false)} /> 
-          </View>
-        ),
-      }} /> */}
-      
-      {/* <Drawer.Screen name="Profile" component={ProfileScreen} />
-      <Drawer.Screen name="Setting" component={SettingScreen} /> */}
-      {/* <Drawer.Screen name="PreviosDashboard" component={DashboardScreen} options={{
-        headerTitle: 'Dashboard',
-        headerRight: () => (
-          <View>
-            <Ionicons name="search-circle-sharp" size={40} color="#FFF" onPress={() => navigation.navigate(SearchScreen as never)} />
-          </View>
-        ),
-      }} /> */}
+
+
     </Drawer.Navigator>
   );
 }
