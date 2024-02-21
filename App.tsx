@@ -7,6 +7,7 @@ import Register from './newscreens/RegisterPage';
 import TestDashboardScreen from './newscreens/TestDashboard';
 import TestSettingScreen from './newscreens/TestSetting';
 import TestTabNavigation from './newscreens/TestNavigation';
+import EditProfileScreen from './newscreens/TestEditProfile';
 import { GetFCMToken, NotificationListner, requestUserPermission } from './components/pushNotification';
 import TabNavigationScreen from './screens/TabNavigation';
 import 'react-native-gesture-handler';
@@ -58,6 +59,7 @@ function App(): JSX.Element {
             <Stack.Screen name="TestTabNavigation" component={TestTabNavigation}/>
             <Stack.Screen name="TestDashboardScreen" component={TestDashboardScreen}/>
             <Stack.Screen name="TestSettingScreen" component={TestSettingScreen}/>
+            <Stack.Screen name="EditProfileScreen" component={EditProfileScreen}/>
             <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />
             <Stack.Screen name = "CustomDrawer" component={CustomDrawer}/>
             </Stack.Group>

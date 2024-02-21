@@ -12,6 +12,7 @@ import Collapsible from 'react-native-collapsible';
 import Login from './LoginPage';
 import i18n from '../language/i18n';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import EditProfileScreen from './TestEditProfile';
 
 const TestSettingScreen = ({ navigation }: any) => {
 
@@ -76,8 +77,11 @@ const TestSettingScreen = ({ navigation }: any) => {
                         <Text style={css.textHeader}>{i18n.t('SettingPage.Company-Name')}</Text>
                     </View>
                     <View style={{ width: "20%", padding: 10, alignItems: "center" }}>
+                    <TouchableOpacity onPress={()=>{navigation.navigate(EditProfileScreen as never)}}>
                         <AntDesign name={"right" ?? ""} size={20} color={"black"} />
+                        </TouchableOpacity>
                     </View>
+                    
                 </View>
 
                 <View style={styles.container}>
