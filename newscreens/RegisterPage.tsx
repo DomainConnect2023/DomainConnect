@@ -20,7 +20,7 @@ const Register = () => {
             <KeyboardAvoidWrapper>
                 {/* Header */}
                 <View style={{ height: Dimensions.get("screen").height / 100 * 90 }}>
-                    <View style={{ flex: 0.15, flexDirection: "row" }}>
+                    <View style={{ flex: 0.15, flexDirection: "row",paddingTop:10 }}>
                         <Image source={require('../assets/logo.png')} style={{ flex: 2, height: Dimensions.get("screen").height / 100 * 10, width: 120, resizeMode: 'contain', alignSelf: "center" }} />
                         <Text style={styles.Header}>DOMAIN CONNECT</Text>
                     </View>

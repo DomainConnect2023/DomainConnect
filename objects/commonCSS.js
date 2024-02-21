@@ -14,6 +14,7 @@ export const css = StyleSheet.create({
         alignItems: 'center', 
         backgroundColor: "#666699",
         
+        
     },
     HeaderView :{
         flex: 1, 

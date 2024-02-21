@@ -13,6 +13,7 @@ import TestDashboardScreen from './TestDashboard';
 import TestSettingScreen from './TestSetting';
 import TestTabNavigation from './TestNavigation';
 import TabNavigation from '../screens/TabNavigation';
+import { CustomDrawer } from '../components/CustomDrawer';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -70,7 +71,7 @@ const Login = () => {
                         <TouchableOpacity onPress={() => { }}>
                             <Text style={{ textAlign: "right", width: "95%", fontWeight: "bold", fontSize: 14, }}>Forgot Password?</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => {navigation.navigate(TestTabNavigation as never) }}>
+                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => {navigation.navigate(CustomDrawer as never) }}>
                             <Text style={styles.fonth2}>
                                 Log In
                             </Text>
@@ -78,7 +79,7 @@ const Login = () => {
                         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                             <Text style={{ fontWeight: "bold", fontSize: 14, }}>Or Login With</Text>
                             <View>
-                                <TouchableOpacity onPress={() => {navigation.navigate(TestTabNavigation as never) }}>
+                                <TouchableOpacity onPress={() => {navigation.navigate(CustomDrawer as never) }}>
                                     <MaterialIcons name="fingerprint" size={65} style={{ marginTop: 20 }} />
                                 </TouchableOpacity>
                             </View>

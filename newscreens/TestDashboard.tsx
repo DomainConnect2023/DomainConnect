@@ -1,30 +1,83 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, Dimensions, Platform, StyleSheet, ActivityIndicator,StatusBar } from 'react-native';
+import { StatusBar, View, Text, FlatList, TouchableOpacity, Dimensions, Platform, StyleSheet, ActivityIndicator, RefreshControl } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import QRCode from 'react-native-qrcode-svg';
 import { NotificationData } from '../objects/objects';
 import { css } from '../objects/commonCSS';
+import axios from 'axios';
+import { URLAccess } from '../objects/URLAccess';
+import Snackbar from 'react-native-snackbar';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-const TestDashboardScreen = () => {
-    
+const TestDashboardScreen = ({ navigation }: any) => {
+
     const [processData, setProcessData] = useState(false);
     const [fetchedData, setFetchedData] = useState<NotificationData[]>([]);
     var setQRText: string;
 
+    // Pagination Part
+    const [itemFinish, setItemFinish] = useState(false);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const [itemPerPage, setItemPerPage] = useState<number>(20);
+    const [refreshing, setRefreshing] = useState(false);
+
     useEffect(() => {
         (async () => {
-            fetchNotificationLogApi();
+            setProcessData(true);
+            setFetchedData([]);
+            fetchNotificationLogApi(currentPage);
         })();
     }, []);
 
-    const fetchNotificationLogApi = async () => {
-        setProcessData(true);
+    const fetchNotificationLogApi = async (page: number) => {
         // var getuserID = await AsyncStorage.getItem('userID');
-        setFetchedData([]);
-        setFetchedData((prevData) => [...prevData, ...dummyData]);
+        var getuserID = "2";
+
+        await axios.post(URLAccess.notificationFunction, {
+            "read": "1",
+            "userID": getuserID,
+            "page": page.toString(),
+            "itemPerPage": itemPerPage.toString()
+        }).then(async response => {
+            if (response.data.status == "1") {
+                setFetchedData((prevData) => [...prevData, ...response.data.data]);
+
+            } else if (response.data.status == "3") {
+                setItemFinish(true);
+
+            } else {
+                Snackbar.show({
+                    text: 'Something is wrong. Can not get the data from server!',
+                    duration: Snackbar.LENGTH_SHORT,
+                });
+            }
+        }).catch(error => {
+            Snackbar.show({
+                text: error,
+                duration: Snackbar.LENGTH_SHORT,
+            });
+        });
+
+        // setFetchedData((prevData) => [...prevData, ...dummyData]);
 
         setProcessData(false);
     };
+
+
+    const onRefresh = async () => {
+        setRefreshing(true);
+        setFetchedData([]);
+        setCurrentPage(1);
+        fetchNotificationLogApi(1);
+        setItemFinish(false);
+        setRefreshing(false);
+    };
+
+    const loadMore = async () => {
+        const passPage = currentPage + 1;
+        setCurrentPage(passPage);
+        await fetchNotificationLogApi(passPage);
+    }
 
     const renderItem = ({ item }: { item: NotificationData }) => {
         if (item.qrText == null) {
@@ -33,8 +86,7 @@ const TestDashboardScreen = () => {
             setQRText = item.qrText;
         }
         return (
-            
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity onPress={() => { }}>
                 <View style={css.listItem} key={parseInt(item.logID)}>
                     <View style={[css.cardBody, { flexDirection: 'row', paddingHorizontal: 0, }]}>
                         <View style={{ padding: 10 }}>
@@ -58,19 +110,33 @@ const TestDashboardScreen = () => {
         );
     };
 
+    const tab1 = ({ navigation }: any) => {
+        return (
+            <View>
+
+            </View>
+        )
+    }
+
     return (
         <MainContainer>
             <StatusBar animated={true} backgroundColor="#666699" barStyle={'dark-content'} />
             {Platform.OS === "android" ? (
-                <View style={[css.mainView, { marginTop: -20 }]}>
+                <View style={[css.mainView]}>
+                    <TouchableOpacity style={{ paddingLeft: 20, }} onPress={() => { navigation.openDrawer() }}>
+                        <Ionicons name="menu" size={26} color={"white"}   />
+                    </TouchableOpacity>
                     <View style={css.HeaderView}>
-                        <Text style={css.PageName}>--- Dashboard</Text>
+                        <Text style={css.PageName}>Dashboard</Text>
                     </View>
                 </View>
             ) : (
-                <View style={[css.mainView, { marginTop: 0 }]}>
+                <View style={[css.mainView]}>
+                    <TouchableOpacity  style={{ paddingLeft: 20, }}  onPress={() => { navigation.openDrawer() }} >
+                        <Ionicons name="menu" size={26} color={"white"} />
+                    </TouchableOpacity>
                     <View style={css.HeaderView}>
-                        <Text style={css.PageName}>--- Dashboard</Text>
+                        <Text style={css.PageName}>Dashboard</Text>
                     </View>
                 </View>
             )}
@@ -80,12 +146,12 @@ const TestDashboardScreen = () => {
                     <ActivityIndicator size="large" />
                 </View>
             ) : (
-                <View style={{height:Dimensions.get("screen").height/100*77}}>
+                <View style={{ height: Dimensions.get("screen").height / 100 * 77 }}>
                     <View style={[css.container]}>
                         <View style={styles.absoluteContainer}></View>
 
                         <View style={styles.profileCard}>
-                            <View style={[css.row,{padding: 10}]}>
+                            <View style={[css.row, { padding: 10 }]}>
                                 <View>
                                     <QRCode value={"aaa123"} />
                                 </View>
@@ -106,9 +172,26 @@ const TestDashboardScreen = () => {
                         data={fetchedData}
                         renderItem={renderItem}
                         keyExtractor={(item) => item.logID}
+                        onEndReached={loadMore}
+                        ListFooterComponent={() => itemFinish && (
+                            <View style={[css.listItem]}>
+                                <View style={css.cardBody}>
+                                    <Text style={[css.textHeader, { textAlign: 'center', fontWeight: "normal" }]}>
+                                        No more Data
+                                    </Text>
+                                </View>
+                            </View>
+                        )}
+                        refreshControl={<RefreshControl
+                            refreshing={refreshing}
+                            onRefresh={onRefresh}
+                        />}
+                    // horizontal  -- change slide from top>bottom to left>right
                     />
                 </View>
+
             )}
+
         </MainContainer>
     );
 };
@@ -130,95 +213,13 @@ const styles = StyleSheet.create({
         borderRadius: 20,
     },
     profileText: {
-        alignItems: 'flex-start', 
-        justifyContent: 'center', 
+        alignItems: 'flex-start',
+        justifyContent: 'center',
         padding: 15,
-        flex: 1, 
+        flex: 1,
         flexGrow: 1,
     },
 });
 
 export default TestDashboardScreen;
 
-const dummyData: NotificationData[] = [
-    {
-      logID: '1',
-      textValue: 'Notification 1',
-      base64Image: 'base64encodedimage1',
-      imgUrl: 'https://example.com/image1.jpg',
-      qrText: 'QRCodeText1',
-      createdTime: '2024-01-15T10:30:00Z',
-    },
-    {
-      logID: '2',
-      textValue: 'Notification 2',
-      base64Image: 'base64encodedimage2',
-      imgUrl: 'https://example.com/image2.jpg',
-      qrText: 'QRCodeText2',
-      createdTime: '2024-01-15T11:45:00Z',
-    },
-    {
-      logID: '3',
-      textValue: 'Notification 3',
-      base64Image: 'base64encodedimage3',
-      imgUrl: 'https://example.com/image3.jpg',
-      qrText: 'QRCodeText3',
-      createdTime: '2024-01-15T13:15:00Z',
-    },
-    {
-      logID: '4',
-      textValue: 'Notification 4',
-      base64Image: 'base64encodedimage4',
-      imgUrl: 'https://example.com/image4.jpg',
-      qrText: 'QRCodeText4',
-      createdTime: '2024-01-15T15:00:00Z',
-    },
-    {
-      logID: '5',
-      textValue: 'Notification 5',
-      base64Image: 'base64encodedimage5',
-      imgUrl: 'https://example.com/image5.jpg',
-      qrText: 'QRCodeText5',
-      createdTime: '2024-01-15T16:30:00Z',
-    },
-    {
-      logID: '6',
-      textValue: 'Notification 6',
-      base64Image: 'base64encodedimage6',
-      imgUrl: 'https://example.com/image6.jpg',
-      qrText: 'QRCodeText6',
-      createdTime: '2024-01-15T18:20:00Z',
-    },
-    {
-      logID: '7',
-      textValue: 'Notification 7',
-      base64Image: 'base64encodedimage7',
-      imgUrl: 'https://example.com/image7.jpg',
-      qrText: 'QRCodeText7',
-      createdTime: '2024-01-15T20:10:00Z',
-    },
-    {
-      logID: '8',
-      textValue: 'Notification 8',
-      base64Image: 'base64encodedimage8',
-      imgUrl: 'https://example.com/image8.jpg',
-      qrText: 'QRCodeText8',
-      createdTime: '2024-01-15T22:00:00Z',
-    },
-    {
-      logID: '9',
-      textValue: 'Notification 9',
-      base64Image: 'base64encodedimage9',
-      imgUrl: 'https://example.com/image9.jpg',
-      qrText: 'QRCodeText9',
-      createdTime: '2024-01-16T01:30:00Z',
-    },
-    {
-      logID: '10',
-      textValue: 'Notification 10',
-      base64Image: 'base64encodedimage10',
-      imgUrl: 'https://example.com/image10.jpg',
-      qrText: 'QRCodeText10',
-      createdTime: '2024-01-16T03:45:00Z',
-    },
-  ];

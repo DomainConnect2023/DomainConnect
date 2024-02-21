@@ -9,7 +9,7 @@ import TestSettingScreen from './newscreens/TestSetting';
 import TestTabNavigation from './newscreens/TestNavigation';
 import { GetFCMToken, NotificationListner, requestUserPermission } from './components/pushNotification';
 import TabNavigationScreen from './screens/TabNavigation';
-import DashboardScreen from './screens/DashboardPage';
+import 'react-native-gesture-handler';
 import ProfileScreen from './screens/Profile';
 import viewImage from './screens/viewImage';
 import messaging from '@react-native-firebase/messaging';
@@ -17,6 +17,7 @@ import DeviceInfo from 'react-native-device-info';
 import { PaperProvider } from 'react-native-paper';
 import whiteTheme from './objects/commonCSS';
 import Welcome from './newscreens/Welcome';
+import {CustomDrawer} from './components/CustomDrawer';
 
 const Stack = createNativeStackNavigator();
 const isSimulator = DeviceInfo.isEmulatorSync();
@@ -48,6 +49,7 @@ function App(): JSX.Element {
     <PaperProvider theme={whiteTheme}>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
+          {/* <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false ,navigationBarColor:"white"}}> */}
           <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false ,navigationBarColor:"white"}}>
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Login" component={Login}/>
@@ -57,7 +59,9 @@ function App(): JSX.Element {
             <Stack.Screen name="TestDashboardScreen" component={TestDashboardScreen}/>
             <Stack.Screen name="TestSettingScreen" component={TestSettingScreen}/>
             <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />
+            <Stack.Screen name = "CustomDrawer" component={CustomDrawer}/>
             </Stack.Group>
+            
             {/* <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
             <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />
