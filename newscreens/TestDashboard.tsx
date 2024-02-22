@@ -10,6 +10,7 @@ import Snackbar from 'react-native-snackbar';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import i18n from '../language/i18n';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFocusEffect } from '@react-navigation/native';
 
 const TestDashboardScreen = ({ navigation }: any) => {
 
@@ -23,7 +24,13 @@ const TestDashboardScreen = ({ navigation }: any) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [itemPerPage, setItemPerPage] = useState<number>(20);
     const [refreshing, setRefreshing] = useState(false);
+    const [locale, setLocale] = React.useState(i18n.locale);
 
+    useFocusEffect(
+        React.useCallback(() => {
+            setLocale(i18n.locale);
+        }, [])
+    );
     useEffect(() => {
         (async () => {
             setProcessData(true);

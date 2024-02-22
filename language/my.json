@@ -109,13 +109,16 @@
         "Check-User-Button": "Semak Pengguna",
         "Modify-Admin-Button": "Ubah Suai Admin",
         "Title3": "Laporan",
+        "Data-Table":"Jadual Data",
         "Title4": "Pemberitahuan",
         "Check-Invoice": "Semak Invois",
         "Send-Notification": "Hantar Pemberitahuan"
     },
     "Left-Navigation": {
         "Dashboard": "Papan Pemuka",
-        "Admin": "Admin"
+        "Admin": "Admin",
+        "Setting": "Tetapan",
+        "LogOut": "Log Keluar"
     },
     "ProfilePage": {
         "Title": "Profil",

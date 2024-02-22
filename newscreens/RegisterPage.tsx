@@ -9,13 +9,20 @@ import Octicons from 'react-native-vector-icons/Octicons'
 import Login from './LoginPage';
 import { ProgressBar } from 'react-native-paper';
 import i18n from '../language/i18n';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Register = () => {
     const navigation = useNavigation();
     const [stage, setstage] = useState(1);
     const [ishide, setishide] = useState(true);
     const [retypeishide, setretypeishide] = useState(true);
+    const [locale, setLocale] = React.useState(i18n.locale);
 
+    useFocusEffect(
+        React.useCallback(() => {
+            setLocale(i18n.locale);
+        }, [])
+    );
     return (
         <MainContainer>
             <KeyboardAvoidWrapper>

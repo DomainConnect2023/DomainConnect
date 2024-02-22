@@ -11,14 +11,46 @@ import { Switch } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import Login from './LoginPage';
 import i18n from '../language/i18n';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import EditProfileScreen from './TestEditProfile';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const STORAGE_KEY = '@app_language';
 const TestSettingScreen = ({ navigation }: any) => {
 
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [showLanguage, setShowLanguage] = useState(false);
-    const [selectedLanguage, setSelectedLanguage] = useState(i18n.locale);
+    const [selectedLanguage, setSelectedLanguage] = React.useState(i18n.locale);
+
+    React.useEffect(() => {
+        loadLanguage();
+    }, []);
+
+    const loadLanguage = async () => {
+        try {
+            const language = await AsyncStorage.getItem(STORAGE_KEY);
+            if (language) {
+                i18n.locale = language;
+                setSelectedLanguage(language);
+            }
+        } catch (error) {
+            console.error('Failed to load language', error);
+        }
+    };
+
+    const saveLanguage = async (language: string) => {
+        try {
+            await AsyncStorage.setItem(STORAGE_KEY, language);
+        } catch (error) {
+            console.error('Failed to save language', error);
+        }
+    };
+
+    const changeLanguage = async (language: string) => {
+        i18n.locale = language;
+        setSelectedLanguage(language);
+        await saveLanguage(language);
+        setShowLanguage(false)
+    };
 
     useEffect(() => {
         (async () => {
@@ -32,13 +64,6 @@ const TestSettingScreen = ({ navigation }: any) => {
 
     const onToggleLanguage = () => {
         setShowLanguage(!showLanguage);
-    };
-
-    const changeLanguage = (language: string) => {
-        i18n.locale = language;
-        setSelectedLanguage(language);
-        setShowLanguage(false)
-        
     };
 
     return (

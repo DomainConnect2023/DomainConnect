@@ -109,13 +109,16 @@
         "Check-User-Button": "检查用户",
         "Modify-Admin-Button": "修改管理员",
         "Title3": "报告",
+        "Data-Table": "数据表",
         "Title4": "通知",
         "Check-Invoice": "检查发票",
         "Send-Notification": "发送通知"
     },
     "Left-Navigation": {
         "Dashboard": "仪表盘",
-        "Admin": "管理员"
+        "Admin": "管理员",
+        "Setting":"设置",
+        "LogOut": "登出"
     },
     "ProfilePage": {
         "Title": "个人资料",

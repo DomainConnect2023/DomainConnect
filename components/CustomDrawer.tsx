@@ -7,12 +7,21 @@ import TestSettingScreen from '../newscreens/TestSetting';
 import Login from '../newscreens/LoginPage';
 import { useNavigation } from '@react-navigation/native';
 import { styles } from '../objects/commonCSS';
-
+import Admin from '../newscreens/Admin';
+import i18n from '../language/i18n';
+import FontAwesome from 'react-native-vector-icons/FontAwesome6';
+// import { useFocusEffect } from '@react-navigation/native';
 
 // Remember install gesturehandler and reanimated
 
 const Drawer = createDrawerNavigator();
+// const [locale, setLocale] = React.useState(i18n.locale);
 
+// useFocusEffect(
+//     React.useCallback(() => {
+//         setLocale(i18n.locale);
+//     }, [])
+// );
 
 
 
@@ -31,7 +40,7 @@ function CustomDrawerContent(props: any) {
       <DrawerContentScrollView contentContainerStyle={{ flex: 1 }} {...props}
       >
         <DrawerItemList {...props} />
-        <DrawerItem label="Log Out" onPress={() => { navigation.navigate(Login as never); }} icon={() => <Ionicons name="log-out-sharp" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />} />
+        <DrawerItem label={i18n.t('Left-Navigation.LogOut')} onPress={() => { navigation.navigate(Login as never); }} icon={() => <Ionicons name="log-out-sharp" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />} />
       </DrawerContentScrollView>
 
       <View style={{ justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
@@ -48,7 +57,7 @@ export function CustomDrawer() {
 
   return (
 
-    <Drawer.Navigator initialRouteName="Dashboard" screenOptions={{
+    <Drawer.Navigator initialRouteName='Dashboard' screenOptions={{
       headerShown: false,
       headerStyle: {
         backgroundColor: "#666699",
@@ -61,7 +70,7 @@ export function CustomDrawer() {
     }}
       drawerContent={props => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name="Dashboard" component={TestDashboardScreen}
+      <Drawer.Screen name={i18n.t('Left-Navigation.Dashboard')} component={TestDashboardScreen}
         options={{
           headerTitle: 'Dashboard',
           headerRight: () => (
@@ -75,9 +84,23 @@ export function CustomDrawer() {
           drawerIcon: ({ focused, size }) => (<Ionicons name="home" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
         }} />
 
-      <Drawer.Screen name="Setting" component={TestSettingScreen}
+      <Drawer.Screen name={i18n.t('Left-Navigation.Admin')} component={Admin}
         options={{
-          headerTitle: 'Setting',
+          headerTitle: 'Admin',
+          headerRight: () => (
+            <View style={{
+              flex: 1, flexDirection: "row",
+              justifyContent: 'center',
+              alignItems: 'flex-start',
+            }}>
+            </View>
+          ),
+          drawerIcon: ({ focused, size }) => (<FontAwesome name="user-tie" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
+        }} />
+
+      <Drawer.Screen name={i18n.t('Left-Navigation.Setting')} component={TestSettingScreen}
+        options={{
+          headerTitle: i18n.t('Left-Navigation.Setting'),
           headerRight: () => (
             <View style={{
               flex: 1, flexDirection: "row",

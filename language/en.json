@@ -109,13 +109,16 @@
         "Check-User-Button": "Check User",
         "Modify-Admin-Button": "Modify Admin",
         "Title3": "Report",
+        "Data-Table": "Data Table",
         "Title4": "Notification",
         "Check-Invoice": "Check Invoice",
         "Send-Notification": "Send Notification"
     },
     "Left-Navigation": {
         "Dashboard": "Dashboard",
-        "Admin": "Admin"
+        "Admin": "Admin",
+        "Setting": "Setting",
+        "LogOut": "Log Out"
     },
     "ProfilePage": {
         "Title": "Profile",

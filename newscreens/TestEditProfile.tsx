@@ -13,7 +13,8 @@ import { TextInput } from 'react-native-paper';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import PhoneInput from 'react-native-phone-number-input';
 import Snackbar from 'react-native-snackbar';
-
+import { useFocusEffect } from '@react-navigation/native';
+import i18n from '../language/i18n';
 
 const EditProfileScreen = () => {
     const navigation = useNavigation();
@@ -23,7 +24,13 @@ const EditProfileScreen = () => {
     const phoneInput = useRef<PhoneInput>(null);
     const [mobileValue, setMobileValue] = useState('');
     const [mobileCountry, setMobileCountry] = useState<string | null>('');
+    const [locale, setLocale] = React.useState(i18n.locale);
 
+    useFocusEffect(
+        React.useCallback(() => {
+            setLocale(i18n.locale);
+        }, [])
+    );
     useEffect(()=> {
         (async()=> {
             
@@ -51,7 +58,7 @@ const EditProfileScreen = () => {
                     
                 </View>
                 <View style={{marginTop:10}}>
-                <Text style={{color:"white"}}> Edit Profile</Text>
+                <Text style={{color:"white"}}>{i18n.t('ProfilePage.Edit-Profile')}</Text>
                 </View>
             </View>
         </View>
@@ -87,7 +94,7 @@ const EditProfileScreen = () => {
 
                 <View style={{width: "100%", height:"auto"}}>
                     <View style={css.subContainer}>
-                        <Text style={css.textTitle}>General Information:</Text>
+                        <Text style={css.textTitle}>{i18n.t('ProfilePage.Title2')}:</Text>
                     </View>
 
                     <View style={css.row}>
@@ -97,7 +104,7 @@ const EditProfileScreen = () => {
                             placeholder=""
                             value={username}
                             onChangeText={setUserName}
-                            label="User Name"
+                            label={i18n.t('ProfilePage.UserName')}
                         />
                         <TextInput
                             mode='outlined'
@@ -105,7 +112,7 @@ const EditProfileScreen = () => {
                             placeholder=""
                             value={username}
                             onChangeText={setUserName}
-                            label="Display Name"
+                            label={i18n.t('ProfilePage.Display-Name')}
                         />
                     </View>
 
@@ -116,7 +123,7 @@ const EditProfileScreen = () => {
                             placeholder=""
                             value={username}
                             onChangeText={setUserName}
-                            label="Email"
+                            label={i18n.t('ProfilePage.Email')}
                         />
                     </View>
 
@@ -127,7 +134,7 @@ const EditProfileScreen = () => {
                             placeholder=""
                             value={username}
                             onChangeText={setUserName}
-                            label="Password"
+                            label={i18n.t('ProfilePage.Password')}
                         />
                     </View>
 
@@ -138,12 +145,12 @@ const EditProfileScreen = () => {
                             placeholder=""
                             value={username}
                             onChangeText={setUserName}
-                            label="Confirm Password"
+                            label={i18n.t('ProfilePage.Confirm-Password')}
                         />
                     </View>
 
                     <View style={css.subContainer}>
-                        <Text style={css.textTitle}>Additional Information:</Text>
+                        <Text style={css.textTitle}>{i18n.t('ProfilePage.Title3')}:</Text>
                     </View>
 
                     <View style={[css.row, {alignSelf:"flex-start"}]}>
@@ -153,7 +160,7 @@ const EditProfileScreen = () => {
                             placeholder=""
                             value={username}
                             onChangeText={setUserName}
-                            label="Vehicle Number"
+                            label={i18n.t('ProfilePage.Vehicle-Number')}
                         />
                     </View>
 
@@ -185,13 +192,13 @@ const EditProfileScreen = () => {
                             placeholder=""
                             value={username}
                             onChangeText={setUserName}
-                            label="Birth Date"
+                            label={i18n.t('ProfilePage.Birth-Date')}
                         />
                     </View>
 
                     <View style={[css.row,{marginBottom:80, height:80}]}>
                         <Pressable style={[css.button,{backgroundColor: '#A0D6B4',margin:10}]} onPress={()=>{testing()}}>
-                            <Text style={[{backgroundColor: '#A0D6B4', color:"white", fontWeight:"bold", fontSize:18}]}>Save Changes</Text>
+                            <Text style={[{backgroundColor: '#A0D6B4', color:"white", fontWeight:"bold", fontSize:18}]}>{i18n.t('ProfilePage.Save-Changes-Button')}</Text>
                         </Pressable>
                     </View>
                 </View>

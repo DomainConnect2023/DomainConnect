@@ -15,11 +15,18 @@ import TestTabNavigation from './TestNavigation';
 import TabNavigation from '../screens/TabNavigation';
 import { CustomDrawer } from '../components/CustomDrawer';
 import i18n from '../language/i18n';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Login = () => {
     const navigation = useNavigation();
     const [ishide, setishide] = useState(true);
+    const [locale, setLocale] = React.useState(i18n.locale);
 
+    useFocusEffect(
+        React.useCallback(() => {
+            setLocale(i18n.locale);
+        }, [])
+    );
     return (
         <MainContainer>
             <KeyboardAvoidWrapper>

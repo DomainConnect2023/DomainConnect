@@ -19,6 +19,7 @@ import { PaperProvider } from 'react-native-paper';
 import whiteTheme from './objects/commonCSS';
 import Welcome from './newscreens/Welcome';
 import {CustomDrawer} from './components/CustomDrawer';
+import Admin from './newscreens/Admin';
 
 const Stack = createNativeStackNavigator();
 const isSimulator = DeviceInfo.isEmulatorSync();
@@ -58,6 +59,7 @@ function App(): JSX.Element {
             <Stack.Group screenOptions={{navigationBarColor:"white"}}>
             <Stack.Screen name="TestTabNavigation" component={TestTabNavigation}/>
             <Stack.Screen name="TestDashboardScreen" component={TestDashboardScreen}/>
+            <Stack.Screen name="Admin" component={Admin}/>
             <Stack.Screen name="TestSettingScreen" component={TestSettingScreen}/>
             <Stack.Screen name="EditProfileScreen" component={EditProfileScreen}/>
             <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />
