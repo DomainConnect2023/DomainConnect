@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Platform, Image, Dimensions, StyleSheet, TouchableOpacity, StatusBar } from 'react-native';
+import { View, Text, Platform, Image, Dimensions, StyleSheet, TouchableOpacity, StatusBar, Alert } from 'react-native';
 import MainContainer from '../components/MainContainer';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useIsFocused } from '@react-navigation/native';
 import { css } from '../objects/commonCSS';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import { ImagesAssets } from '../objects/ImagesAssets';
@@ -20,10 +20,10 @@ const TestSettingScreen = ({ navigation }: any) => {
     const [isDarkMode, setIsDarkMode] = useState(false);
     const [showLanguage, setShowLanguage] = useState(false);
     const [selectedLanguage, setSelectedLanguage] = React.useState(i18n.locale);
-
+    const isFocused = useIsFocused();
     React.useEffect(() => {
         loadLanguage();
-    }, []);
+    }, [isFocused]);
 
     const loadLanguage = async () => {
         try {
@@ -48,10 +48,25 @@ const TestSettingScreen = ({ navigation }: any) => {
     const changeLanguage = async (language: string) => {
         i18n.locale = language;
         setSelectedLanguage(language);
-        await saveLanguage(language);
-        setShowLanguage(false)
+        saveLanguage(language);
+        setShowLanguage(false);
+        showLanguageUpdateAlert();
     };
 
+    const showLanguageUpdateAlert = () => {
+        Alert.alert(
+            i18n.t('Language-Update'),
+            i18n.t('Update'),
+            [
+                {
+                    text: 'OK',
+                    onPress: () => navigation.navigate('CustomDrawer', { screen: i18n.t('Left-Navigation.Setting') }),
+                    style: 'cancel',
+                },
+            ],
+            { cancelable: false }
+        );
+    };
     useEffect(() => {
         (async () => {
 
@@ -102,11 +117,11 @@ const TestSettingScreen = ({ navigation }: any) => {
                         <Text style={css.textHeader}>{i18n.t('SettingPage.Company-Name')}</Text>
                     </View>
                     <View style={{ width: "20%", padding: 10, alignItems: "center" }}>
-                    <TouchableOpacity onPress={()=>{navigation.navigate(EditProfileScreen as never)}}>
-                        <AntDesign name={"right" ?? ""} size={20} color={"black"} />
+                        <TouchableOpacity onPress={() => { navigation.navigate(EditProfileScreen as never) }}>
+                            <AntDesign name={"right" ?? ""} size={20} color={"black"} />
                         </TouchableOpacity>
                     </View>
-                    
+
                 </View>
 
                 <View style={styles.container}>
@@ -136,17 +151,23 @@ const TestSettingScreen = ({ navigation }: any) => {
 
                 <Collapsible collapsed={!showLanguage}>
                     <View style={[styles.container]}>
-                        <TouchableOpacity onPress={() => changeLanguage('en')}>
+                        <TouchableOpacity onPress={() => {
+                            changeLanguage('en');
+                        }}>
                             <View style={{ padding: 20, margin: 5, borderRadius: 10, alignSelf: 'center', backgroundColor: 'lightgray', width: Dimensions.get("screen").width / 100 * 80, borderWidth: 1 }}>
                                 <Text>English</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => changeLanguage('zh')}>
+                        <TouchableOpacity onPress={() => {
+                            changeLanguage('zh');
+                        }}>
                             <View style={{ padding: 20, margin: 5, borderRadius: 10, alignSelf: 'center', backgroundColor: 'lightgray', width: Dimensions.get("screen").width / 100 * 80, borderWidth: 1 }}>
                                 <Text>中文</Text>
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity onPress={() => changeLanguage('my')}>
+                        <TouchableOpacity onPress={() => {
+                            changeLanguage('my')
+                        }}>
                             <View style={{ padding: 20, margin: 5, borderRadius: 10, alignSelf: 'center', backgroundColor: 'lightgray', width: Dimensions.get("screen").width / 100 * 80, borderWidth: 1 }}>
                                 <Text>Malay</Text>
                             </View>
