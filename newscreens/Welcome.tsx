@@ -12,6 +12,7 @@ const Welcome = () => {
     const navigation = useNavigation();
     const [locale, setLocale] = React.useState(i18n.locale);
 
+
     useFocusEffect(
         React.useCallback(() => {
             setLocale(i18n.locale);

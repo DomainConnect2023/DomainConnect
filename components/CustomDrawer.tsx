@@ -10,18 +10,10 @@ import { styles } from '../objects/commonCSS';
 import Admin from '../newscreens/Admin';
 import i18n from '../language/i18n';
 import FontAwesome from 'react-native-vector-icons/FontAwesome6';
-// import { useFocusEffect } from '@react-navigation/native';
 
 // Remember install gesturehandler and reanimated
 
 const Drawer = createDrawerNavigator();
-// const [locale, setLocale] = React.useState(i18n.locale);
-
-// useFocusEffect(
-//     React.useCallback(() => {
-//         setLocale(i18n.locale);
-//     }, [])
-// );
 
 
 
