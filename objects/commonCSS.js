@@ -13,8 +13,6 @@ export const css = StyleSheet.create({
         flexDirection: 'row',
         alignItems: 'center', 
         backgroundColor: "#666699",
-        
-        
     },
     HeaderView :{
         flex: 1, 

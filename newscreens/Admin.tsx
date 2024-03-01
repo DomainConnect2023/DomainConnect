@@ -83,78 +83,79 @@ const Admin = ({ navigation }: any) => {
                         <Text style={[css.textHeader, { fontWeight: 'bold' }]}> {i18n.t('Admin.Title')} (User Name)</Text>
                         <Text style={{ textAlign: 'right', fontWeight: 'bold', paddingRight: 20 }}> {i18n.t('Admin.SubTitle')}</Text>
                     </View>
-                </View>
 
-                <Text style={{ paddingLeft: 20, paddingTop: 10, fontWeight: 'bold' }}>
-                    {i18n.t('Admin.Title2')}
-                </Text>
 
-                <View style={styles.Chart}>
-                    <BarChart
-                        barWidth={Dimensions.get('window').width / 10}
-                        noOfSections={5}
-                        barBorderRadius={1}
-                        frontColor="lightgray"
-                        data={barData}
-                        yAxisThickness={1}
-                        xAxisThickness={1}
-                    />
-                </View>
-
-                <View style={[css.row, { width: Dimensions.get('screen').width, }]}>
-                    <TouchableOpacity style={[styles.button, { marginRight: 5 }]} onPress={() => navigation.navigate('Admin')}>
-                        <Text style={[css.textHeader, styles.textButton]}>{i18n.t('Admin.Check-User-Button')}</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity style={[styles.button, { marginLeft: 5 }]}>
-                        <Text style={[css.textHeader, styles.textButton]}>{i18n.t('Admin.Modify-Admin-Button')}</Text>
-                    </TouchableOpacity>
-                </View>
-
-                <View style={[styles.ContentContainer]}>
-                    <Text style={[css.textHeader, { paddingLeft: 10, width: Dimensions.get('screen').width }]}>
-                        {i18n.t('Admin.Title3')}
+                    <Text style={{ paddingLeft: 20, paddingTop: 10, fontWeight: 'bold' }}>
+                        {i18n.t('Admin.Title2')}
                     </Text>
-                    <View style={[styles.ToolContainer]}>
-                        <TouchableOpacity>
-                            <View style={[styles.item]}>
-                                <AntDesign name="table" size={60} color="black" />
-                                <Text style={[css.textHeader, { textAlign: 'center' }]}>{i18n.t('Admin.Data-Table')}</Text>
-                            </View>
+
+                    <View style={styles.Chart}>
+                        <BarChart
+                            barWidth={Dimensions.get('window').width / 10}
+                            noOfSections={5}
+                            barBorderRadius={1}
+                            frontColor="lightgray"
+                            data={barData}
+                            yAxisThickness={1}
+                            xAxisThickness={1}
+                        />
+                    </View>
+
+                    <View style={[css.row, { width: Dimensions.get('screen').width, }]}>
+                        <TouchableOpacity style={[styles.button, { marginRight: 5 }]} onPress={() => navigation.navigate('Admin')}>
+                            <Text style={[css.textHeader, styles.textButton]}>{i18n.t('Admin.Check-User-Button')}</Text>
+                        </TouchableOpacity>
+                        <TouchableOpacity style={[styles.button, { marginLeft: 5 }]}>
+                            <Text style={[css.textHeader, styles.textButton]}>{i18n.t('Admin.Modify-Admin-Button')}</Text>
                         </TouchableOpacity>
                     </View>
-                </View>
-                <View style={[styles.ContentContainer]}>
-                    <Text style={[css.textHeader, { paddingLeft: 10, width: Dimensions.get('screen').width }]}>
-                        {i18n.t('Admin.Title4')}
-                    </Text>
-                    <TouchableOpacity>
+
+                    <View style={[styles.ContentContainer]}>
+                        <Text style={[css.textHeader, { paddingLeft: 10, width: Dimensions.get('screen').width }]}>
+                            {i18n.t('Admin.Title3')}
+                        </Text>
                         <View style={[styles.ToolContainer]}>
                             <TouchableOpacity>
                                 <View style={[styles.item]}>
-                                    <FontAwesome5 name="file-invoice" size={60} color="black" />
-                                    <Text style={[css.textHeader, { textAlign: 'center' }]}>{i18n.t('Admin.Check-Invoice')}</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <View style={[styles.item]}>
-                                    <MaterialCommunityIcons name="message-text-outline" size={60} color="black" />
-                                    <Text style={[css.textHeader, { textAlign: 'center' }]}>{i18n.t('Admin.Send-Notification')}</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <View style={[styles.item]}>
-                                    <FontAwesome name="dollar" size={60} color="black" />
-                                    <Text style={[css.textHeader, { textAlign: 'center' }]}>Example</Text>
-                                </View>
-                            </TouchableOpacity>
-                            <TouchableOpacity>
-                                <View style={[styles.item]}>
-                                    <AntDesign name="questioncircleo" size={60} color="black" />
-                                    <Text style={[css.textHeader, { textAlign: 'center' }]}>Example</Text>
+                                    <AntDesign name="table" size={60} color="black" />
+                                    <Text style={[css.textHeader, { textAlign: 'center' }]}>{i18n.t('Admin.Data-Table')}</Text>
                                 </View>
                             </TouchableOpacity>
                         </View>
-                    </TouchableOpacity>
+                    </View>
+                    <View style={[styles.ContentContainer]}>
+                        <Text style={[css.textHeader, { paddingLeft: 10, width: Dimensions.get('screen').width }]}>
+                            {i18n.t('Admin.Title4')}
+                        </Text>
+                        <TouchableOpacity>
+                            <View style={[styles.ToolContainer]}>
+                                <TouchableOpacity>
+                                    <View style={[styles.item]}>
+                                        <FontAwesome5 name="file-invoice" size={60} color="black" />
+                                        <Text style={[css.textHeader, { textAlign: 'center' }]}>{i18n.t('Admin.Check-Invoice')}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <View style={[styles.item]}>
+                                        <MaterialCommunityIcons name="message-text-outline" size={60} color="black" />
+                                        <Text style={[css.textHeader, { textAlign: 'center' }]}>{i18n.t('Admin.Send-Notification')}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <View style={[styles.item]}>
+                                        <FontAwesome name="dollar" size={60} color="black" />
+                                        <Text style={[css.textHeader, { textAlign: 'center' }]}>Example</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                <TouchableOpacity>
+                                    <View style={[styles.item]}>
+                                        <AntDesign name="questioncircleo" size={60} color="black" />
+                                        <Text style={[css.textHeader, { textAlign: 'center' }]}>Example</Text>
+                                    </View>
+                                </TouchableOpacity>
+                            </View>
+                        </TouchableOpacity>
+                    </View>
                 </View>
             </KeyboardAvoidWrapper>
         </MainContainer>

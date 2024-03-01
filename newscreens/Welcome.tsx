@@ -7,7 +7,9 @@ import Login from '../screens/LoginPage';
 import Register from './RegisterPage';
 import i18n from '../language/i18n';
 import { useFocusEffect } from '@react-navigation/native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+const STORAGE_KEY = '@app_language';
 const Welcome = () => {
     const navigation = useNavigation();
     const [locale, setLocale] = React.useState(i18n.locale);
@@ -18,6 +20,23 @@ const Welcome = () => {
             setLocale(i18n.locale);
         }, [])
     );
+
+    useEffect(() => {
+        const loadLanguage = async () => {
+            try {
+                const language = await AsyncStorage.getItem(STORAGE_KEY);
+                if (language) {
+                    i18n.locale = language;
+                    setLocale(language);
+                }
+            } catch (error) {
+                console.error('Failed to load language', error);
+            }
+        };
+
+        loadLanguage();
+    }, []);
+
     return (
         <MainContainer>
 

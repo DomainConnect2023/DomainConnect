@@ -5,7 +5,7 @@ import { Dimensions, Image, Platform, Text, View } from 'react-native';
 import TestDashboardScreen from '../newscreens/TestDashboard';
 import TestSettingScreen from '../newscreens/TestSetting';
 import Login from '../newscreens/LoginPage';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useNavigationState } from '@react-navigation/native';
 import { styles } from '../objects/commonCSS';
 import Admin from '../newscreens/Admin';
 import i18n from '../language/i18n';
@@ -16,14 +16,14 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome6';
 const Drawer = createDrawerNavigator();
 
 
-
-
 function CustomDrawerContent(props: any) {
   const navigation = useNavigation();
-
+  const onLogout = () => {
+    navigation.navigate(Login as never); // Navigate to 'Login' screen
+  };
 
   return (
-    <><View style={{ height: Dimensions.get("screen").height / 100 * 93 }}>
+    <View style={{ height: Dimensions.get("screen").height / 100 * 93 }}>
       <View style={{ flex: 0.25, flexDirection: "row", paddingTop: 10 }}>
         <Image source={require('../assets/logo.png')} style={{ flex: 1, height: Dimensions.get("screen").height / 100 * 10, width: 120, resizeMode: 'contain', alignSelf: "center" }} />
         <Text style={styles.Header}>DOMAIN CONNECT</Text>
@@ -40,16 +40,21 @@ function CustomDrawerContent(props: any) {
 
       </View>
 
-    </View></>
+    </View>
   );
 };
 
 export function CustomDrawer() {
+  const navigation = useNavigation();
+  const [initialRoute, setInitialRoute] = React.useState(i18n.t('Left-Navigation.Dashboard'));
+
+  React.useEffect(() => {
+    setInitialRoute(i18n.t('Left-Navigation.Dashboard'));
+  }, [i18n.locale]);
 
 
   return (
-
-    <Drawer.Navigator initialRouteName='Dashboard' screenOptions={{
+    <Drawer.Navigator initialRouteName={initialRoute} screenOptions={{
       headerShown: false,
       headerStyle: {
         backgroundColor: "#666699",
@@ -58,13 +63,12 @@ export function CustomDrawer() {
       headerTintColor: '#fff',
       headerTitleAlign: 'left',
       drawerActiveBackgroundColor: "rgb(226, 223, 255)",
-
     }}
       drawerContent={props => <CustomDrawerContent {...props} />}
     >
       <Drawer.Screen name={i18n.t('Left-Navigation.Dashboard')} component={TestDashboardScreen}
         options={{
-          headerTitle: 'Dashboard',
+          headerTitle: i18n.t('Left-Navigation.Dashboard'),
           headerRight: () => (
             <View style={{
               flex: 1, flexDirection: "row",
@@ -78,7 +82,7 @@ export function CustomDrawer() {
 
       <Drawer.Screen name={i18n.t('Left-Navigation.Admin')} component={Admin}
         options={{
-          headerTitle: 'Admin',
+          headerTitle: i18n.t('Left-Navigation.Admin'),
           headerRight: () => (
             <View style={{
               flex: 1, flexDirection: "row",
@@ -97,16 +101,12 @@ export function CustomDrawer() {
             <View style={{
               flex: 1, flexDirection: "row",
               justifyContent: 'center',
-              alignItems: 'center',
+              alignItems: 'flex-start',
             }}>
             </View>
           ),
           drawerIcon: ({ focused, size }) => (<Ionicons name="settings-outline" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
         }} />
-
-
-
-
     </Drawer.Navigator>
   );
 }
