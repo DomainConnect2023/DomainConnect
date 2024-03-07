@@ -1,4 +1,5 @@
 package com.domainproject
+import expo.modules.ReactActivityDelegateWrapper
 
 // import com.facebook.react.ReactActivity;
 // import com.facebook.react.ReactActivityDelegate;
@@ -7,7 +8,7 @@ package com.domainproject
 
 // public class MainActivity extends ReactActivity {
 
-//   /**
+//   /**import expo.modules.ReactActivityDelegateWrapper
 //    * Returns the name of the main component registered from JavaScript. This is used to schedule
 //    * rendering of the component.
 //    */
@@ -23,11 +24,11 @@ package com.domainproject
 //    */
 //   @Override
 //   protected ReactActivityDelegate createReactActivityDelegate() {
-//     return new DefaultReactActivityDelegate(
+//     return new ReactActivityDelegateWrapper(this, BuildConfig.IS_NEW_ARCHITECTURE_ENABLED, DefaultReactActivityDelegate(
 //         this,
 //         getMainComponentName(),
 //         // If you opted-in for the New Architecture, we enable the Fabric Renderer.
-//         DefaultNewArchitectureEntryPoint.getFabricEnabled());
+//         DefaultNewArchitectureEntryPoint.getFabricEnabled()));
 //   }
 // }
 
@@ -46,5 +47,5 @@ class MainActivity : ReactActivity() {
    * which allows you to enable New Architecture with a single boolean flags [fabricEnabled]
    */
   override fun createReactActivityDelegate(): ReactActivityDelegate =
-      DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled)
+      ReactActivityDelegateWrapper(this, BuildConfig.IS_NEW_ARCHITECTURE_ENABLED, DefaultReactActivityDelegate(this, mainComponentName, fabricEnabled))
 }

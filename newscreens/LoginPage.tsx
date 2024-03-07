@@ -16,11 +16,72 @@ import TabNavigation from '../screens/TabNavigation';
 import { CustomDrawer } from '../components/CustomDrawer';
 import i18n from '../language/i18n';
 import { useFocusEffect } from '@react-navigation/native';
+import ReactNativeBiometrics from 'react-native-biometrics'
+import { checkBiometricSupportednEnrolled } from '../components/biometricService';
+import * as Keyman from "react-native-keychain";
+import * as LocalAuthentication from 'expo-local-authentication';
 
 const Login = () => {
     const navigation = useNavigation();
     const [ishide, setishide] = useState(true);
     const [locale, setLocale] = React.useState(i18n.locale);
+
+    const handleBiometricAuth = async () => {  
+        console.log("start Face ID");
+        const biometricAuth = await LocalAuthentication.authenticateAsync({
+            promptMessage: 'login with face id',
+        });
+      }
+
+    //   const promptOptions = {
+    //     promptMessage: 'Authenticate with Face ID to continue.'
+    //   };
+      
+    //   const authenticateResult = await LocalAuthentication.authenticateAsync(promptOptions);
+      
+    //   if (authenticateResult.status === 'success') {
+    //     // User successfully authenticated with Face ID
+    //   } else {
+    //     // Handle authentication failure (e.g., user cancelled, failed scan)
+    //   }
+
+    const faceLoginAPI = async () => {
+        
+
+        // let isFingerPrintSupported = await checkBiometricSupportednEnrolled();
+        // console.log(isFingerPrintSupported);
+        // const username = "username";
+        // const password = "password";
+        // await KeyChain.setGenericPassword(username, password, {
+        //     accessControl: KeyChain.ACCESS_CONTROL.BIOMETRY_ANY_OR_DEVICE_PASSCODE,
+        // });
+
+
+        const rnBiometrics = new ReactNativeBiometrics()
+        console.log("start");
+
+        rnBiometrics.createKeys().then((resultObject) => {
+            const { publicKey } = resultObject
+            console.log(publicKey)
+            // sendPublicKeyToServer(publicKey)
+        });
+
+        let epochTimeSeconds = Math.round((new Date()).getTime() / 1000).toString();
+        let payload = epochTimeSeconds + 'some message';
+        rnBiometrics.createSignature({
+            promptMessage: 'Sign in',
+            payload: payload
+        })
+            .then((resultObject) => {
+                const { success, signature } = resultObject
+
+                if (success) {
+                    console.log(signature);
+                    console.log(payload);
+                    //   verifySignatureWithServer(signature, payload)
+                }
+            });
+    }
 
     useFocusEffect(
         React.useCallback(() => {
@@ -92,6 +153,12 @@ const Login = () => {
                                 </TouchableOpacity>
                             </View>
                         </View>
+
+                         <TouchableOpacity style={{width:"20%", padding:"3%"}} onPress={() => handleBiometricAuth()}>
+                        <View>
+                            <MaterialIcons  name={"face" } size={40} color={"gray"} />
+                        </View>
+                        </TouchableOpacity>
                     </View>
                     {/* End Login Information */}
 

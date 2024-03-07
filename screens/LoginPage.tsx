@@ -20,6 +20,7 @@ import ReactNativeBiometrics from 'react-native-biometrics'
 import { TextInput } from 'react-native-paper';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import PushNotification from "react-native-push-notification";
+import * as LocalAuthentication from 'expo-local-authentication'
 
 
 type UserData = {
@@ -29,6 +30,10 @@ type UserData = {
 };
 
 const { width } = Dimensions.get("window");
+
+const handleBiometricAuth = async () => {  
+    const biometricAuth = await LocalAuthentication.authenticateAsync(2);
+  }
 
 const Login = () => {
     const navigation = useNavigation();

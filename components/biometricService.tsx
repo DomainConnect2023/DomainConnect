@@ -15,7 +15,7 @@ export const checkBiometricSupportednEnrolled = async () => {
             console.log("biometryType: "+biometryType);
             // Success code.
             if (biometryType && biometryType != 'FaceID') {
-                // console.log('Supported.');
+                console.log('Supported.');
                 resolve(true);
             } else {
                 let fingerprintLableForOS = Platform.OS == "ios" ? "Touch ID" : "Fingerprint";
