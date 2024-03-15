@@ -11,6 +11,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import i18n from '../language/i18n';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
+import RNFetchBlob from 'rn-fetch-blob';
 
 const TestDashboardScreen = ({ navigation }: any) => {
 
@@ -36,6 +37,7 @@ const TestDashboardScreen = ({ navigation }: any) => {
             setProcessData(true);
             setFetchedData([]);
             fetchNotificationLogApi(currentPage);
+            checktoken();
         })();
 
         
@@ -122,12 +124,27 @@ const TestDashboardScreen = ({ navigation }: any) => {
         );
     };
 
-    const tab1 = ({ navigation }: any) => {
-        return (
-            <View>
-
-            </View>
-        )
+    const checktoken =async()=>{
+        RNFetchBlob.config({trusty:true}).fetch("POST",URLAccess.Url+"CheckToken",{"Content-Type": "application/json"},
+        JSON.stringify( {
+            "token":await AsyncStorage.getItem('fcmtoken') ,
+            "username": await AsyncStorage.getItem('username')
+        })).then(async(res)=>{
+            if(await res.json().isSuccess==true){
+            }
+            else{
+                Snackbar.show({
+                    text:"Token No Detect",
+                    duration:Snackbar.LENGTH_LONG
+                })
+                console.log("Error")
+            }
+        }).catch(err=>{
+            Snackbar.show({
+                text:err.message,
+                duration:Snackbar.LENGTH_LONG
+            })
+        })
     }
 
     return (

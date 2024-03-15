@@ -8,25 +8,66 @@ import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons'
 import Register from './RegisterPage';
-import DashboardScreen from '../screens/DashboardPage';
-import TestDashboardScreen from './TestDashboard';
-import TestSettingScreen from './TestSetting';
-import TestTabNavigation from './TestNavigation';
-import TabNavigation from '../screens/TabNavigation';
 import { CustomDrawer } from '../components/CustomDrawer';
 import i18n from '../language/i18n';
 import { useFocusEffect } from '@react-navigation/native';
+import RNFetchBlob from "rn-fetch-blob";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { setCredentials } from '../components/keychainService';
+import Snackbar from 'react-native-snackbar';
+import { getGenericPassword } from 'react-native-keychain';
+import { URLAccess } from '../objects/URLAccess';
+import Verify from './Verify';
 
 const Login = () => {
     const navigation = useNavigation();
     const [ishide, setishide] = useState(true);
-    const [locale, setLocale] = React.useState(i18n.locale);
+    const [username,setusername] = useState("");
+    const [password,setpassword] = useState("");
+    const [locale, setLocale] = useState(i18n.locale);
 
     useFocusEffect(
         React.useCallback(() => {
-            setLocale(i18n.locale);
+        setLocale(i18n.locale);
         }, [])
     );
+
+//     useEffect(()=>{
+//         (async()=>{
+//         await LoginApi();
+//     })();
+
+// },[]);
+
+    const LoginApi=async()=>{
+        RNFetchBlob.config({trusty:true}).fetch("POST",URLAccess.Url+"Login",{"Content-Type": "application/json"},
+        JSON.stringify( {
+            "username":username,
+            "password":password,
+            "token":await AsyncStorage.getItem("fcmtoken")
+        })).then(async(res)=>{
+            if(await res.json().isSuccess==true){
+                setCredentials(username,password);
+                const Credential= await getGenericPassword()
+                await AsyncStorage.setItem('username',username);
+                navigation.navigate(CustomDrawer as never);
+            }
+            else{
+                Snackbar.show({
+                    text:"Login Fail, Please Check Your credential and try again later.",
+                    duration:Snackbar.LENGTH_LONG
+                })
+                console.log("Error")
+            }
+        }).catch(err=>{
+            Snackbar.show({
+                text:err.message,
+                duration:Snackbar.LENGTH_LONG
+            })
+        })
+        
+    }
+
     return (
         <MainContainer>
             <KeyboardAvoidWrapper>
@@ -49,6 +90,8 @@ const Login = () => {
                                 style={styles.Textinput}
                                 mode="outlined"
                                 label={i18n.t('LoginPage.UserName')}
+                                value={username}
+                                onChangeText={setusername}
                             />
                         </View>
                         <View style={styles.InputRange}>
@@ -73,25 +116,32 @@ const Login = () => {
                                 secureTextEntry={ishide}
                                 mode="outlined"
                                 label={i18n.t('LoginPage.Password')}
+                                value={password}
+                                onChangeText={setpassword}
                             />
 
                         </View>
                         <TouchableOpacity onPress={() => { }}>
                             <Text style={{ textAlign: "right", width: "95%", fontWeight: "bold", fontSize: 14, }}>Forgot Password?</Text>
                         </TouchableOpacity>
-                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => {navigation.navigate(CustomDrawer as never) }}>
+                        {/* navigation.navigate(CustomDrawer as never) */}
+                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => {LoginApi()}}>
                             <Text style={styles.fonth2}>
                                 {i18n.t('LoginPage.Login-Button')}
                             </Text>
                         </TouchableOpacity>
-                        <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+
+                        {/* Fingerprint Login */}
+
+                        {/* <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                             <Text style={{ fontWeight: "bold", fontSize: 14, }}>{i18n.t('LoginPage.Or-Login-With')}</Text>
                             <View>
-                                <TouchableOpacity onPress={() => {navigation.navigate(CustomDrawer as never) }}>
+                                <TouchableOpacity onPress={() => }>
                                     <MaterialIcons name="fingerprint" size={65} style={{ marginTop: 20 }} />
                                 </TouchableOpacity>
                             </View>
-                        </View>
+                        </View> */}
+
                     </View>
                     {/* End Login Information */}
 

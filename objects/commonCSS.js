@@ -182,7 +182,7 @@ export const datepickerCSS = StyleSheet.create({
     },
     datePicker: {
         height: 120,
-        marginTop: -10,
+        marginTop: 10,
     },
     textInput: {
         color: "#000", 
@@ -298,7 +298,8 @@ const whiteTheme = {
     },
     InputRange:{
         width:"90%",
-        alignSelf:"center"
+        alignSelf:"center",
+        
     },
     Textinput:{
         alignSelf:"center",
@@ -317,7 +318,15 @@ const whiteTheme = {
         justifyContent:"center",
         marginTop:20,
     },
-    
+    //Verify Page
+    NumberInput:{
+        borderWidth: 1,
+        borderRadius:10, 
+        margin: 5,
+         width:50,
+         height:50,
+         fontSize:20 
+    },
 })
   
   export default whiteTheme;

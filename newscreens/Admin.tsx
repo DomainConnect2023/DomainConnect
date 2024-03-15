@@ -77,28 +77,11 @@ const Admin = ({ navigation }: any) => {
                 </View>
             )}
 
-            <KeyboardAvoidWrapper>
+
                 <View style={styles.container}>
                     <View style={styles.HeaderContainer}>
                         <Text style={[css.textHeader, { fontWeight: 'bold' }]}> {i18n.t('Admin.Title')} (User Name)</Text>
                         <Text style={{ textAlign: 'right', fontWeight: 'bold', paddingRight: 20 }}> {i18n.t('Admin.SubTitle')}</Text>
-                    </View>
-
-
-                    <Text style={{ paddingLeft: 20, paddingTop: 10, fontWeight: 'bold' }}>
-                        {i18n.t('Admin.Title2')}
-                    </Text>
-
-                    <View style={styles.Chart}>
-                        <BarChart
-                            barWidth={Dimensions.get('window').width / 10}
-                            noOfSections={5}
-                            barBorderRadius={1}
-                            frontColor="lightgray"
-                            data={barData}
-                            yAxisThickness={1}
-                            xAxisThickness={1}
-                        />
                     </View>
 
                     <View style={[css.row, { width: Dimensions.get('screen').width, }]}>
@@ -127,7 +110,6 @@ const Admin = ({ navigation }: any) => {
                         <Text style={[css.textHeader, { paddingLeft: 10, width: Dimensions.get('screen').width }]}>
                             {i18n.t('Admin.Title4')}
                         </Text>
-                        <TouchableOpacity>
                             <View style={[styles.ToolContainer]}>
                                 <TouchableOpacity>
                                     <View style={[styles.item]}>
@@ -154,10 +136,8 @@ const Admin = ({ navigation }: any) => {
                                     </View>
                                 </TouchableOpacity>
                             </View>
-                        </TouchableOpacity>
                     </View>
                 </View>
-            </KeyboardAvoidWrapper>
         </MainContainer>
     )
 };
@@ -172,6 +152,7 @@ const styles = StyleSheet.create({
     HeaderContainer: {
         width: Dimensions.get('screen').width / 100 * 90,
         backgroundColor: 'grey',
+        flex:1,
         padding: 10,
         borderRadius: 10
     },
@@ -191,13 +172,16 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').width / 100 * 90,
         alignSelf: 'center',
         backgroundColor: 'lightgrey',
+        flex:3,
         height: 140,
         marginVertical: 5,
         borderRadius: 5,
+        marginBottom:10
     },
     ToolContainer: {
         justifyContent: 'space-between',
         flexDirection: 'row',
+        
     },
     item: {
         width: 80,

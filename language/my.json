@@ -63,7 +63,8 @@
         "Back-Button": "Kembali",
         "Have-Account": "Sudah mempunyai akaun? Log masuk",
         "Register-Success": "Daftar Berjaya",
-        "Register-Failed": "Daftar Gagal"
+        "Register-Failed": "Daftar Gagal",
+        "Verify": "Verify"
     },
     "FingerPrint": {
         "SetFingerPrint": "Tetapkan Cetakan jari?",
@@ -143,5 +144,8 @@
             "Server-Error": "Ralat Pelayan",
             "User-Company-Empty": "Nama Pengguna dan Syarikat tidak boleh kosong!"
         }
+    },
+    "VerifyPage":{
+        "Verify_The_Code":"Verify the Code"
     }
 }

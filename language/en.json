@@ -63,7 +63,9 @@
         "Back-Button": "Back",
         "Have-Account": "Already Have an Account? Login",
         "Register-Success": "Register Successfully",
-        "Register-Failed": "Register fail"
+        "Register-Failed": "Register fail",
+        "Verify": "Verify"
+        
     },
     "FingerPrint": {
         "SetFingerPrint": "Set the finger Print?",
@@ -143,5 +145,8 @@
             "Server-Error": "Server Error",
             "User-Company-Empty": "User and Company Name can't be empty!"
         }
+    },
+    "VerifyPage":{
+        "Verify_The_Code":"Verify the Code"
     }
 }

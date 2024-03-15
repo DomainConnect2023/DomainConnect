@@ -20,6 +20,7 @@ import whiteTheme from './objects/commonCSS';
 import Welcome from './newscreens/Welcome';
 import {CustomDrawer} from './components/CustomDrawer';
 import Admin from './newscreens/Admin';
+import Verify from './newscreens/Verify';
 
 const Stack = createNativeStackNavigator();
 const isSimulator = DeviceInfo.isEmulatorSync();
@@ -51,12 +52,11 @@ function App(): JSX.Element {
     <PaperProvider theme={whiteTheme}>
       <SafeAreaView style={{ flex: 1 }}>
         <NavigationContainer>
-          {/* <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false ,navigationBarColor:"white"}}> */}
           <Stack.Navigator initialRouteName="Welcome" screenOptions={{ headerShown: false ,navigationBarColor:"white"}}>
             <Stack.Screen name="Welcome" component={Welcome} />
             <Stack.Screen name="Login" component={Login}/>
             <Stack.Screen name="Register" component={Register}/>
-            <Stack.Group screenOptions={{navigationBarColor:"white"}}>
+            <Stack.Group screenOptions={{navigationBarColor:"white", }}> 
             <Stack.Screen name="TestTabNavigation" component={TestTabNavigation}/>
             <Stack.Screen name="TestDashboardScreen" component={TestDashboardScreen}/>
             <Stack.Screen name="Admin" component={Admin}/>
@@ -64,6 +64,7 @@ function App(): JSX.Element {
             <Stack.Screen name="EditProfileScreen" component={EditProfileScreen}/>
             <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />
             <Stack.Screen name = "CustomDrawer" component={CustomDrawer}/>
+            <Stack.Screen name = "Verify" component={Verify}/>
             </Stack.Group>
             
             {/* <Stack.Screen name="Login" component={Login} />

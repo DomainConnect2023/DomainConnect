@@ -63,7 +63,8 @@
         "Back-Button": "返回",
         "Have-Account": "已经有帐户？ 登录",
         "Register-Success": "注册成功",
-        "Register-Failed": "注册失败"
+        "Register-Failed": "注册失败",
+        "Verify": "验证"
     },
     "FingerPrint": {
         "SetFingerPrint": "设置指纹解锁",
@@ -143,5 +144,8 @@
             "Server-Error": "服务器错误",
             "User-Company-Empty": "用户名和公司名不能为空"
         }
+    },
+    "VerifyPage":{
+        "Verify_The_Code":"验证号码"
     }
 }

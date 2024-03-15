@@ -10,6 +10,7 @@ import { styles } from '../objects/commonCSS';
 import Admin from '../newscreens/Admin';
 import i18n from '../language/i18n';
 import FontAwesome from 'react-native-vector-icons/FontAwesome6';
+import { resetGenericPassword } from 'react-native-keychain';
 
 // Remember install gesturehandler and reanimated
 
@@ -32,7 +33,7 @@ function CustomDrawerContent(props: any) {
       <DrawerContentScrollView contentContainerStyle={{ flex: 1 }} {...props}
       >
         <DrawerItemList {...props} />
-        <DrawerItem label={i18n.t('Left-Navigation.LogOut')} onPress={() => { navigation.navigate(Login as never); }} icon={() => <Ionicons name="log-out-sharp" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />} />
+        <DrawerItem label={i18n.t('Left-Navigation.LogOut')} onPress={() => { resetGenericPassword(),navigation.navigate(Login as never); }} icon={() => <Ionicons name="log-out-sharp" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />} />
       </DrawerContentScrollView>
 
       <View style={{ justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
