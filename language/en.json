@@ -1,0 +1,152 @@
+{
+    "Language": "English",
+    "Language-Update": "Language Update",
+    "Update": "Language updated to English",
+    "WelcomePage": {
+        "Title": "Welcome to Domain Connect",
+        "SubTitle": "Your Reliable I.T. Partner Since 1988.",
+        "Sign-In": "Sign In",
+        "Create-Account": "Create Account"
+    },
+    "LoginPage": {
+        "Title": "Login",
+        "SubTitle": "Enter Your Credential to Log In",
+        "UserName": "User Name",
+        "Password": "Password",
+        "Forgot-Password": "Forgot Password",
+        "Login-Button": "Log In",
+        "Or-Login-With": "Or Login with",
+        "Don't-Have-Account": "Don't have an account? Sign Up",
+        "Login-Failed": "Login Failed",
+        "UserName-Password-Error": "Login Failed, Your username or password is incorrect!",
+        "Re-Enter": "Please type your user name or password manually again.",
+        "Not-Allowed": "Not Allowed"
+    },
+    "EmailVerify": {
+        "VerificationEmail": "Verification Email",
+        "SentEmail": "An email has sent to your email already. Please verify it.",
+        "DoubleCheckEmail": "Please double check your email is typing correctly"
+    },
+    "RegisterPage": {
+        "Title": "Sign Up",
+        "SubTitle": "Enter Your Credential to Sign Up",
+        "Company-Name": "Company Name",
+        "UserName": {
+            "UserName": "User Name",
+            "UserName-Duplicated": "User Name is duplicated. Please change the name and test again"
+        },
+        "Email": "Email",
+        "Password": {
+            "Password": "Password",
+            "Retype-Password": "Retype Password",
+            "Wrong-Password": "Password is wrong ",
+            "Password-Empty": "Password can't be empty!",
+            "Password-No-Match": "Password is not match!"
+        },
+        "UserName-Password-Empty": "User Name and Password can't be empty",
+        "Empty": "Can't be empty!",
+        "SubTitle-Page2": "Do you prefer provide some additional information",
+        "Mobile": {
+            "Mobile-Number": "Mobile Number",
+            "Phone-Number-Invalid": "Phone Number is Invalid!"
+        },
+        "BirthDate": {
+            "BirthDate": "Birth Date",
+            "Select-BirthDate": "Select BirthDate"
+        },
+        "Vehicle": "Vehicle No",
+        "SubTitle-Page3": "Almost Done",
+        "Confirm-Credential": "Confirm your credential",
+        "Or": "Or",
+        "Skip": "Skip",
+        "Next-Button": "Next",
+        "Back-Button": "Back",
+        "Have-Account": "Already Have an Account? Login",
+        "Register-Success": "Register Successfully",
+        "Register-Failed": "Register fail",
+        "Verify": "Verify"
+        
+    },
+    "FingerPrint": {
+        "SetFingerPrint": "Set the finger Print?",
+        "Reset": "Seems your user name is different. Do you want to set to the new one?",
+        "New": "Do you want to use the finger print function?",
+        "Fingerprint-Not-Obtained": "You have not been accessed the fingerprint yet."
+    },
+    "Operate": {
+        "Submit": "Submit",
+        "Back": "Back",
+        "Edit": "Edit",
+        "Save": "Save",
+        "Cancel": "Cancel"
+    },
+    "DashboardPage": {
+        "Dashboard": "Dashboard",
+        "Name": "Name",
+        "Company": "Company",
+        "Notification": "Notification",
+        "Msg": "Msg",
+        "Time": "Time",
+        "No-Notification": "No Notification",
+        "No-Data": "No Data",
+        "No-QR-Code": "No QR Code in this log",
+        "Error": "Something is wrong. Can not get the data from server!"
+    },
+    "SettingPage": {
+        "Setting": "Setting",
+        "UserName": "User Name",
+        "Company-Name": "Company Name",
+        "Preference": "Preference",
+        "Language": "Language",
+        "Dark-Mode": "Dark Mode",
+        "LogOut": "Log Out"
+    },
+    "Bottom-Navigation": {
+        "Dashboard": "Dashboard",
+        "Setting": "Setting"
+    },
+    "Admin": {
+        "Admin": "Admin",
+        "Title": "Welcome Back",
+        "SubTitle": "You are Admin.",
+        "Title2": "User Register Each Month",
+        "Check-User-Button": "Check User",
+        "Modify-Admin-Button": "Modify Admin",
+        "Title3": "Report",
+        "Data-Table": "Data Table",
+        "Title4": "Notification",
+        "Check-Invoice": "Check Invoice",
+        "Send-Notification": "Send Notification"
+    },
+    "Left-Navigation": {
+        "Dashboard": "Dashboard",
+        "Admin": "Admin",
+        "Setting": "Setting",
+        "LogOut": "Log Out"
+    },
+    "ProfilePage": {
+        "Title": "Profile",
+        "Edit-Profile": "Edit Profile",
+        "Title2": "General Information",
+        "UserName": "User Name",
+        "Display-Name": "Display Name",
+        "Email": "Email",
+        "Password": "Password",
+        "Confirm-Password": "Confirm Password",
+        "Title3": "Additional Information",
+        "Vehicle-Number": "Vehicle Number",
+        "Phone-Number": "Phone Number",
+        "Birth-Date": "Birth Date",
+        "Save-Changes-Button": "Save Changes",
+        "Alert": {
+            "Data-Error": "Something is wrong. Can't get the data from server!",
+            "Update-Successfully": "Update Successfully",
+            "Update-Failed": "Update Fail",
+            "Server-Error": "Server Error",
+            "User-Company-Empty": "User and Company Name can't be empty!"
+        }
+    },
+    "VerifyPage":{
+        "Verify_The_Code":"Verify the Code"
+    }
+}

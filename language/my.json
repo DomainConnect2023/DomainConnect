@@ -1,0 +1,151 @@
+{
+    "Language": "Malay",
+    "Language-Update": "Kemas Kini Bahasa",
+    "Update": "Bahasa dikemas kini kepada bahasa Melayu",
+    "WelcomePage": {
+        "Title": "Selamat Datang ke Domain Connect",
+        "SubTitle": "I.T yang Boleh Dipercayai Anda Rakan Kongsi Sejak 1988.",
+        "Sign-In": "Log Masuk",
+        "Create-Account": "Buat akaun"
+    },
+    "LoginPage": {
+        "Title": "Log Masuk",
+        "SubTitle": "Masukkan Tauliah Anda untuk Log Masuk",
+        "UserName": "Nama Pengguna",
+        "Password": "Kata Laluan",
+        "Forgot-Password": "Lupa Kata Laluan",
+        "Login-Button": "Log Masuk",
+        "Or-Login-With": "Atau Log Masuk dengan",
+        "Don't-Have-Account": "Tiada akaun? Daftar",
+        "Login-Failed": "Daftar masuk gagal",
+        "UserName-Password-Error": "Log Masuk Gagal, Nama pengguna atau kata laluan anda salah!",
+        "Re-Enter": "Sila taip nama pengguna atau kata laluan anda secara manual sekali lagi.",
+        "Not-Allowed": "Tidak dibenarkan"
+    },
+    "EmailVerify": {
+        "VerificationEmail": "E-mel Pengesahan",
+        "SentEmail": "E-mel telah dihantar ke e-mel anda. Sila sahkan.",
+        "DoubleCheckEmail": "Sila semak semula e-mel anda menaip dengan betul"
+    },
+    "RegisterPage": {
+        "Title": "Daftar",
+        "SubTitle": "Masukkan Kelayakan Anda untuk Mendaftar",
+        "Company-Name": "Nama Syarikat",
+        "UserName": {
+            "UserName": "Nama Pengguna",
+            "UserName-Duplicated": "Nama Pengguna diduakan. Sila tukar nama dan uji semula"
+        },
+        "Email": "E-mel",
+        "Password": {
+            "Password": "Kata Laluan",
+            "Retype-Password": "Tulis semula kata laluan",
+            "Wrong-Password": "Kata laluan salah",
+            "Password-Empty": "Kata laluan tidak boleh kosong!",
+            "Password-No-Match": "Kata laluan tidak sepadan!"
+        },
+        "UserName-Password-Empty": "Nama Pengguna dan Kata Laluan tidak boleh kosong",
+        "Empty": "Tidak boleh kosong!",
+        "SubTitle-Page2": "Adakah anda lebih suka memberikan beberapa maklumat tambahan",
+        "Mobile": {
+            "Mobile-Number": "Mobile Number",
+            "Phone-Number-Invalid": "Nombor Telefon Tidak Sah!"
+        },
+        "BirthDate": {
+            "BirthDate": "Tarikh lahir",
+            "Select-BirthDate": "Pilih Tarikh Lahir"
+        },
+        "Vehicle": "No. Kenderaan",
+        "SubTitle-Page3": "Hampir siap",
+        "Confirm-Credential": "Sahkan kelayakan anda",
+        "Or": "Atau",
+        "Skip": "Langkau",
+        "Next-Button": "Seterusnya",
+        "Back-Button": "Kembali",
+        "Have-Account": "Sudah mempunyai akaun? Log masuk",
+        "Register-Success": "Daftar Berjaya",
+        "Register-Failed": "Daftar Gagal",
+        "Verify": "Verify"
+    },
+    "FingerPrint": {
+        "SetFingerPrint": "Tetapkan Cetakan jari?",
+        "Reset": "Nampaknya nama pengguna anda berbeza. Adakah anda mahu menetapkan kepada yang baharu?",
+        "New": "Adakah anda ingin menggunakan fungsi cap jari?",
+        "Fingerprint-Not-Obtained": "Anda masih belum mengakses cap jari."
+    },
+    "Operate": {
+        "Submit": "Hantar",
+        "Back": "Kembali",
+        "Edit": "Sunting",
+        "Save": "Simpan",
+        "Cancel": "Batal"
+    },
+    "DashboardPage": {
+        "Dashboard": "Papan pemuka",
+        "Name": "Nama",
+        "Company": "Syarikat",
+        "Notification": "Pemberitahuan",
+        "Msg": "Msg",
+        "Time": "Masa",
+        "No-Notification": "Tiada Pemberitahuan",
+        "No-Data": "Tiada data",
+        "No-QR-Code": "Tiada Kod QR dalam log ini",
+        "Error": "Ada yang tak kena. Tidak boleh mendapatkan data daripada pelayan!"
+    },
+    "SettingPage": {
+        "Setting": "Tetapan",
+        "UserName": "Nama Pengguna",
+        "Company-Name": "Nama Syarikat",
+        "Preference": "Keutamaan",
+        "Language": "Bahasa",
+        "Dark-Mode": "Mod Gelap",
+        "LogOut": "Log Keluar"
+    },
+    "Bottom-Navigation": {
+        "Dashboard": "Papan Pemuka",
+        "Setting": "Tetapan"
+    },
+    "Admin": {
+        "Admin": "Admin",
+        "Title": "Selamat kembali",
+        "SubTitle": "Anda adalah Admin.",
+        "Title2": "Daftar Pengguna Setiap Bulan",
+        "Check-User-Button": "Semak Pengguna",
+        "Modify-Admin-Button": "Ubah Suai Admin",
+        "Title3": "Laporan",
+        "Data-Table":"Jadual Data",
+        "Title4": "Pemberitahuan",
+        "Check-Invoice": "Semak Invois",
+        "Send-Notification": "Hantar Pemberitahuan"
+    },
+    "Left-Navigation": {
+        "Dashboard": "Papan Pemuka",
+        "Admin": "Admin",
+        "Setting": "Tetapan",
+        "LogOut": "Log Keluar"
+    },
+    "ProfilePage": {
+        "Title": "Profil",
+        "Edit-Profile": "Sunting Profil",
+        "Title2": "Maklumat Am",
+        "UserName": "Nama Pengguna",
+        "Display-Name": "Nama Paparan",
+        "Email": "E-mel",
+        "Password": "Kata Laluan",
+        "Confirm-Password": "Sahkan Kata Laluan",
+        "Title3": "Maklumat Tambahan",
+        "Vehicle-Number": "Nombor Kenderaan",
+        "Phone-Number": "Nombor Telefon",
+        "Birth-Date": "Tarikh Lahir",
+        "Save-Changes-Button": "Simpan Perubahan",
+        "Alert": {
+            "Data-Error": "Ada yang tak kena. Tidak boleh mendapatkan data daripada pelayan!",
+            "Update-Successfully": "Kemas kini Berjaya",
+            "Update-Failed": "Kemas Kini Gagal",
+            "Server-Error": "Ralat Pelayan",
+            "User-Company-Empty": "Nama Pengguna dan Syarikat tidak boleh kosong!"
+        }
+    },
+    "VerifyPage":{
+        "Verify_The_Code":"Verify the Code"
+    }
+}
