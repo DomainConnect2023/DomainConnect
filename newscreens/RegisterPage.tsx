@@ -3,7 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Dimensions, Platform, AppState, Alert, StatusBar, Image, Pressable } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { datepickerCSS, styles } from '../objects/commonCSS';
-import { TextInput } from 'react-native-paper';
+import { HelperText, TextInput } from 'react-native-paper';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import Octicons from 'react-native-vector-icons/Octicons'
 import Login from './LoginPage';
@@ -56,6 +56,80 @@ const Register = () => {
     };
     // END IOS Date Picker modal setup
 
+    const [companyHelperText, setComapnyHelperText] = useState(false);
+    const [UserIDHelperText, setUserIDHelperText] = useState(false);
+    const [EmailHelperText, setEmailHelperText] = useState(false);
+    const [PasswordHelperText, setPasswordHelperText] = useState(false);
+    const [RetypeHelperText, setRetypeHelperText] = useState(false);
+    const [readyToNextStage, setToNextStage] = useState(false);
+
+    const hasErrors = () => {
+        // return Email.length == 0;
+        return false;
+    };
+    const isInputEmpty = (input: String) => {
+        return input.length == 0 ? true : false
+    }
+    const isInputDuplicated = async (input: String, type: String) => {
+    }
+    const isPasswordNotSame = () => {
+        return Password.length > 0 && Retypepass.length > 0 && Password != Retypepass ? true : false
+    }
+    const handleInputChanges = (type: any, input: any) =>
+    {
+        switch(type)
+        {
+            case 'company':
+                setCompany(input);
+                isInputEmpty(input) ? setComapnyHelperText(true) : setComapnyHelperText(false);
+                break;
+            case 'userID':
+                setUsername(input);
+                isInputEmpty(input) ? setUserIDHelperText(true) : setUserIDHelperText(false);
+                break;
+            case 'email':
+                setEmail(input);
+                isInputEmpty(input) ? setEmailHelperText(true) : setEmailHelperText(false);
+            case 'password':
+                setPassword(input);
+                isInputEmpty(input) ? setPasswordHelperText(true) : setPasswordHelperText(false);
+            case 'retypePassword':
+                setRetypepass(input);
+                isInputEmpty(input) ? setRetypeHelperText(true) : setRetypeHelperText(false);
+        }
+    }
+    const inputs = [
+        { value: Company, setHelperText: setComapnyHelperText },
+        { value: Username, setHelperText: setUserIDHelperText },
+        { value: Email, setHelperText: setEmailHelperText },
+        { value: Password, setHelperText: setPasswordHelperText },
+        { value: Retypepass, setHelperText: setRetypeHelperText },
+    ];
+    const IsInputCorrect = (stage: any) => {
+        let allInputsCorrect = true;
+    
+        inputs.forEach(input => {
+            if (isInputEmpty(input.value)) {
+                input.setHelperText(true);
+                allInputsCorrect = false;
+            }
+            else{
+                input.setHelperText(false);
+            }
+        });
+
+        if(isPasswordNotSame())
+        {  
+            setRetypeHelperText(true);
+            allInputsCorrect = false;
+        }
+    
+        setToNextStage(allInputsCorrect);
+    
+        if (stage === 1 && allInputsCorrect) {
+            setstage(2);
+        }
+    }
 
     const tonggleDatePicker = () => {
         if (Platform.OS === 'android') {
@@ -80,18 +154,13 @@ const Register = () => {
         }
     }
 
-
-
     const confirmIOSDate = async (date: any) => {
 
         const currentDate = date;
         setSelectedIOSDate(date);
         setBirthDate(currentDate.toString());
         setKeepDatetoDatabase(currentDate.toISOString())
-
-        // tonggleDatePicker();
         setDatePickerVisible(false);
-        // await fetchDataApi(currentDate.toISOString().split('T')[0]);
     }
 
 
@@ -189,28 +258,38 @@ const Register = () => {
                                         mode="outlined"
                                         label={i18n.t('RegisterPage.Company-Name')}
                                         value={Company}
-                                        onChangeText={setCompany} />
+                                        onChangeText={text => handleInputChanges('company', text)} />
+                                    {companyHelperText && <HelperText type="error" style = {{height: 20}}>
+                                        Company is invalid!
+                                    </HelperText>}
                                 </View>
                                 <View style={styles.InputRange}>
                                     <TextInput
-                                        style={styles.Textinput}
+                                        style={companyHelperText?styles.Textinput_NoMargin:styles.Textinput}
                                         mode="outlined"
                                         label={i18n.t('RegisterPage.UserName.UserName')}
                                         value={Username}
-                                        onChangeText={setUsername}
+                                        onChangeText={text => handleInputChanges('userID', text)}
                                     />
+                                    {UserIDHelperText && <HelperText type="error" style = {{height: 20}}>
+                                        UserName is invalid!
+                                    </HelperText>}
                                 </View>
                                 <View style={styles.InputRange}>
                                     <TextInput
-                                        style={styles.Textinput}
+                                        style={UserIDHelperText?styles.Textinput_NoMargin:styles.Textinput}
                                         mode="outlined"
                                         label={i18n.t('RegisterPage.Email')}
                                         value={Email}
-                                        onChangeText={setEmail}
+                                        onChangeText={text => handleInputChanges('email', text)}
                                     />
+                                    {EmailHelperText && <HelperText type="error" style = {{height: 20}}>
+                                        Email address is invalid!
+                                    </HelperText>}
+
                                 </View>
                                 <View style={styles.InputRange}>
-                                    <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }}
+                                    {/* <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }}
                                         onPress={() => {
                                             if (ishide == (true)) {
                                                 setishide(false);
@@ -225,18 +304,23 @@ const Register = () => {
                                                 <Octicons name="eye-closed" size={40} style={{}} />
                                             )}
 
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                     <TextInput
-                                        style={styles.Textinput}
+                                        style={EmailHelperText?styles.Textinput_NoMargin:styles.Textinput}
                                         secureTextEntry={ishide}
                                         mode="outlined"
                                         label={i18n.t('RegisterPage.Password.Password')}
                                         value={Password}
-                                        onChangeText={setPassword}
+                                        onChangeText={text => handleInputChanges('password', text)}
+                                        right = {ishide?<TextInput.Icon icon="eye" onPress={value => setishide(false)} /> 
+                                        : <TextInput.Icon icon="eye-off" onPress={value => setishide(true)} /> }
                                     />
+                                     {PasswordHelperText && <HelperText type="error" style = {{height: 20}}>
+                                        Password is required!
+                                    </HelperText>}
                                 </View>
                                 <View style={styles.InputRange}>
-                                    <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }}
+                                    {/* <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }}
                                         onPress={() => {
                                             if (retypeishide == (true)) {
                                                 setretypeishide(false);
@@ -251,17 +335,21 @@ const Register = () => {
                                                 <Octicons name="eye-closed" size={40} style={{}} />
                                             )}
 
-                                    </TouchableOpacity>
+                                    </TouchableOpacity> */}
                                     <TextInput
-                                        style={styles.Textinput}
+                                    //FIXME: close eye will cause first char capital
+                                        style={PasswordHelperText?styles.Textinput_NoMargin:styles.Textinput}
                                         secureTextEntry={retypeishide}
                                         mode="outlined"
                                         label={i18n.t('RegisterPage.Password.Retype-Password')}
                                         value={Retypepass}
-                                        onChangeText={setRetypepass}
+                                        onChangeText={text => handleInputChanges('retypePassword', text)}
+                                        right = {retypeishide?<TextInput.Icon icon="eye" onPress={value => setretypeishide(false)} /> 
+                                        : <TextInput.Icon icon="eye-off" onPress={value => setretypeishide(true)} /> }
                                     />
+                                    {RetypeHelperText && <HelperText type="error">Please check retype passoword</HelperText>}
                                 </View>
-                                <TouchableOpacity style={styles.ButtonLogin} onPress={() => { setstage(2); }}>
+                                <TouchableOpacity style={RetypeHelperText?styles.ButtonLogin_NoMargin:styles.ButtonLogin} onPress={() => { IsInputCorrect(1) }}>
                                     <Text style={styles.fonth2}>
                                         {i18n.t('RegisterPage.Next-Button')}
                                     </Text>

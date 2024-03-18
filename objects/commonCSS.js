@@ -307,6 +307,12 @@ const whiteTheme = {
         width:"100%",
         borderRadius:5,
     },
+    Textinput_NoMargin:
+    {
+        alignSelf:"center",
+        width:"100%",
+        borderRadius:5,
+    },
     ButtonLogin:{
         alignSelf:"center",
         backgroundColor:"#D9D9D9",
@@ -317,6 +323,16 @@ const whiteTheme = {
         alignItems:"center",
         justifyContent:"center",
         marginTop:20,
+    },
+    ButtonLogin_NoMargin:{
+        alignSelf:"center",
+        backgroundColor:"#D9D9D9",
+        marginBottom:10,
+        borderRadius:5,
+        width:"80%",
+        height:"10%",
+        alignItems:"center",
+        justifyContent:"center",
     },
     //Verify Page
     NumberInput:{
