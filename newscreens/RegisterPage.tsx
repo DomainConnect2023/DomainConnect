@@ -39,6 +39,23 @@ const Register = () => {
     const [Vehicle, setVehicle] = useState('');
     const [Status, setStatus] = useState(1);
 
+    // Refresh page When the user exits register and returns again 
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            setCompany('');
+            setUsername('');
+            setPassword('');
+            setEmail('');
+            setRetypepass('');
+            setMobileValue('');
+            setformatmobileValue('');
+            setBirthDate('');
+            setVehicle('');
+            setstage(1)
+        });
+        return unsubscribe;
+    }, [navigation])
+
     //date time picker
     const [birthDate, setBirthDate] = useState("");
     const [keepDatetoDatabase, setKeepDatetoDatabase] = useState("");
@@ -47,7 +64,6 @@ const Register = () => {
 
     //IOS Date Setup
     const [selectedIOSDate, setSelectedIOSDate] = useState(new Date());
-
 
     // IOS Date picker modal setup
     const [datePickerVisible, setDatePickerVisible] = useState(false);
@@ -62,23 +78,55 @@ const Register = () => {
     const [PasswordHelperText, setPasswordHelperText] = useState(false);
     const [RetypeHelperText, setRetypeHelperText] = useState(false);
     const [readyToNextStage, setToNextStage] = useState(false);
+    const usernameInputRef = useRef<any>(null);
+    const emailInputRef = useRef<any>(null);
+    const passwordInputRef = useRef<any>(null);
+    const retypePasswordInputRef = useRef<any>(null);
+    const [Duplicate, setDuplicate] = useState(false);
+    const [UserDuplicateHelperText, setUserDuplicateHelperText] = useState(false);
+    const [EmailDuplicateHelperText, setEmailDuplicateHelperText] = useState(false);
+    const [loading, setLoading] = React.useState(false);
+    const [phoneHelperText, setPhoneHelperText] = useState<any>(false);
+    const [dateHelperText, setDateHelperText] = useState<any>(false);
+    const [vehicleHelperText, setVehicleHelperText] = useState<any>(false);
 
     const hasErrors = () => {
         // return Email.length == 0;
         return false;
     };
+
     const isInputEmpty = (input: String) => {
         return input.length == 0 ? true : false
     }
-    const isInputDuplicated = async (input: String, type: String) => {
+
+    // Check the email and username are duplicated
+    const isInputDuplicated = async (Username: String, Email: String) => {
+        try {
+            const response = await RNFetchBlob.config({ trusty: true }).fetch('POST', URLAccess.Url + 'CheckCrediential', { "Content-Type": "application/json" },
+                JSON.stringify({
+                    "username": Username,
+                    "Email": Email
+                }));
+
+            const responseData = await response.json();
+            return { isUsernameAvailable: responseData.isSuccess1, isEmailAvailable: responseData.isSuccess2 };
+        } catch (error) {
+            console.error('Error checking input duplicate:', error);
+            return { isEmailAvailable: false, isUsernameAvailable: false, message: 'Error checking input duplicate' };
+        }
     }
+
     const isPasswordNotSame = () => {
         return Password.length > 0 && Retypepass.length > 0 && Password != Retypepass ? true : false
     }
-    const handleInputChanges = (type: any, input: any) =>
-    {
-        switch(type)
-        {
+
+    const emailFormat = (email: string): boolean => {
+        const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+        return regex.test(email);
+    }
+
+    const handleInputChanges = async (type: any, input: any) => {
+        switch (type) {
             case 'company':
                 setCompany(input);
                 isInputEmpty(input) ? setComapnyHelperText(true) : setComapnyHelperText(false);
@@ -90,14 +138,67 @@ const Register = () => {
             case 'email':
                 setEmail(input);
                 isInputEmpty(input) ? setEmailHelperText(true) : setEmailHelperText(false);
+                break;
             case 'password':
                 setPassword(input);
                 isInputEmpty(input) ? setPasswordHelperText(true) : setPasswordHelperText(false);
+                break;
             case 'retypePassword':
                 setRetypepass(input);
                 isInputEmpty(input) ? setRetypeHelperText(true) : setRetypeHelperText(false);
+                break;
         }
     }
+
+    useEffect(() => {
+        // Check User Name Availability
+        const checkAvailability = async () => {
+            const { isUsernameAvailable } = await isInputDuplicated(Username, Email);
+            if (!isUsernameAvailable) {
+                setUserDuplicateHelperText(true);
+            } else {
+                setUserDuplicateHelperText(false);
+            }
+        };
+        // Check Email Availability
+        const checkEmailAvailable = async () => {
+            const { isEmailAvailable } = await isInputDuplicated(Username, Email);
+            if (!isEmailAvailable) {
+                setEmailDuplicateHelperText(true);
+            } else {
+                setEmailDuplicateHelperText(false);
+            }
+        }
+        checkAvailability();
+        checkEmailAvailable();
+    }, [Username, Email]);
+
+    // Handle UserName Duplicated Alert Display
+    const handleUsernameInput = async (input: string) => {
+        setUsername(input);
+        isInputEmpty(input) ? setUserIDHelperText(true) : setUserIDHelperText(false);
+        const { isUsernameAvailable } = await isInputDuplicated(Username, Email);
+        if (!isUsernameAvailable) {
+            setUserDuplicateHelperText(true);
+        } else {
+            setUserDuplicateHelperText(false);
+        }
+        return isUsernameAvailable;
+    }
+
+    // Handle Email Duplicated Alert Display
+    const handleEmailInput = async (input: string) => {
+        setEmail(input);
+        isInputEmpty(input) ? setEmailHelperText(true) : setEmailHelperText(false);
+        const { isEmailAvailable } = await isInputDuplicated(Username, Email);
+        if (!isEmailAvailable) {
+            setEmailDuplicateHelperText(true);
+        } else {
+            setEmailDuplicateHelperText(false);
+        }
+        return isEmailAvailable;
+    }
+
     const inputs = [
         { value: Company, setHelperText: setComapnyHelperText },
         { value: Username, setHelperText: setUserIDHelperText },
@@ -105,29 +206,77 @@ const Register = () => {
         { value: Password, setHelperText: setPasswordHelperText },
         { value: Retypepass, setHelperText: setRetypeHelperText },
     ];
-    const IsInputCorrect = (stage: any) => {
+
+    const IsInputCorrect = async (stage: any) => {
         let allInputsCorrect = true;
-    
+
         inputs.forEach(input => {
             if (isInputEmpty(input.value)) {
                 input.setHelperText(true);
                 allInputsCorrect = false;
             }
-            else{
+            else {
                 input.setHelperText(false);
             }
         });
 
-        if(isPasswordNotSame())
-        {  
+        if (isPasswordNotSame()) {
             setRetypeHelperText(true);
             allInputsCorrect = false;
         }
-    
+
+        const isUsernameAvailable = await handleUsernameInput(Username);
+        if (!isUsernameAvailable) {
+            allInputsCorrect = false;
+        }
+
+        const isEmailAvailable = await handleEmailInput(Email);
+        if (!isEmailAvailable) {
+            allInputsCorrect = false;
+        }
+
+        const isEmailValid = emailFormat(Email);
+        if (!isEmailValid) {
+            setEmailHelperText(true)
+            allInputsCorrect = false;
+        }
+
         setToNextStage(allInputsCorrect);
-    
+
         if (stage === 1 && allInputsCorrect) {
             setstage(2);
+        }
+    }
+
+    const handleStage2Input = async (stage: any) => {
+        let allInputsCorrect = true;
+
+        const phoneFormat = /^[0-9]{7,11}$/;
+        if (mobileValue) {
+            const isPhoneValid = phoneFormat.test(mobileValue);
+            if (!isPhoneValid) {
+                console.log(mobileValue.length)
+                setPhoneHelperText(true)
+                allInputsCorrect = false
+            }
+        } else {
+            allInputsCorrect = false
+            setPhoneHelperText(true)
+        }
+
+        if (!birthDate) {
+            allInputsCorrect = false
+            setDateHelperText(true)
+        }
+
+        if (!Vehicle) {
+            allInputsCorrect = false
+            setVehicleHelperText(true)
+        }
+
+        if (stage === 2 && allInputsCorrect) {
+            setStatus(1)
+            setstage(3)
         }
     }
 
@@ -139,6 +288,7 @@ const Register = () => {
             setDatePickerVisible(true);
         }
     }
+
     const onChange = ({ type }: any, selectedDate: any) => {
         if (type == "set") {
             console.log(selectedDate)
@@ -163,8 +313,8 @@ const Register = () => {
         setDatePickerVisible(false);
     }
 
-
     const GETOTP = async () => {
+        setLoading(true);
         console.log("Start")
 
         if (Status == 1) {
@@ -185,12 +335,10 @@ const Register = () => {
             await AsyncStorage.setItem("Email", Email);
             await AsyncStorage.setItem("Company", Company);
             await AsyncStorage.setItem("Password", Password);
-            await AsyncStorage.setItem("MobileNo", " ");
-            await AsyncStorage.setItem("BirthDate", " ");
-            await AsyncStorage.setItem("Vehicle", " ");
+            await AsyncStorage.setItem("MobileNo", "");
+            await AsyncStorage.setItem("BirthDate", "");
+            await AsyncStorage.setItem("Vehicle", "");
         }
-
-
         RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "GetOTP", { "Content-Type": "application/json" },
             JSON.stringify({
                 "Email": Email
@@ -207,89 +355,108 @@ const Register = () => {
                     })
                     console.log("Error")
                 }
+                setLoading(false);
             }).catch(err => {
                 Snackbar.show({
                     text: err.message,
                     duration: Snackbar.LENGTH_LONG
                 })
+                setLoading(false);
             })
-
-
-
     }
-
 
     useFocusEffect(
         React.useCallback(() => {
             setLocale(i18n.locale);
         }, [])
     );
+
     return (
         <MainContainer>
-            <KeyboardAvoidWrapper>
-                {/* Header */}
-                <View style={{ height: Dimensions.get("screen").height / 100 * 90 }}>
-                    <View style={{ flex: 0.15, flexDirection: "row", paddingTop: 10 }}>
-                        <Image source={require('../assets/logo.png')} style={{ flex: 2, height: Dimensions.get("screen").height / 100 * 10, width: 120, resizeMode: 'contain', alignSelf: "center" }} />
-                        <Text style={styles.Header}>DOMAIN CONNECT</Text>
-                    </View>
+            {loading ? (
+                <View style={{ flex: 1, marginVertical: Dimensions.get('screen').height / 100 * 50 }}>
+                    <ActivityIndicator size={80} color="#000000" />
+                </View>
+            ) : (
+                <KeyboardAvoidWrapper>
 
-
-                    {/*End Header */}
-
-                    <View style={{ flex: 1, maxHeight: Dimensions.get("screen").height / 100 * 90 }}>
-                        <View style={{ justifyContent: "flex-end", width: "90%", alignSelf: "center", marginTop: 30 }}>
-                            <Text style={styles.fontLogin}>{i18n.t('RegisterPage.Title')}</Text>
-                            {stage == 1 && <Text style={styles.fontsmall}>{i18n.t('RegisterPage.SubTitle')}</Text>}
-                            {stage == 2 && <Text style={styles.fontsmall}>{i18n.t('RegisterPage.SubTitle-Page2')}</Text>}
-                            {stage == 3 && <Text style={styles.fontsmall}>{i18n.t('RegisterPage.SubTitle-Page3')}</Text>}
+                    {/* Header */}
+                    <View style={{ height: Dimensions.get("screen").height / 100 * 90 }}>
+                        <View style={{ flex: 0.15, flexDirection: "row", paddingTop: 10 }}>
+                            <Image source={require('../assets/logo.png')} style={{ flex: 2, height: Dimensions.get("screen").height / 100 * 10, width: 120, resizeMode: 'contain', alignSelf: "center" }} />
+                            <Text style={styles.Header}>DOMAIN CONNECT</Text>
                         </View>
-                        {/* Stage 1 information */}
 
-                        {stage == 1 &&
-                            <><View style={{ marginTop: 10, paddingTop: 10, width: "50%", alignSelf: "center", flexDirection: "row", justifyContent: "center" }}>
-                                <ProgressBar progress={1} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
-                                <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
-                                <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
+                        {/*End Header */}
+
+                        <View style={{ flex: 1, maxHeight: Dimensions.get("screen").height / 100 * 90 }}>
+                            <View style={{ justifyContent: "flex-end", width: "90%", alignSelf: "center", marginTop: 30 }}>
+                                <Text style={styles.fontLogin}>{i18n.t('RegisterPage.Title')}</Text>
+                                {stage == 1 && <Text style={styles.fontsmall}>{i18n.t('RegisterPage.SubTitle')}</Text>}
+                                {stage == 2 && <Text style={styles.fontsmall}>{i18n.t('RegisterPage.SubTitle-Page2')}</Text>}
+                                {stage == 3 && <Text style={styles.fontsmall}>{i18n.t('RegisterPage.SubTitle-Page3')}</Text>}
                             </View>
-                                <View style={styles.InputRange}>
-                                    <TextInput
-                                        style={styles.Textinput}
-                                        mode="outlined"
-                                        label={i18n.t('RegisterPage.Company-Name')}
-                                        value={Company}
-                                        onChangeText={text => handleInputChanges('company', text)} />
-                                    {companyHelperText && <HelperText type="error" style = {{height: 20}}>
-                                        Company is invalid!
-                                    </HelperText>}
-                                </View>
-                                <View style={styles.InputRange}>
-                                    <TextInput
-                                        style={companyHelperText?styles.Textinput_NoMargin:styles.Textinput}
-                                        mode="outlined"
-                                        label={i18n.t('RegisterPage.UserName.UserName')}
-                                        value={Username}
-                                        onChangeText={text => handleInputChanges('userID', text)}
-                                    />
-                                    {UserIDHelperText && <HelperText type="error" style = {{height: 20}}>
-                                        UserName is invalid!
-                                    </HelperText>}
-                                </View>
-                                <View style={styles.InputRange}>
-                                    <TextInput
-                                        style={UserIDHelperText?styles.Textinput_NoMargin:styles.Textinput}
-                                        mode="outlined"
-                                        label={i18n.t('RegisterPage.Email')}
-                                        value={Email}
-                                        onChangeText={text => handleInputChanges('email', text)}
-                                    />
-                                    {EmailHelperText && <HelperText type="error" style = {{height: 20}}>
-                                        Email address is invalid!
-                                    </HelperText>}
+                            {/* Stage 1 information */}
 
+                            {stage == 1 &&
+                                <><View style={{ marginTop: 10, paddingTop: 10, width: "50%", alignSelf: "center", flexDirection: "row", justifyContent: "center" }}>
+                                    <ProgressBar progress={1} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
+                                    <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
+                                    <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
                                 </View>
-                                <View style={styles.InputRange}>
-                                    {/* <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }}
+                                    <View style={styles.InputRange}>
+                                        <TextInput
+                                            style={styles.Textinput}
+                                            mode="outlined"
+                                            label={i18n.t('RegisterPage.Company-Name')}
+                                            value={Company}
+                                            returnKeyType="next"
+                                            onSubmitEditing={() => usernameInputRef.current?.focus()}
+                                            onChangeText={text => handleInputChanges('company', text)} />
+                                        {companyHelperText && <HelperText type="error" style={{ height: 30 }}>
+                                            Company is invalid!
+                                        </HelperText>}
+                                    </View>
+                                    <View style={styles.InputRange}>
+                                        <TextInput
+                                            ref={usernameInputRef}
+                                            returnKeyType="next"
+                                            onSubmitEditing={() => emailInputRef.current?.focus()}
+                                            style={companyHelperText ? styles.Textinput_NoMargin : styles.Textinput}
+                                            mode="outlined"
+                                            label={i18n.t('RegisterPage.UserName.UserName')}
+                                            value={Username}
+                                            onChangeText={text => handleInputChanges('userID', text)}
+                                        />
+                                        {UserDuplicateHelperText && <HelperText type="error">
+                                            UserName is Duplicated
+                                        </HelperText>}
+                                        {UserIDHelperText && <HelperText type="error">
+                                            UserName is invalid!
+                                        </HelperText>}
+
+                                    </View>
+                                    <View style={styles.InputRange}>
+                                        <TextInput
+                                            ref={emailInputRef}
+                                            returnKeyType="next"
+                                            onSubmitEditing={() => passwordInputRef.current?.focus()}
+                                            style={UserIDHelperText ? styles.Textinput_NoMargin : styles.Textinput}
+                                            mode="outlined"
+                                            label={i18n.t('RegisterPage.Email')}
+                                            value={Email}
+                                            onChangeText={text => handleInputChanges('email', text)}
+                                            keyboardType='email-address'
+                                        />
+                                        {EmailHelperText && <HelperText type="error">
+                                            Email address is invalid!
+                                        </HelperText>}
+                                        {EmailDuplicateHelperText && <HelperText type="error">
+                                            This Email has been registered!
+                                        </HelperText>}
+                                    </View>
+                                    <View style={styles.InputRange}>
+                                        {/* <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }}
                                         onPress={() => {
                                             if (ishide == (true)) {
                                                 setishide(false);
@@ -305,22 +472,25 @@ const Register = () => {
                                             )}
 
                                     </TouchableOpacity> */}
-                                    <TextInput
-                                        style={EmailHelperText?styles.Textinput_NoMargin:styles.Textinput}
-                                        secureTextEntry={ishide}
-                                        mode="outlined"
-                                        label={i18n.t('RegisterPage.Password.Password')}
-                                        value={Password}
-                                        onChangeText={text => handleInputChanges('password', text)}
-                                        right = {ishide?<TextInput.Icon icon="eye" onPress={value => setishide(false)} /> 
-                                        : <TextInput.Icon icon="eye-off" onPress={value => setishide(true)} /> }
-                                    />
-                                     {PasswordHelperText && <HelperText type="error" style = {{height: 20}}>
-                                        Password is required!
-                                    </HelperText>}
-                                </View>
-                                <View style={styles.InputRange}>
-                                    {/* <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }}
+                                        <TextInput
+                                            ref={passwordInputRef}
+                                            returnKeyType="next"
+                                            onSubmitEditing={() => retypePasswordInputRef.current?.focus()}
+                                            style={EmailHelperText ? styles.Textinput_NoMargin : styles.Textinput}
+                                            secureTextEntry={ishide}
+                                            mode="outlined"
+                                            label={i18n.t('RegisterPage.Password.Password')}
+                                            value={Password}
+                                            onChangeText={text => handleInputChanges('password', text)}
+                                            right={ishide ? <TextInput.Icon icon="eye" onPress={value => setishide(false)} />
+                                                : <TextInput.Icon icon="eye-off" onPress={value => setishide(true)} />}
+                                        />
+                                        {PasswordHelperText && <HelperText type="error" style={{ height: 30 }}>
+                                            Password is required!
+                                        </HelperText>}
+                                    </View>
+                                    <View style={styles.InputRange}>
+                                        {/* <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }}
                                         onPress={() => {
                                             if (retypeishide == (true)) {
                                                 setretypeishide(false);
@@ -336,200 +506,193 @@ const Register = () => {
                                             )}
 
                                     </TouchableOpacity> */}
-                                    <TextInput
-                                    //FIXME: close eye will cause first char capital
-                                        style={PasswordHelperText?styles.Textinput_NoMargin:styles.Textinput}
-                                        secureTextEntry={retypeishide}
-                                        mode="outlined"
-                                        label={i18n.t('RegisterPage.Password.Retype-Password')}
-                                        value={Retypepass}
-                                        onChangeText={text => handleInputChanges('retypePassword', text)}
-                                        right = {retypeishide?<TextInput.Icon icon="eye" onPress={value => setretypeishide(false)} /> 
-                                        : <TextInput.Icon icon="eye-off" onPress={value => setretypeishide(true)} /> }
+                                        <TextInput
+                                            //FIXME: close eye will cause first char capital
+                                            ref={retypePasswordInputRef}
+                                            style={PasswordHelperText ? styles.Textinput_NoMargin : styles.Textinput}
+                                            secureTextEntry={retypeishide}
+                                            mode="outlined"
+                                            label={i18n.t('RegisterPage.Password.Retype-Password')}
+                                            value={Retypepass}
+                                            onChangeText={text => handleInputChanges('retypePassword', text)}
+                                            right={retypeishide ? <TextInput.Icon icon="eye" onPress={value => setretypeishide(false)} />
+                                                : <TextInput.Icon icon="eye-off" onPress={value => setretypeishide(true)} />}
+                                        />
+                                        {RetypeHelperText && <HelperText type="error">Please check retype password</HelperText>}
+                                    </View>
+                                    <TouchableOpacity style={RetypeHelperText ? styles.ButtonLogin_NoMargin : styles.ButtonLogin} onPress={() => { IsInputCorrect(1) }}>
+                                        <Text style={styles.fonth2}>
+                                            {i18n.t('RegisterPage.Next-Button')}
+                                        </Text>
+                                    </TouchableOpacity></>}
+                            {/*End Stage 1*/}
+
+                            {/* Stage 2*/}
+
+                            {stage == 2 && <><View style={{ marginTop: 10, paddingTop: 10, width: "50%", alignSelf: "center", flexDirection: "row", justifyContent: "center" }}>
+                                <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
+                                <ProgressBar progress={1} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
+                                <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
+                            </View>
+                                <View style={styles.InputRange}>
+                                    <PhoneInput
+                                        containerStyle={{
+                                            alignSelf: "center",
+                                            marginTop: 20,
+                                            width: "100%",
+                                            height: 60,
+                                            borderRadius: 5,
+                                            borderWidth: 1,
+                                        }}
+                                        textContainerStyle={{
+                                            borderLeftWidth: 1,
+                                            borderBottomWidth: 0.5,
+                                            backgroundColor: "white"
+                                        }}
+                                        textInputStyle={{
+                                            margin: -10
+                                        }}
+                                        textInputProps={{ multiline: false }}
+                                        ref={phoneInput}
+                                        defaultValue={mobileValue}
+                                        defaultCode={mobileCountry as any}
+                                        layout="second"
+
+                                        onChangeText={(text) => {
+                                            setMobileValue(text)
+                                        }}
+                                        onChangeFormattedText={(text) => {
+                                            setformatmobileValue(text)
+                                        }}
                                     />
-                                    {RetypeHelperText && <HelperText type="error">Please check retype passoword</HelperText>}
+                                    {phoneHelperText && <HelperText type="error">Phone number is invalid</HelperText>}
                                 </View>
-                                <TouchableOpacity style={RetypeHelperText?styles.ButtonLogin_NoMargin:styles.ButtonLogin} onPress={() => { IsInputCorrect(1) }}>
+                                <View style={styles.InputRange}>
+                                    {showPicker && <DateTimePicker
+                                        mode="date"
+                                        display="default"
+                                        value={date}
+                                        onChange={onChange}
+                                        style={datepickerCSS.datePicker}
+                                    />}
+
+                                    {Platform.OS === "ios" && (<DateTimePickerModal
+                                        date={selectedIOSDate}
+                                        isVisible={datePickerVisible}
+                                        mode="date"
+                                        display='inline'
+                                        onConfirm={confirmIOSDate}
+                                        onCancel={hideIOSDatePicker}
+                                    />)}
+
+                                    <TextInput
+                                        placeholder="Birth Date"
+                                        style={styles.Textinput}
+                                        mode="outlined"
+                                        value={birthDate}
+                                        onChangeText={setBirthDate}
+                                        label={"Birth Date"}
+                                        editable={false}
+                                    />
+                                    <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }} onPress={tonggleDatePicker}>
+                                        <Image source={require('../assets/calendar_3.png')} style={{ resizeMode: 'contain', alignSelf: "center", width: 40, height: 40 }} />
+                                    </TouchableOpacity>
+                                    {dateHelperText && <HelperText type="error">Birth Date is invalid</HelperText>}
+                                </View>
+                                <View style={styles.InputRange}>
+                                    <TextInput
+                                        style={styles.Textinput}
+                                        mode="outlined"
+                                        value={Vehicle}
+                                        onChangeText={setVehicle}
+                                        label={i18n.t('RegisterPage.Vehicle')} />
+                                    {vehicleHelperText && <HelperText type="error">Vehicle is invalid</HelperText>}
+                                </View>
+                                <View style={{ justifyContent: "center", flexDirection: "row" }}>
+                                    <View style={{ width: "20%", height: 1, backgroundColor: "black", alignSelf: 'center', marginHorizontal: 20 }} />
+                                    <TouchableOpacity onPress={() => { setStatus(2), setstage(3) }}>
+                                        <View style={{ flexDirection: "column" }}></View>
+                                        <Text style={{ fontWeight: "bold", fontSize: 12, alignSelf: "center", marginTop: 10 }}>{i18n.t('RegisterPage.Or')}</Text>
+                                        <Text style={{ fontWeight: "bold", fontSize: 12, alignSelf: "center" }}>{i18n.t('RegisterPage.Skip')}</Text>
+                                    </TouchableOpacity>
+                                    <View style={{
+                                        width: "20%", height: 1, backgroundColor: "black", alignSelf: 'center', marginHorizontal: 20,
+                                    }} />
+                                </View>
+
+                                <TouchableOpacity style={styles.ButtonLogin} onPress={() => { setstage(1); }}>
+                                    <Text style={styles.fonth2}>
+                                        {i18n.t('RegisterPage.Back-Button')}
+                                    </Text>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[styles.ButtonLogin, { backgroundColor: '#87cefa' }]} onPress={() => { handleStage2Input(2) }}>
                                     <Text style={styles.fonth2}>
                                         {i18n.t('RegisterPage.Next-Button')}
                                     </Text>
-                                </TouchableOpacity></>}
-                        {/*End Stage 1*/}
-
-                        {/* Stage 2*/}
-
-                        {stage == 2 && <><View style={{ marginTop: 10, paddingTop: 10, width: "50%", alignSelf: "center", flexDirection: "row", justifyContent: "center" }}>
-                            <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
-                            <ProgressBar progress={1} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
-                            <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
-                        </View>
-                            <View style={styles.InputRange}>
-                                <PhoneInput
-                                    containerStyle={{
-                                        alignSelf: "center",
-                                        marginTop: 20,
-                                        width: "100%",
-                                        height: 60,
-                                        borderRadius: 5,
-                                        borderWidth: 1,
-
-                                    }}
-                                    textContainerStyle={{
-                                        borderLeftWidth: 1,
-                                        borderBottomWidth: 0.5,
-                                        backgroundColor: "white"
-
-                                    }}
-                                    textInputStyle={{
-                                        margin: -10
-                                    }}
-                                    textInputProps={{ multiline: false }}
-                                    ref={phoneInput}
-                                    defaultValue={mobileValue}
-                                    defaultCode={mobileCountry as any}
-                                    layout="second"
-                                    onChangeText={(text) => {
-                                        setMobileValue(text)
-                                    }}
-                                    onChangeFormattedText={(text) => {
-                                        setformatmobileValue(text)
-                                    }}
-                                />
-                            </View>
-                            <View style={styles.InputRange}>
-                                {showPicker && <DateTimePicker
-                                    mode="date"
-                                    display="default"
-                                    value={date}
-                                    onChange={onChange}
-                                    style={datepickerCSS.datePicker}
-                                />}
-
-                                {Platform.OS === "ios" && (<DateTimePickerModal
-                                    date={selectedIOSDate}
-                                    isVisible={datePickerVisible}
-                                    mode="date"
-                                    display='inline'
-                                    onConfirm={confirmIOSDate}
-                                    onCancel={hideIOSDatePicker}
-                                />)}
-
-                                <TextInput
-                                    placeholder="Birth Date"
-                                    style={styles.Textinput}
-                                    mode="outlined"
-                                    value={birthDate}
-                                    onChangeText={setBirthDate}
-                                    label={"Birth Date"}
-                                    editable={false}
-
-                                />
-                                <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }} onPress={tonggleDatePicker}>
-                                    <Image source={require('../assets/calendar_3.png')} style={{ resizeMode: 'contain', alignSelf: "center", width: 40, height: 40 }} />
                                 </TouchableOpacity>
 
+                            </>
+                            }
+                            {/* End Stage 2*/}
 
 
+                            {/* Stage 3 */}
+                            {stage == 3 && <><View style={{ marginTop: 10, paddingTop: 10, width: "50%", alignSelf: "center", flexDirection: "row", justifyContent: "center" }}>
+                                <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
+                                <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
+                                <ProgressBar progress={1} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
                             </View>
-                            <View style={styles.InputRange}>
-                                <TextInput
-                                    style={styles.Textinput}
-                                    mode="outlined"
-                                    value={Vehicle}
-                                    onChangeText={setVehicle}
-                                    label={i18n.t('RegisterPage.Vehicle')} />
-                            </View>
-                            <View style={{ justifyContent: "center", flexDirection: "row" }}>
-                                <View style={{ width: "20%", height: 1, backgroundColor: "black", alignSelf: 'center', marginHorizontal: 20 }} />
-                                <TouchableOpacity onPress={() => { setStatus(2), setstage(3) }}>
-                                    <View style={{ flexDirection: "column" }}></View>
-                                    <Text style={{ fontWeight: "bold", fontSize: 12, alignSelf: "center", marginTop: 10 }}>{i18n.t('RegisterPage.Or')}</Text>
-                                    <Text style={{ fontWeight: "bold", fontSize: 12, alignSelf: "center" }}>{i18n.t('RegisterPage.Skip')}</Text>
+
+                                <View style={{ backgroundColor: "#D9D9D9", width: "80%", height: "40%", alignSelf: "center", margin: 10, borderRadius: 5 }}>
+                                    <Text style={{ margin: 15, fontWeight: "bold", fontSize: 12 }}>{i18n.t('RegisterPage.Confirm-Credential')}</Text>
+                                    <View style={{ flexDirection: "row" }}>
+                                        <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, flex: 1, paddingLeft: 20 }}>{i18n.t('RegisterPage.UserName.UserName')} </Text>
+                                        <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12 }}>:</Text>
+                                        <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, paddingLeft: 10, flex: 1 }}>{Username} </Text>
+                                    </View>
+                                    <View style={{ flexDirection: "row" }}>
+                                        <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, flex: 1, paddingLeft: 20 }}>{i18n.t('RegisterPage.Company-Name')}</Text>
+                                        <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12 }}>:</Text>
+                                        <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, paddingLeft: 10, flex: 1 }}>{Company} </Text>
+                                    </View>
+                                    <View style={{ flexDirection: "row" }}>
+                                        <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, flex: 1, paddingLeft: 20 }}>{i18n.t('RegisterPage.Email')}</Text>
+                                        <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12 }}>:</Text>
+                                        <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, paddingLeft: 10, flex: 1 }}>{Email} </Text>
+                                    </View>
+
+                                </View>
+
+                                <TouchableOpacity style={styles.ButtonLogin} onPress={() => { setstage(2); }}>
+                                    <Text style={styles.fonth2}>
+                                        {i18n.t('RegisterPage.Back-Button')}
+                                    </Text>
+                                </TouchableOpacity><TouchableOpacity style={styles.ButtonLogin} onPress={() => { GETOTP(); }}>
+                                    <Text style={styles.fonth2}>
+                                        {i18n.t('RegisterPage.Verify')}
+                                    </Text>
                                 </TouchableOpacity>
-                                <View style={{
-                                    width: "20%", height: 1, backgroundColor: "black", alignSelf: 'center', marginHorizontal: 20,
-                                }} />
 
-                            </View>
+                            </>}
 
-
-                            <TouchableOpacity style={styles.ButtonLogin} onPress={() => { setstage(1); }}>
-                                <Text style={styles.fonth2}>
-                                    {i18n.t('RegisterPage.Back-Button')}
-                                </Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity style={styles.ButtonLogin} onPress={() => { setStatus(1), setstage(3); }}>
-                                <Text style={styles.fonth2}>
-                                    {i18n.t('RegisterPage.Next-Button')}
-                                </Text>
-                            </TouchableOpacity>
-
-                        </>
-                        }
-                        {/* End Stage 2*/}
-
-
-                        {/* Stage 3 */}
-                        {stage == 3 && <><View style={{ marginTop: 10, paddingTop: 10, width: "50%", alignSelf: "center", flexDirection: "row", justifyContent: "center" }}>
-                            <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
-                            <ProgressBar progress={0} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
-                            <ProgressBar progress={1} color={"#1B2A62"} style={{ width: 50, height: 10, marginHorizontal: 10, borderRadius: 10 }} />
+                            {/* End Stage 3 */}
 
                         </View>
 
-                            <View style={{ backgroundColor: "#D9D9D9", width: "80%", height: "40%", alignSelf: "center", margin: 10, borderRadius: 5 }}>
-                                <Text style={{ margin: 15, fontWeight: "bold", fontSize: 12 }}>{i18n.t('RegisterPage.Confirm-Credential')}</Text>
-                                <View style={{ flexDirection: "row" }}>
-                                    <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, flex: 1, paddingLeft: 20 }}>{i18n.t('RegisterPage.UserName.UserName')} </Text>
-                                    <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12 }}>:</Text>
-                                    <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, paddingLeft: 10, flex: 1 }}>{Username} </Text>
-                                </View>
-                                <View style={{ flexDirection: "row" }}>
-                                    <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, flex: 1, paddingLeft: 20 }}>{i18n.t('RegisterPage.Company-Name')}</Text>
-                                    <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12 }}>:</Text>
-                                    <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, paddingLeft: 10, flex: 1 }}>{Company} </Text>
-                                </View>
-                                <View style={{ flexDirection: "row" }}>
-                                    <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, flex: 1, paddingLeft: 20 }}>{i18n.t('RegisterPage.Email')}</Text>
-                                    <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12 }}>:</Text>
-                                    <Text style={{ marginVertical: 20, fontWeight: "bold", fontSize: 12, paddingLeft: 10, flex: 1 }}>{Email} </Text>
-                                </View>
-
-                            </View>
-
-                            <TouchableOpacity style={styles.ButtonLogin} onPress={() => { setstage(2); }}>
-                                <Text style={styles.fonth2}>
-                                    {i18n.t('RegisterPage.Back-Button')}
-                                </Text>
-                            </TouchableOpacity><TouchableOpacity style={styles.ButtonLogin} onPress={() => { GETOTP(); }}>
-                                <Text style={styles.fonth2}>
-                                    {i18n.t('RegisterPage.Verify')}
-                                </Text>
+                        {/* Footer */}
+                        <View style={{ justifyContent: "flex-end" }}>
+                            <View style={styles.blackline} />
+                            <TouchableOpacity onPress={() => { navigation.navigate(Login as never) }}>
+                                <Text style={styles.fonth2}>{i18n.t('RegisterPage.Have-Account')}</Text>
                             </TouchableOpacity>
+                        </View>
 
-                        </>}
-
-                        {/* End Stage 3 */}
-
-
+                        {/* End Footer */}
                     </View>
-
-                    {/* Footer */}
-                    <View style={{ justifyContent: "flex-end" }}>
-                        <View style={styles.blackline} />
-                        <TouchableOpacity onPress={() => { navigation.navigate(Login as never) }}>
-                            <Text style={styles.fonth2}>{i18n.t('RegisterPage.Have-Account')}</Text>
-                        </TouchableOpacity>
-                    </View>
-
-                    {/* End Footer */}
-                </View>
-            </KeyboardAvoidWrapper>
-        </MainContainer>
+                </KeyboardAvoidWrapper>
+            )}
+        </MainContainer >
     );
-
-
-
 }
 
 export default Register;

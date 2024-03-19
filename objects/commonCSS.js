@@ -262,7 +262,7 @@ const whiteTheme = {
     fonth2:{
         fontWeight:"bold",
         fontSize:16,
-        alignSelf:"center"
+        alignSelf:"center",
     },
     fonth3:{
         alignSelf:"center",

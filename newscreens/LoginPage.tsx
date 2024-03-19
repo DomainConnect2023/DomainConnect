@@ -22,50 +22,60 @@ import Verify from './Verify';
 const Login = () => {
     const navigation = useNavigation();
     const [ishide, setishide] = useState(true);
-    const [username,setusername] = useState("");
-    const [password,setpassword] = useState("");
+    const [username, setusername] = useState("");
+    const [password, setpassword] = useState("");
     const [locale, setLocale] = useState(i18n.locale);
+    const passwordInputRef = useRef<any>(null);
 
     useFocusEffect(
         React.useCallback(() => {
-        setLocale(i18n.locale);
+            setLocale(i18n.locale);
         }, [])
     );
 
-//     useEffect(()=>{
-//         (async()=>{
-//         await LoginApi();
-//     })();
+    // Refresh page When the user logout 
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('focus', () => {
+            setusername('');
+            setpassword('');
+        });
 
-// },[]);
+        return unsubscribe;
+    }, [navigation]);
 
-    const LoginApi=async()=>{
-        RNFetchBlob.config({trusty:true}).fetch("POST",URLAccess.Url+"Login",{"Content-Type": "application/json"},
-        JSON.stringify( {
-            "username":username,
-            "password":password,
-            "token":await AsyncStorage.getItem("fcmtoken")
-        })).then(async(res)=>{
-            if(await res.json().isSuccess==true){
-                setCredentials(username,password);
-                const Credential= await getGenericPassword()
-                await AsyncStorage.setItem('username',username);
-                navigation.navigate(CustomDrawer as never);
-            }
-            else{
+    //     useEffect(()=>{
+    //         (async()=>{
+    //         await LoginApi();
+    //     })();
+
+    // },[]);
+
+    const LoginApi = async () => {
+        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "Login", { "Content-Type": "application/json" },
+            JSON.stringify({
+                "username": username,
+                "password": password,
+                "token": await AsyncStorage.getItem("fcmtoken")
+            })).then(async (res) => {
+                if (await res.json().isSuccess == true) {
+                    setCredentials(username, password);
+                    const Credential = await getGenericPassword()
+                    await AsyncStorage.setItem('username', username);
+                    navigation.navigate(CustomDrawer as never);
+                }
+                else {
+                    Snackbar.show({
+                        text: "Login Fail, Please Check Your credential and try again later.",
+                        duration: Snackbar.LENGTH_LONG
+                    })
+                    console.log("Error")
+                }
+            }).catch(err => {
                 Snackbar.show({
-                    text:"Login Fail, Please Check Your credential and try again later.",
-                    duration:Snackbar.LENGTH_LONG
+                    text: err.message,
+                    duration: Snackbar.LENGTH_LONG
                 })
-                console.log("Error")
-            }
-        }).catch(err=>{
-            Snackbar.show({
-                text:err.message,
-                duration:Snackbar.LENGTH_LONG
             })
-        })
-        
     }
 
     return (
@@ -92,32 +102,21 @@ const Login = () => {
                                 label={i18n.t('LoginPage.UserName')}
                                 value={username}
                                 onChangeText={setusername}
+                                returnKeyType="next"
+                                onSubmitEditing={() => passwordInputRef.current?.focus()}
                             />
                         </View>
                         <View style={styles.InputRange}>
-                            <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }}
-                                onPress={() => {
-                                    if (ishide == (true)) {
-                                        setishide(false)
-                                    } else {
-                                        setishide(true)
-                                    }
-                                }}>
-                                {ishide == true ?
-                                    (
-                                        <Octicons name="eye" size={40} style={{}} />
-                                    ) : (
-                                        <Octicons name="eye-closed" size={40} style={{}} />
-                                    )}
-
-                            </TouchableOpacity>
                             <TextInput
+                                ref={passwordInputRef}
                                 style={styles.Textinput}
                                 secureTextEntry={ishide}
                                 mode="outlined"
                                 label={i18n.t('LoginPage.Password')}
                                 value={password}
                                 onChangeText={setpassword}
+                                right={ishide ? <TextInput.Icon icon="eye" onPress={value => setishide(false)} />
+                                    : <TextInput.Icon icon="eye-off" onPress={value => setishide(true)} />}
                             />
 
                         </View>
@@ -125,7 +124,7 @@ const Login = () => {
                             <Text style={{ textAlign: "right", width: "95%", fontWeight: "bold", fontSize: 14, }}>Forgot Password?</Text>
                         </TouchableOpacity>
                         {/* navigation.navigate(CustomDrawer as never) */}
-                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => {LoginApi()}}>
+                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => { LoginApi() }}>
                             <Text style={styles.fonth2}>
                                 {i18n.t('LoginPage.Login-Button')}
                             </Text>
@@ -158,9 +157,6 @@ const Login = () => {
             </KeyboardAvoidWrapper>
         </MainContainer>
     );
-
-
-
 }
 
 export default Login;
