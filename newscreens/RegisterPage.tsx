@@ -382,7 +382,7 @@ const Register = () => {
 
                     {/* Header */}
                     <View style={{ height: Dimensions.get("screen").height / 100 * 90 }}>
-                        <View style={{ flex: 0.15, flexDirection: "row", paddingTop: 10 }}>
+                        <View style={{ flex: 0.10, flexDirection: "row", paddingTop: 10 }}>
                             <Image source={require('../assets/logo.png')} style={{ flex: 2, height: Dimensions.get("screen").height / 100 * 10, width: 120, resizeMode: 'contain', alignSelf: "center" }} />
                             <Text style={styles.Header}>DOMAIN CONNECT</Text>
                         </View>
@@ -587,7 +587,7 @@ const Register = () => {
 
                                     <TextInput
                                         placeholder="Birth Date"
-                                        style={styles.Textinput}
+                                        style={dateHelperText? styles.Textinput_NoMargin : styles.Textinput}
                                         mode="outlined"
                                         value={birthDate}
                                         onChangeText={setBirthDate}
@@ -597,16 +597,16 @@ const Register = () => {
                                     <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }} onPress={tonggleDatePicker}>
                                         <Image source={require('../assets/calendar_3.png')} style={{ resizeMode: 'contain', alignSelf: "center", width: 40, height: 40 }} />
                                     </TouchableOpacity>
-                                    {dateHelperText && <HelperText type="error">Birth Date is invalid</HelperText>}
+                                    {dateHelperText && <HelperText type="error" >Birth Date is invalid</HelperText>}
                                 </View>
                                 <View style={styles.InputRange}>
                                     <TextInput
-                                        style={styles.Textinput}
+                                        style={vehicleHelperText ? styles.Textinput_NoMargin : styles.Textinput}
                                         mode="outlined"
                                         value={Vehicle}
                                         onChangeText={setVehicle}
                                         label={i18n.t('RegisterPage.Vehicle')} />
-                                    {vehicleHelperText && <HelperText type="error">Vehicle is invalid</HelperText>}
+                                    {vehicleHelperText && <HelperText type="error" >Vehicle is invalid</HelperText>}
                                 </View>
                                 <View style={{ justifyContent: "center", flexDirection: "row" }}>
                                     <View style={{ width: "20%", height: 1, backgroundColor: "black", alignSelf: 'center', marginHorizontal: 20 }} />
@@ -625,8 +625,8 @@ const Register = () => {
                                         {i18n.t('RegisterPage.Back-Button')}
                                     </Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={[styles.ButtonLogin, { backgroundColor: '#87cefa' }]} onPress={() => { handleStage2Input(2) }}>
-                                    <Text style={styles.fonth2}>
+                                <TouchableOpacity style={[styles.ButtonLogin, { backgroundColor: '#1B2A62' }]} onPress={() => { handleStage2Input(2) }}>
+                                    <Text style={[styles.fonth2,{color:'white'}]}>
                                         {i18n.t('RegisterPage.Next-Button')}
                                     </Text>
                                 </TouchableOpacity>
@@ -667,7 +667,8 @@ const Register = () => {
                                     <Text style={styles.fonth2}>
                                         {i18n.t('RegisterPage.Back-Button')}
                                     </Text>
-                                </TouchableOpacity><TouchableOpacity style={styles.ButtonLogin} onPress={() => { GETOTP(); }}>
+                                </TouchableOpacity>
+                                <TouchableOpacity style={styles.ButtonLogin} onPress={() => { GETOTP(); }}>
                                     <Text style={styles.fonth2}>
                                         {i18n.t('RegisterPage.Verify')}
                                     </Text>
