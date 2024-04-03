@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, StatusBar, Image, TextInput, Dimensions, Keyboard, ActivityIndicator } from 'react-native';
+import { View, Text, TouchableOpacity, StatusBar, Image, TextInput, Dimensions, Keyboard, ActivityIndicator, Alert, Modal, Pressable, StyleSheet } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { styles } from '../objects/commonCSS';
 import i18n from '../language/i18n';
@@ -10,11 +10,13 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { URLAccess } from '../objects/URLAccess';
 import Snackbar from 'react-native-snackbar';
 import Login from './LoginPage';
+import Feather from 'react-native-vector-icons/Feather'
 
 const Verify = () => {
     const navigation = useNavigation();
     const [loading, setLoading] = React.useState(false);
     const [errorOccurred, setErrorOccurred] = useState(true);
+    const [modalVisible, setModalVisible] = useState(false);
 
     const [email, setemail] = useState<String | null>('')
     const [number1, setnumber1] = useState('');
@@ -167,7 +169,7 @@ const Verify = () => {
                 if (await res.json().isSuccess == true) {
                     AsyncStorage.clear();
 
-                    navigation.navigate(Login as never);
+                    setModalVisible(true)
 
                 }
                 else {
@@ -292,6 +294,7 @@ const Verify = () => {
                                     }}>Resend</Text>
                                 </TouchableOpacity>
                             </View>
+
                             <TouchableOpacity style={{
                                 alignSelf: "center",
                                 backgroundColor: "#D9D9D9",
@@ -307,6 +310,26 @@ const Verify = () => {
                                     {i18n.t('VerifyPage.Verify_The_Code')}
                                 </Text>
                             </TouchableOpacity>
+                            <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={modalVisible}
+                                onRequestClose={() => {
+                                    Alert.alert('Modal has been closed.');
+                                    setModalVisible(!modalVisible);
+                                }}>
+                                <View style={styles.centeredView}>
+                                    <View style={styles.modalView}>
+                                        <Feather name='check' size={50} color={'#FFFFFF'} style={{ backgroundColor: 'green', borderRadius: 50, padding: 10 }}></Feather>
+                                        <Text style={styles.modalText}>Register Successful !</Text>
+                                        <Pressable
+                                            style={[styles.buttonClose]}
+                                            onPress={() => navigation.navigate(Login as never)}>
+                                            <Text style={styles.textStyle}>Login</Text>
+                                        </Pressable>
+                                    </View>
+                                </View>
+                            </Modal>
                         </View>
                     </View>
 
@@ -315,5 +338,9 @@ const Verify = () => {
         </MainContainer>
     )
 }
+
+const style = StyleSheet.create({
+
+});
 
 export default Verify;

@@ -69,10 +69,6 @@ const Welcome = () => {
                 </TouchableOpacity>
             </View>
             {/* End Button Navigation */}
-
-
-
-
         </MainContainer>
 
     )

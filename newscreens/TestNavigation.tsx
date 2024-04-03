@@ -2,8 +2,8 @@ import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { Dimensions } from 'react-native';
-import TestDashboardScreen from './TestDashboard';
-import TestSettingScreen from './TestSetting';
+// import TestDashboardScreen from './TestDashboard';
+// import TestSettingScreen from './TestSetting';
 import i18n from '../language/i18n';
 
 const Tab = createBottomTabNavigator();
@@ -33,8 +33,8 @@ const TestTabNavigation = () => {
           },
         })}
       >
-        <Tab.Screen options={{ unmountOnBlur: true, }} name={i18n.t('Bottom-Navigation.Dashboard')} component={TestDashboardScreen} />
-        <Tab.Screen options={{ unmountOnBlur: true, }} name={i18n.t('Bottom-Navigation.Setting')} component={TestSettingScreen} />
+        {/* <Tab.Screen options={{ unmountOnBlur: true, }} name={i18n.t('Bottom-Navigation.Dashboard')} component={TestDashboardScreen} />
+        <Tab.Screen options={{ unmountOnBlur: true, }} name={i18n.t('Bottom-Navigation.Setting')} component={TestSettingScreen} /> */}
       </Tab.Navigator>
   );
 }

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Dimensions, Platform, AppState, Alert, StatusBar, Image, Pressable } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Button, Dimensions, Platform, AppState, Alert, Image, Keyboard, KeyboardAvoidingView, } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { datepickerCSS, styles } from '../objects/commonCSS';
 import { HelperText, TextInput } from 'react-native-paper';
@@ -42,15 +42,6 @@ const Register = () => {
     // Refresh page When the user exits register and returns again 
     useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
-            setCompany('');
-            setUsername('');
-            setPassword('');
-            setEmail('');
-            setRetypepass('');
-            setMobileValue('');
-            setformatmobileValue('');
-            setBirthDate('');
-            setVehicle('');
             setstage(1)
         });
         return unsubscribe;
@@ -89,6 +80,8 @@ const Register = () => {
     const [phoneHelperText, setPhoneHelperText] = useState<any>(false);
     const [dateHelperText, setDateHelperText] = useState<any>(false);
     const [vehicleHelperText, setVehicleHelperText] = useState<any>(false);
+    const [EmailFormatHelperText, setEmailFormatHelperText] = useState<any>(false);
+    const [phoneFormatHelperText, setPhoneFormatHelperText] = useState<any>(false);
 
     const hasErrors = () => {
         // return Email.length == 0;
@@ -120,11 +113,19 @@ const Register = () => {
         return Password.length > 0 && Retypepass.length > 0 && Password != Retypepass ? true : false
     }
 
+    // Check Email Format
     const emailFormat = (email: string): boolean => {
-        const regex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
-        return regex.test(email);
+        const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
+        return emailRegex.test(email);
     }
 
+    // Check Phone Format
+    const phoneFormat = (mobileValue: string): boolean => {
+        const phoneRegex = /^[0-9]{7,12}$/;
+        return phoneRegex.test(mobileValue)
+    }
+
+    // Handle Stage 1 Input
     const handleInputChanges = async (type: any, input: any) => {
         switch (type) {
             case 'company':
@@ -150,9 +151,24 @@ const Register = () => {
         }
     }
 
+    // Handle Stage 2 Input
+    const handleInputChanges2 = async (type: any, input: any) => {
+        switch (type) {
+            case 'mobile':
+                setMobileValue(input);
+                isInputEmpty(input) ? setPhoneHelperText(true) : setPhoneHelperText(false);
+                break;
+            case 'vehicle':
+                setVehicle(input);
+                isInputEmpty(input) ? setVehicleHelperText(true) : setVehicleHelperText(false);
+                break;
+        }
+    }
+
+    // Continuously check whether the input data is valid
     useEffect(() => {
-        // Check User Name Availability
-        const checkAvailability = async () => {
+        // Check User Name Duplicated
+        const checkUserAvailability = async () => {
             const { isUsernameAvailable } = await isInputDuplicated(Username, Email);
             if (!isUsernameAvailable) {
                 setUserDuplicateHelperText(true);
@@ -160,7 +176,8 @@ const Register = () => {
                 setUserDuplicateHelperText(false);
             }
         };
-        // Check Email Availability
+
+        // Check Email Duplicated
         const checkEmailAvailable = async () => {
             const { isEmailAvailable } = await isInputDuplicated(Username, Email);
             if (!isEmailAvailable) {
@@ -169,35 +186,59 @@ const Register = () => {
                 setEmailDuplicateHelperText(false);
             }
         }
-        checkAvailability();
+
+        // Check Email Format
+        const checkEmailValid = async () => {
+            if (!emailFormat(Email)) {
+                setEmailFormatHelperText(true);
+            } else {
+                setEmailFormatHelperText(false);
+            }
+        }
+
+        // Check Email Valid
+        const checkEmail = async () => {
+            if (Email !== '') {
+                checkEmailValid();
+            } else {
+                setEmailFormatHelperText(false);
+            }
+        }
+
+        // Check Password Match
+        const checkPassword = async () => {
+            if (Password !== '' && Retypepass !== '') {
+                if (isPasswordNotSame()) {
+                    setRetypeHelperText(true);
+                } else {
+                    setRetypeHelperText(false)
+                }
+            }
+        }
+
+        const checkPhoneFormat = async () => {
+            if (!phoneFormat(mobileValue)) {
+                setPhoneFormatHelperText(true);
+            } else {
+                setPhoneFormatHelperText(false);
+            }
+        }
+
+        const checkPhone = async () => {
+            if (mobileValue !== '') {
+                checkPhoneFormat();
+            } else {
+                setPhoneFormatHelperText(false);
+            }
+        }
+
+        checkUserAvailability();
         checkEmailAvailable();
-    }, [Username, Email]);
+        checkEmail();
+        checkPassword();
+        checkPhone();
 
-    // Handle UserName Duplicated Alert Display
-    const handleUsernameInput = async (input: string) => {
-        setUsername(input);
-        isInputEmpty(input) ? setUserIDHelperText(true) : setUserIDHelperText(false);
-        const { isUsernameAvailable } = await isInputDuplicated(Username, Email);
-        if (!isUsernameAvailable) {
-            setUserDuplicateHelperText(true);
-        } else {
-            setUserDuplicateHelperText(false);
-        }
-        return isUsernameAvailable;
-    }
-
-    // Handle Email Duplicated Alert Display
-    const handleEmailInput = async (input: string) => {
-        setEmail(input);
-        isInputEmpty(input) ? setEmailHelperText(true) : setEmailHelperText(false);
-        const { isEmailAvailable } = await isInputDuplicated(Username, Email);
-        if (!isEmailAvailable) {
-            setEmailDuplicateHelperText(true);
-        } else {
-            setEmailDuplicateHelperText(false);
-        }
-        return isEmailAvailable;
-    }
+    }, [Username, Email, Password, Retypepass, mobileValue, Vehicle]);
 
     const inputs = [
         { value: Company, setHelperText: setComapnyHelperText },
@@ -207,76 +248,116 @@ const Register = () => {
         { value: Retypepass, setHelperText: setRetypeHelperText },
     ];
 
+    // Confirm whether the stage 1 data is correct 
     const IsInputCorrect = async (stage: any) => {
         let allInputsCorrect = true;
+        setLoading(true);
 
         inputs.forEach(input => {
             if (isInputEmpty(input.value)) {
                 input.setHelperText(true);
                 allInputsCorrect = false;
+                setLoading(false);
+                return;
             }
             else {
                 input.setHelperText(false);
             }
         });
 
-        if (isPasswordNotSame()) {
+        // Check User Name Available
+        const { isUsernameAvailable } = await isInputDuplicated(Username, Email);
+        if (!isUsernameAvailable) {
+            setUserDuplicateHelperText(true);
+            allInputsCorrect = false;
+            setLoading(false);
+            return;
+        } else {
+            setUserDuplicateHelperText(false);
+        }
+
+        // // Check Email Available
+        const { isEmailAvailable } = await isInputDuplicated(Username, Email);
+        if (!isEmailAvailable) {
+            setEmailDuplicateHelperText(true);
+            allInputsCorrect = false;
+            setLoading(false);
+            return;
+        } else {
+            setEmailDuplicateHelperText(false);
+        }
+
+        // Check Email Format
+        const checkEmailFormat = emailFormat(Email);
+        if (Email) {
+            if (checkEmailFormat == false) {
+                setEmailFormatHelperText(true);
+                allInputsCorrect = false;
+                setLoading(false);
+                return;
+            } else {
+                setEmailFormatHelperText(false);
+            }
+        }
+
+        // Check Password Match
+        if (Password !== Retypepass) {
             setRetypeHelperText(true);
             allInputsCorrect = false;
-        }
-
-        const isUsernameAvailable = await handleUsernameInput(Username);
-        if (!isUsernameAvailable) {
-            allInputsCorrect = false;
-        }
-
-        const isEmailAvailable = await handleEmailInput(Email);
-        if (!isEmailAvailable) {
-            allInputsCorrect = false;
-        }
-
-        const isEmailValid = emailFormat(Email);
-        if (!isEmailValid) {
-            setEmailHelperText(true)
-            allInputsCorrect = false;
+            setLoading(false);
+            return;
+        } else {
+            setRetypeHelperText(false)
         }
 
         setToNextStage(allInputsCorrect);
 
         if (stage === 1 && allInputsCorrect) {
             setstage(2);
+            setLoading(false);
         }
     }
 
+    const input2 = [
+        { value: mobileValue, setHelperText: setPhoneHelperText },
+        { value: birthDate, setHelperText: setDateHelperText },
+        { value: Vehicle, setHelperText: setVehicleHelperText },
+    ]
+    // Confirm whether the stage 2 data is correct 
     const handleStage2Input = async (stage: any) => {
+        setLoading(true);
         let allInputsCorrect = true;
 
-        const phoneFormat = /^[0-9]{7,11}$/;
-        if (mobileValue) {
-            const isPhoneValid = phoneFormat.test(mobileValue);
-            if (!isPhoneValid) {
-                console.log(mobileValue.length)
-                setPhoneHelperText(true)
-                allInputsCorrect = false
+        // Check Empty
+        input2.forEach(input => {
+            if (isInputEmpty(input.value)) {
+                input.setHelperText(true);
+                allInputsCorrect = false;
+                setLoading(false);
+                return;
             }
-        } else {
-            allInputsCorrect = false
-            setPhoneHelperText(true)
-        }
+            else {
+                input.setHelperText(false);
+            }
+        });
 
-        if (!birthDate) {
-            allInputsCorrect = false
-            setDateHelperText(true)
-        }
-
-        if (!Vehicle) {
-            allInputsCorrect = false
-            setVehicleHelperText(true)
+        // Check Phone Format
+        const checkPhoneFormat = phoneFormat(mobileValue);
+        if (mobileValue) {
+            if (checkPhoneFormat == false) {
+                setPhoneFormatHelperText(true);
+                allInputsCorrect = false;
+                setLoading(false);
+                return;
+            } else {
+                setPhoneFormatHelperText(false);
+            }
         }
 
         if (stage === 2 && allInputsCorrect) {
             setStatus(1)
             setstage(3)
+            setLoading(false);
         }
     }
 
@@ -378,7 +459,8 @@ const Register = () => {
                     <ActivityIndicator size={80} color="#000000" />
                 </View>
             ) : (
-                <KeyboardAvoidWrapper>
+                // <KeyboardAvoidWrapper>
+                <KeyboardAvoidingView behavior="padding" style={{ flex: 1, paddingTop: 15 }}>
 
                     {/* Header */}
                     <View style={{ height: Dimensions.get("screen").height / 100 * 90 }}>
@@ -454,6 +536,9 @@ const Register = () => {
                                         {EmailDuplicateHelperText && <HelperText type="error">
                                             This Email has been registered!
                                         </HelperText>}
+                                        {EmailFormatHelperText && <HelperText type="error">
+                                            Please follow the email format!
+                                        </HelperText>}
                                     </View>
                                     <View style={styles.InputRange}>
                                         {/* <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }}
@@ -482,8 +567,14 @@ const Register = () => {
                                             label={i18n.t('RegisterPage.Password.Password')}
                                             value={Password}
                                             onChangeText={text => handleInputChanges('password', text)}
-                                            right={ishide ? <TextInput.Icon icon="eye" onPress={value => setishide(false)} />
-                                                : <TextInput.Icon icon="eye-off" onPress={value => setishide(true)} />}
+                                            right={
+                                                <TextInput.Icon
+                                                    icon={ishide ? "eye" : "eye-off"}
+                                                    onPress={() => {
+                                                        setishide(!ishide);
+                                                    }}
+                                                />
+                                            }
                                         />
                                         {PasswordHelperText && <HelperText type="error" style={{ height: 30 }}>
                                             Password is required!
@@ -560,12 +651,14 @@ const Register = () => {
 
                                         onChangeText={(text) => {
                                             setMobileValue(text)
+                                            handleInputChanges2('mobile', text)
                                         }}
                                         onChangeFormattedText={(text) => {
                                             setformatmobileValue(text)
                                         }}
                                     />
                                     {phoneHelperText && <HelperText type="error">Phone number is invalid</HelperText>}
+                                    {phoneFormatHelperText && <HelperText type="error">Please follow the phone number format!</HelperText>}
                                 </View>
                                 <View style={styles.InputRange}>
                                     {showPicker && <DateTimePicker
@@ -584,19 +677,19 @@ const Register = () => {
                                         onConfirm={confirmIOSDate}
                                         onCancel={hideIOSDatePicker}
                                     />)}
-
                                     <TextInput
                                         placeholder="Birth Date"
-                                        style={dateHelperText? styles.Textinput_NoMargin : styles.Textinput}
+                                        style={dateHelperText ? styles.Textinput_NoMargin : styles.Textinput}
                                         mode="outlined"
                                         value={birthDate}
                                         onChangeText={setBirthDate}
                                         label={"Birth Date"}
                                         editable={false}
+                                        right={
+                                            <TextInput.Icon icon={require('../assets/calendar_3.png')} onPress={tonggleDatePicker} />
+                                        }
                                     />
-                                    <TouchableOpacity style={{ position: "absolute", alignSelf: "flex-end", margin: 30, zIndex: 10, paddingRight: 10 }} onPress={tonggleDatePicker}>
-                                        <Image source={require('../assets/calendar_3.png')} style={{ resizeMode: 'contain', alignSelf: "center", width: 40, height: 40 }} />
-                                    </TouchableOpacity>
+
                                     {dateHelperText && <HelperText type="error" >Birth Date is invalid</HelperText>}
                                 </View>
                                 <View style={styles.InputRange}>
@@ -604,7 +697,10 @@ const Register = () => {
                                         style={vehicleHelperText ? styles.Textinput_NoMargin : styles.Textinput}
                                         mode="outlined"
                                         value={Vehicle}
-                                        onChangeText={setVehicle}
+                                        onChangeText={(text) => {
+                                            setVehicle
+                                            handleInputChanges2('vehicle', text)
+                                        }}
                                         label={i18n.t('RegisterPage.Vehicle')} />
                                     {vehicleHelperText && <HelperText type="error" >Vehicle is invalid</HelperText>}
                                 </View>
@@ -626,7 +722,7 @@ const Register = () => {
                                     </Text>
                                 </TouchableOpacity>
                                 <TouchableOpacity style={[styles.ButtonLogin, { backgroundColor: '#1B2A62' }]} onPress={() => { handleStage2Input(2) }}>
-                                    <Text style={[styles.fonth2,{color:'white'}]}>
+                                    <Text style={[styles.fonth2, { color: 'white' }]}>
                                         {i18n.t('RegisterPage.Next-Button')}
                                     </Text>
                                 </TouchableOpacity>
@@ -668,8 +764,8 @@ const Register = () => {
                                         {i18n.t('RegisterPage.Back-Button')}
                                     </Text>
                                 </TouchableOpacity>
-                                <TouchableOpacity style={styles.ButtonLogin} onPress={() => { GETOTP(); }}>
-                                    <Text style={styles.fonth2}>
+                                <TouchableOpacity style={[styles.ButtonLogin, { backgroundColor: '#1B2A62' }]} onPress={() => { GETOTP(); }}>
+                                    <Text style={[styles.fonth2, { color: '#FFFFFF' }]}>
                                         {i18n.t('RegisterPage.Verify')}
                                     </Text>
                                 </TouchableOpacity>
@@ -690,7 +786,8 @@ const Register = () => {
 
                         {/* End Footer */}
                     </View>
-                </KeyboardAvoidWrapper>
+                </KeyboardAvoidingView>
+                // </KeyboardAvoidWrapper>
             )}
         </MainContainer >
     );

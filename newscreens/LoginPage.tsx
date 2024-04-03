@@ -1,9 +1,9 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Dimensions, Platform, AppState, Alert, StatusBar, Image, Pressable } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Dimensions, Platform, AppState, Alert, StatusBar, Image, KeyboardAvoidingView } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { styles } from '../objects/commonCSS';
-import { TextInput } from 'react-native-paper';
+import { TextInput, HelperText } from 'react-native-paper';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Octicons from 'react-native-vector-icons/Octicons'
@@ -18,6 +18,7 @@ import Snackbar from 'react-native-snackbar';
 import { getGenericPassword } from 'react-native-keychain';
 import { URLAccess } from '../objects/URLAccess';
 import Verify from './Verify';
+import { CommonActions } from '@react-navigation/native';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -26,6 +27,9 @@ const Login = () => {
     const [password, setpassword] = useState("");
     const [locale, setLocale] = useState(i18n.locale);
     const passwordInputRef = useRef<any>(null);
+    const [loading, setLoading] = React.useState(false);
+    const [usernameHelperText, setusernameHelperText] = useState(false);
+    const [passwordHelperText, setpasswordHelperText] = useState(false);
 
     useFocusEffect(
         React.useCallback(() => {
@@ -50,7 +54,38 @@ const Login = () => {
 
     // },[]);
 
+    const checkEmpty = () => {
+        let emtpy = false;
+        if (username === '') {
+            setusernameHelperText(true)
+            emtpy = true;
+        } else {
+            setusernameHelperText(false)
+        }
+
+        if (password === '') {
+            setpasswordHelperText(true)
+            emtpy = true;
+        } else {
+            setpasswordHelperText(false)
+        }
+
+        if (!emtpy) {
+            LoginApi();
+        }
+    }
+
+    useEffect(() => {
+        if (username) {
+            setusernameHelperText(false)
+        }
+        if (password) {
+            setpasswordHelperText(false)
+        }
+    })
+
     const LoginApi = async () => {
+        setLoading(true)
         RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "Login", { "Content-Type": "application/json" },
             JSON.stringify({
                 "username": username,
@@ -61,7 +96,16 @@ const Login = () => {
                     setCredentials(username, password);
                     const Credential = await getGenericPassword()
                     await AsyncStorage.setItem('username', username);
-                    navigation.navigate(CustomDrawer as never);
+                    await AsyncStorage.setItem('password', password);
+                    await AsyncStorage.setItem('firstLauncher', 'false')
+                    navigation.dispatch(
+                        CommonActions.reset({
+                            index: 0,
+                            routes: [
+                                { name: 'CustomDrawer' },
+                            ],
+                        })
+                    );
                 }
                 else {
                     Snackbar.show({
@@ -70,69 +114,78 @@ const Login = () => {
                     })
                     console.log("Error")
                 }
+                setLoading(false)
             }).catch(err => {
                 Snackbar.show({
                     text: err.message,
                     duration: Snackbar.LENGTH_LONG
                 })
+                setLoading(false)
             })
     }
 
     return (
         <MainContainer>
-            <KeyboardAvoidWrapper>
-                {/* Header */}
-                <View style={{ height: Dimensions.get("screen").height / 100 * 90 }}>
-                    <View style={{ flex: 0.3, flexDirection: "row" }}>
-                        <Image source={require('../assets/logo.png')} style={{ flex: 2, height: Dimensions.get("screen").height / 100 * 15, width: 120, resizeMode: 'contain', alignSelf: "center" }} />
-                        <Text style={styles.Header}>DOMAIN CONNECT</Text>
-                    </View>
-
-                    {/*End Header */}
-                    <View style={{ flex: 1 }}>
-                        <View style={{ justifyContent: "flex-end", width: "90%", alignSelf: "center", marginTop: 30 }}>
-                            <Text style={styles.fontLogin}>{i18n.t('LoginPage.Title')}</Text>
-                            <Text style={styles.fontsmall}>{i18n.t('LoginPage.SubTitle')}</Text>
+            {loading ? (
+                <View style={{ flex: 1, marginVertical: Dimensions.get('screen').height / 100 * 50 }}>
+                    <ActivityIndicator size={80} color="#000000" />
+                </View>
+            ) : (
+                // <KeyboardAvoidWrapper>
+                <KeyboardAvoidingView behavior="padding" style={{ flex: 1 }}>
+                    {/* Header */}
+                    <View style={{ height: Dimensions.get("screen").height / 100 * 90 }}>
+                        <View style={{ flex: 0.3, flexDirection: "row" }}>
+                            <Image source={require('../assets/logo.png')} style={{ flex: 2, height: Dimensions.get("screen").height / 100 * 15, width: 120, resizeMode: 'contain', alignSelf: "center" }} />
+                            <Text style={styles.Header}>DOMAIN CONNECT</Text>
                         </View>
-                        {/* Login Information */}
-                        <View style={styles.InputRange}>
-                            <TextInput
-                                style={styles.Textinput}
-                                mode="outlined"
-                                label={i18n.t('LoginPage.UserName')}
-                                value={username}
-                                onChangeText={setusername}
-                                returnKeyType="next"
-                                onSubmitEditing={() => passwordInputRef.current?.focus()}
-                            />
-                        </View>
-                        <View style={styles.InputRange}>
-                            <TextInput
-                                ref={passwordInputRef}
-                                style={styles.Textinput}
-                                secureTextEntry={ishide}
-                                mode="outlined"
-                                label={i18n.t('LoginPage.Password')}
-                                value={password}
-                                onChangeText={setpassword}
-                                right={ishide ? <TextInput.Icon icon="eye" onPress={value => setishide(false)} />
-                                    : <TextInput.Icon icon="eye-off" onPress={value => setishide(true)} />}
-                            />
 
-                        </View>
-                        <TouchableOpacity onPress={() => { }}>
-                            <Text style={{ textAlign: "right", width: "95%", fontWeight: "bold", fontSize: 14, }}>Forgot Password?</Text>
-                        </TouchableOpacity>
-                        {/* navigation.navigate(CustomDrawer as never) */}
-                        <TouchableOpacity style={styles.ButtonLogin} onPress={() => { LoginApi() }}>
-                            <Text style={styles.fonth2}>
-                                {i18n.t('LoginPage.Login-Button')}
-                            </Text>
-                        </TouchableOpacity>
+                        {/*End Header */}
+                        <View style={{ flex: 1 }}>
+                            <View style={{ justifyContent: "flex-end", width: "90%", alignSelf: "center", marginTop: 30 }}>
+                                <Text style={styles.fontLogin}>{i18n.t('LoginPage.Title')}</Text>
+                                <Text style={styles.fontsmall}>{i18n.t('LoginPage.SubTitle')}</Text>
+                            </View>
+                            {/* Login Information */}
+                            <View style={styles.InputRange}>
+                                <TextInput
+                                    style={styles.Textinput}
+                                    mode="outlined"
+                                    label={i18n.t('LoginPage.UserName')}
+                                    value={username}
+                                    onChangeText={setusername}
+                                    returnKeyType="next"
+                                    onSubmitEditing={() => passwordInputRef.current?.focus()}
+                                />
+                                {usernameHelperText && <HelperText type="error">User Name can't be empty</HelperText>}
+                            </View>
+                            <View style={styles.InputRange}>
+                                <TextInput
+                                    ref={passwordInputRef}
+                                    style={styles.Textinput}
+                                    secureTextEntry={ishide}
+                                    mode="outlined"
+                                    label={i18n.t('LoginPage.Password')}
+                                    value={password}
+                                    onChangeText={setpassword}
+                                    right={ishide ? <TextInput.Icon icon="eye" onPress={value => setishide(false)} />
+                                        : <TextInput.Icon icon="eye-off" onPress={value => setishide(true)} />}
+                                />
+                                {passwordHelperText && <HelperText type="error">Password can't be empty</HelperText>}
+                            </View>
+                            <TouchableOpacity onPress={() => { }}>
+                                <Text style={{ textAlign: "right", width: "95%", fontWeight: "bold", fontSize: 14, }}>Forgot Password?</Text>
+                            </TouchableOpacity>
+                            {/* navigation.navigate(CustomDrawer as never) */}
+                            <TouchableOpacity style={styles.ButtonLogin} onPress={() => { checkEmpty() }}>
+                                <Text style={styles.fonth2}>
+                                    {i18n.t('LoginPage.Login-Button')}
+                                </Text>
+                            </TouchableOpacity>
 
-                        {/* Fingerprint Login */}
+                            {/* Fingerprint Login */}
 
-                        {/* <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                            {/* <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                             <Text style={{ fontWeight: "bold", fontSize: 14, }}>{i18n.t('LoginPage.Or-Login-With')}</Text>
                             <View>
                                 <TouchableOpacity onPress={() => }>
@@ -141,20 +194,22 @@ const Login = () => {
                             </View>
                         </View> */}
 
-                    </View>
-                    {/* End Login Information */}
+                        </View>
+                        {/* End Login Information */}
 
-                    {/* Footer */}
-                    <View style={{ justifyContent: "flex-end" }}>
-                        <View style={styles.blackline} />
-                        <TouchableOpacity onPress={() => { navigation.navigate(Register as never) }}>
-                            <Text style={styles.fonth2}>{i18n.t("LoginPage.Don't-Have-Account")}</Text>
-                        </TouchableOpacity>
-                    </View>
+                        {/* Footer */}
+                        <View style={{ justifyContent: "flex-end" }}>
+                            <View style={styles.blackline} />
+                            <TouchableOpacity onPress={() => { navigation.navigate(Register as never) }}>
+                                <Text style={styles.fonth2}>{i18n.t("LoginPage.Don't-Have-Account")}</Text>
+                            </TouchableOpacity>
+                        </View>
 
-                    {/* End Footer */}
-                </View>
-            </KeyboardAvoidWrapper>
+                        {/* End Footer */}
+                    </View>
+                </KeyboardAvoidingView>
+                // </KeyboardAvoidWrapper>
+            )}
         </MainContainer>
     );
 }

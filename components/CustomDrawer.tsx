@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { DrawerContentScrollView, DrawerItem, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Dimensions, Image, Platform, Text, View } from 'react-native';
-import TestDashboardScreen from '../newscreens/TestDashboard';
-import TestSettingScreen from '../newscreens/TestSetting';
+import { Dimensions, Image, Text, View } from 'react-native';
+// import TestDashboardScreen from '../newscreens/TestDashboard';
+// import TestSettingScreen from '../newscreens/TestSetting';
 import Login from '../newscreens/LoginPage';
 import { useNavigation, useNavigationState } from '@react-navigation/native';
 import { styles } from '../objects/commonCSS';
@@ -11,6 +11,9 @@ import Admin from '../newscreens/Admin';
 import i18n from '../language/i18n';
 import FontAwesome from 'react-native-vector-icons/FontAwesome6';
 import { resetGenericPassword } from 'react-native-keychain';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import DashboardScreen from '../newscreens/Dashboard';
+import SettingScreen from '../newscreens/Setting';
 
 // Remember install gesturehandler and reanimated
 
@@ -33,14 +36,13 @@ function CustomDrawerContent(props: any) {
       <DrawerContentScrollView contentContainerStyle={{ flex: 1 }} {...props}
       >
         <DrawerItemList {...props} />
-        <DrawerItem label={i18n.t('Left-Navigation.LogOut')} onPress={() => { resetGenericPassword(),navigation.navigate(Login as never); }} icon={() => <Ionicons name="log-out-sharp" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />} />
+        <DrawerItem label={i18n.t('Left-Navigation.LogOut')} onPress={() => { resetGenericPassword(), navigation.navigate(Login as never), AsyncStorage.removeItem('username'), AsyncStorage.removeItem('password') }} icon={() => <Ionicons name="log-out-sharp" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />} />
       </DrawerContentScrollView>
 
       <View style={{ justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
         <Text style={styles.fontsmall}>Develop by Domain Connect @2024</Text>
 
       </View>
-
     </View>
   );
 };
@@ -67,7 +69,7 @@ export function CustomDrawer() {
     }}
       drawerContent={props => <CustomDrawerContent {...props} />}
     >
-      <Drawer.Screen name={i18n.t('Left-Navigation.Dashboard')} component={TestDashboardScreen}
+      <Drawer.Screen name={i18n.t('Left-Navigation.Dashboard')} component={DashboardScreen}
         options={{
           headerTitle: i18n.t('Left-Navigation.Dashboard'),
           headerRight: () => (
@@ -95,7 +97,7 @@ export function CustomDrawer() {
           drawerIcon: ({ focused, size }) => (<FontAwesome name="user-tie" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
         }} />
 
-      <Drawer.Screen name={i18n.t('Left-Navigation.Setting')} component={TestSettingScreen}
+      <Drawer.Screen name={i18n.t('Left-Navigation.Setting')} component={SettingScreen}
         options={{
           headerTitle: i18n.t('Left-Navigation.Setting'),
           headerRight: () => (
