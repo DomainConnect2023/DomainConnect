@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { LogBox, Platform, SafeAreaView, ActivityIndicator, View, Dimensions } from 'react-native';
+import { LogBox, Platform, SafeAreaView, ActivityIndicator, View, Dimensions, Alert } from 'react-native';
 import Login from './newscreens/LoginPage';
 import Register from './newscreens/RegisterPage';
 // import TestDashboardScreen from './newscreens/TestDashboard';
@@ -25,6 +25,7 @@ import { useState } from 'react';
 import SessionManagement from './components/SessionManagement';
 import DashboardScreen from './newscreens/Dashboard';
 import SettingScreen from './newscreens/Setting';
+import { hmsToken } from './components/hmsPushNotification';
 
 const Stack = createNativeStackNavigator();
 const isSimulator = DeviceInfo.isEmulatorSync();
@@ -49,6 +50,7 @@ function App(): JSX.Element {
     requestUserPermission();
     initializeFirebase();
     NotificationListner();
+    hmsToken()
   }, []);
 
   const [loading, setLoading] = React.useState(true);

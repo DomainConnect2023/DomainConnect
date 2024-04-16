@@ -19,6 +19,7 @@ import { getGenericPassword } from 'react-native-keychain';
 import { URLAccess } from '../objects/URLAccess';
 import Verify from './Verify';
 import { CommonActions } from '@react-navigation/native';
+import { HmsPushInstanceId } from '@hmscore/react-native-hms-push';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -30,7 +31,7 @@ const Login = () => {
     const [loading, setLoading] = React.useState(false);
     const [usernameHelperText, setusernameHelperText] = useState(false);
     const [passwordHelperText, setpasswordHelperText] = useState(false);
-
+    const [token, setToken] = useState("");
     useFocusEffect(
         React.useCallback(() => {
             setLocale(i18n.locale);
@@ -46,13 +47,6 @@ const Login = () => {
 
         return unsubscribe;
     }, [navigation]);
-
-    //     useEffect(()=>{
-    //         (async()=>{
-    //         await LoginApi();
-    //     })();
-
-    // },[]);
 
     const checkEmpty = () => {
         let emtpy = false;
@@ -197,6 +191,7 @@ const Login = () => {
                         </View>
                         {/* End Login Information */}
 
+                        <Text>{token}</Text>
                         {/* Footer */}
                         <View style={{ justifyContent: "flex-end" }}>
                             <View style={styles.blackline} />
