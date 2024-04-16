@@ -1234,6 +1234,11 @@
   dependencies:
     "@hapi/hoek" "^9.0.0"
 
+"@hmscore/react-native-hms-availability@^6.12.0-300":
+  version "6.12.0-300"
+  resolved "https://registry.npmjs.org/@hmscore/react-native-hms-availability/-/react-native-hms-availability-6.12.0-300.tgz"
+  integrity sha512-c7Sftx7RisSUazLW/Tln3fP7GhRVqy8RHwLSbLuqv784tFWyCHK/6SWVX+vYmTY/i5zJ0jYcMLTZpXTE8X/xlA==
+
 "@hmscore/react-native-hms-push@^6.12.0-300":
   version "6.12.0-300"
   resolved "https://registry.npmjs.org/@hmscore/react-native-hms-push/-/react-native-hms-push-6.12.0-300.tgz"

@@ -45,13 +45,34 @@ const initializeFirebase = async () => {
 
 function App(): JSX.Element {
   LogBox.ignoreAllLogs();
+  const [hasHms, setHasHms] = useState(false);
 
   useEffect(() => {
-    requestUserPermission();
-    initializeFirebase();
-    NotificationListner();
-    hmsToken()
+    const checkHms = async () => {
+      const hmsAvailable = await DeviceInfo.hasHms();
+      setHasHms(hmsAvailable);
+    };
+    checkHms();
   }, []);
+
+  const gmsToken = async () => {
+    GetFCMToken();
+    requestUserPermission();
+    NotificationListner();
+    initializeFirebase();
+  }
+
+  const checkMobileService = async () => {
+    if (hasHms == true) {
+      hmsToken() 
+    } else {
+      gmsToken()
+    }
+  }
+
+  useEffect(() => {
+    checkMobileService()
+  })
 
   const [loading, setLoading] = React.useState(true);
   const [initialRouteName, setInitialRouteName] = React.useState("Welcome");

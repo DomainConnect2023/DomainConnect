@@ -4,7 +4,7 @@ export const URLAccess = {
     // emailFunction: `http://192.168.1.121:8080/domain/email/sendMail.php`,
 
     imgUrl: `https://domainconnect.my/domain_app/mobile/notificationImage/`,
-    Url:'   ',
+    Url:'https://192.168.0.124:3983/Api/',
 
     userFunction: `https://domainconnect.my/domain_app/mobile/userFunction.php`,
     notificationFunction: `https://domainconnect.my/domain_app/mobile/notificationLogFunction.php`,
