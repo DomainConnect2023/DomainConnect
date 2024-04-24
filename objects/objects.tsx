@@ -8,6 +8,15 @@ export interface NotificationData {
     // other properties
 }
 
+export interface Notification {
+    logID: number,
+    userID: number,
+    type: string,
+    header: string,
+    textValue: string,
+    created_at: string
+}
+
 export type InsertUserData = {
     insert: string,
     username: string,

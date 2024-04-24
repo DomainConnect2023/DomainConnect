@@ -84,7 +84,8 @@ const Login = () => {
             JSON.stringify({
                 "username": username,
                 "password": password,
-                "token": await AsyncStorage.getItem("fcmtoken")
+                "token": await AsyncStorage.getItem("fcmtoken"),
+                "service": await AsyncStorage.getItem("service"),
             })).then(async (res) => {
                 if (await res.json().isSuccess == true) {
                     setCredentials(username, password);
@@ -100,15 +101,17 @@ const Login = () => {
                             ],
                         })
                     );
+                    setLoading(false)
                 }
                 else {
+                    setLoading(false)
                     Snackbar.show({
                         text: "Login Fail, Please Check Your credential and try again later.",
                         duration: Snackbar.LENGTH_LONG
                     })
                     console.log("Error")
                 }
-                setLoading(false)
+                
             }).catch(err => {
                 Snackbar.show({
                     text: err.message,

@@ -45,6 +45,7 @@ const Admin = ({ navigation }: any) => {
                     setLoading(false);
                 }
             });
+        setLoading(false);
     }, []);
 
     const [favorite, setFavorite] = useState(false);

@@ -128,6 +128,9 @@ const EditProfileScreen = () => {
                                 defaultValue={mobileValue}
                                 defaultCode={mobileCountry as any}
                                 layout="second"
+                                containerStyle={[styles.WholeInput, {borderWidth: 1, borderRadius: 5, height: 50}]}
+                                codeTextStyle={{fontSize: 16}}
+                                textInputStyle={{fontSize: 16, height: 50}}
                                 onChangeText={(text) => {
                                     console.log(text);
                                 }}
