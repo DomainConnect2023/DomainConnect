@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { DrawerContentScrollView, DrawerItem, DrawerItemList, createDrawerNavigator } from '@react-navigation/drawer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Dimensions, Image, Text, View } from 'react-native';
+import { Dimensions, Image, Text, View, BackHandler } from 'react-native';
 // import TestDashboardScreen from '../newscreens/TestDashboard';
 // import TestSettingScreen from '../newscreens/TestSetting';
 import Login from '../newscreens/LoginPage';
@@ -14,7 +14,6 @@ import { resetGenericPassword } from 'react-native-keychain';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DashboardScreen from '../newscreens/Dashboard';
 import SettingScreen from '../newscreens/Setting';
-
 // Remember install gesturehandler and reanimated
 
 const Drawer = createDrawerNavigator();
@@ -22,9 +21,29 @@ const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props: any) {
   const navigation = useNavigation();
-  const onLogout = () => {
-    navigation.navigate(Login as never); // Navigate to 'Login' screen
+  const [loggedOut, setLoggedOut] = React.useState(false);
+
+  const handleLogout = () => {
+    resetGenericPassword();
+    navigation.navigate(Login as never);
+    AsyncStorage.removeItem('username');
+    AsyncStorage.removeItem('password');
+    setLoggedOut(true);
   };
+
+  React.useEffect(() => {
+    const backAction = () => {
+      BackHandler.exitApp();
+      return true;
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, []);
 
   return (
     <View style={{ height: Dimensions.get("screen").height / 100 * 93 }}>
@@ -33,10 +52,14 @@ function CustomDrawerContent(props: any) {
         <Text style={styles.Header}>DOMAIN CONNECT</Text>
       </View>
 
-      <DrawerContentScrollView contentContainerStyle={{ flex: 1 }} {...props}
-      >
+      <DrawerContentScrollView contentContainerStyle={{ flex: 1 }} {...props}>
         <DrawerItemList {...props} />
-        <DrawerItem label={i18n.t('Left-Navigation.LogOut')} onPress={() => { resetGenericPassword(), navigation.navigate(Login as never), AsyncStorage.removeItem('username'), AsyncStorage.removeItem('password') }} icon={() => <Ionicons name="log-out-sharp" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />} />
+        <DrawerItem
+          label={i18n.t('Left-Navigation.LogOut')}
+          onPress={handleLogout}
+          icon={() =>
+            <Ionicons name="log-out-sharp" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />}
+        />
       </DrawerContentScrollView>
 
       <View style={{ justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
@@ -83,7 +106,7 @@ export function CustomDrawer() {
           drawerIcon: ({ focused, size }) => (<Ionicons name="home" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
         }} />
 
-      <Drawer.Screen name={i18n.t('Left-Navigation.Admin')} component={Admin}
+      {/* <Drawer.Screen name={i18n.t('Left-Navigation.Admin')} component={Admin}
         options={{
           headerTitle: i18n.t('Left-Navigation.Admin'),
           headerRight: () => (
@@ -95,7 +118,7 @@ export function CustomDrawer() {
             </View>
           ),
           drawerIcon: ({ focused, size }) => (<FontAwesome name="user-tie" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
-        }} />
+        }} /> */}
 
       <Drawer.Screen name={i18n.t('Left-Navigation.Setting')} component={SettingScreen}
         options={{
@@ -113,4 +136,6 @@ export function CustomDrawer() {
     </Drawer.Navigator>
   );
 }
+
+
 export default CustomDrawer;

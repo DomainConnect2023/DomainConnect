@@ -19,6 +19,7 @@ import { getGenericPassword } from 'react-native-keychain';
 import { URLAccess } from '../objects/URLAccess';
 import Verify from './Verify';
 import { CommonActions } from '@react-navigation/native';
+import { HmsPushInstanceId } from '@hmscore/react-native-hms-push';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -30,7 +31,7 @@ const Login = () => {
     const [loading, setLoading] = React.useState(false);
     const [usernameHelperText, setusernameHelperText] = useState(false);
     const [passwordHelperText, setpasswordHelperText] = useState(false);
-
+    const [token, setToken] = useState("");
     useFocusEffect(
         React.useCallback(() => {
             setLocale(i18n.locale);
@@ -46,13 +47,6 @@ const Login = () => {
 
         return unsubscribe;
     }, [navigation]);
-
-    //     useEffect(()=>{
-    //         (async()=>{
-    //         await LoginApi();
-    //     })();
-
-    // },[]);
 
     const checkEmpty = () => {
         let emtpy = false;
@@ -86,11 +80,12 @@ const Login = () => {
 
     const LoginApi = async () => {
         setLoading(true)
-        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "Login", { "Content-Type": "application/json" },
+        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/Login", { "Content-Type": "application/json" },
             JSON.stringify({
                 "username": username,
                 "password": password,
-                "token": await AsyncStorage.getItem("fcmtoken")
+                "token": await AsyncStorage.getItem("fcmtoken"),
+                "service": await AsyncStorage.getItem("service"),
             })).then(async (res) => {
                 if (await res.json().isSuccess == true) {
                     setCredentials(username, password);
@@ -106,15 +101,17 @@ const Login = () => {
                             ],
                         })
                     );
+                    setLoading(false)
                 }
                 else {
+                    setLoading(false)
                     Snackbar.show({
                         text: "Login Fail, Please Check Your credential and try again later.",
                         duration: Snackbar.LENGTH_LONG
                     })
                     console.log("Error")
                 }
-                setLoading(false)
+                
             }).catch(err => {
                 Snackbar.show({
                     text: err.message,
@@ -197,6 +194,7 @@ const Login = () => {
                         </View>
                         {/* End Login Information */}
 
+                        <Text>{token}</Text>
                         {/* Footer */}
                         <View style={{ justifyContent: "flex-end" }}>
                             <View style={styles.blackline} />

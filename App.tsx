@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { LogBox, Platform, SafeAreaView, ActivityIndicator, View, Dimensions } from 'react-native';
+import { LogBox, Platform, SafeAreaView, ActivityIndicator, View, Dimensions, Alert } from 'react-native';
 import Login from './newscreens/LoginPage';
 import Register from './newscreens/RegisterPage';
 // import TestDashboardScreen from './newscreens/TestDashboard';
@@ -25,6 +25,10 @@ import { useState } from 'react';
 import SessionManagement from './components/SessionManagement';
 import DashboardScreen from './newscreens/Dashboard';
 import SettingScreen from './newscreens/Setting';
+import { hmsToken } from './components/hmsPushNotification';
+import MessageDetail from './newscreens/MessageDetail';
+import localStorage from './components/localStorage';
+import CustomBottomTabNavigator from './components/BottomNavigation';
 
 const Stack = createNativeStackNavigator();
 const isSimulator = DeviceInfo.isEmulatorSync();
@@ -44,12 +48,35 @@ const initializeFirebase = async () => {
 
 function App(): JSX.Element {
   LogBox.ignoreAllLogs();
+  const [hasHms, setHasHms] = useState(false);
 
   useEffect(() => {
-    requestUserPermission();
-    initializeFirebase();
-    NotificationListner();
+    const checkHms = async () => {
+      const hmsAvailable = await DeviceInfo.hasHms();
+      setHasHms(hmsAvailable);
+    };
+    checkHms();
   }, []);
+
+  const gmsToken = async () => {
+    GetFCMToken();
+    requestUserPermission();
+    NotificationListner();
+    initializeFirebase();
+  }
+
+  const checkMobileService = async () => {
+    if (hasHms == true) {
+      hmsToken()
+    } else {
+      gmsToken()
+    }
+  }
+
+  useEffect(() => {
+    checkMobileService()
+    localStorage()
+  })
 
   const [loading, setLoading] = React.useState(true);
   const [initialRouteName, setInitialRouteName] = React.useState("Welcome");
@@ -74,15 +101,16 @@ function App(): JSX.Element {
               <Stack.Screen name="Register" component={Register} />
               <Stack.Group screenOptions={{ navigationBarColor: "white", }}>
                 <Stack.Screen name="TestTabNavigation" component={TestTabNavigation} />
-                {/* <Stack.Screen name="TestDashboardScreen" component={TestDashboardScreen} /> */}
                 <Stack.Screen name="DashboardScreen" component={DashboardScreen} />
                 <Stack.Screen name="Admin" component={Admin} />
                 <Stack.Screen name="Setting" component={SettingScreen} />
-                {/* <Stack.Screen name="TestSettingScreen" component={TestSettingScreen} /> */}
                 <Stack.Screen name="EditProfileScreen" component={EditProfileScreen} />
                 <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />
                 <Stack.Screen name="CustomDrawer" component={CustomDrawer} />
                 <Stack.Screen name="Verify" component={Verify} />
+                <Stack.Screen name="CustomBottomTabNavigator" component={CustomBottomTabNavigator} />
+                <Stack.Screen name="MessageDetail" component={MessageDetail} />
+  
               </Stack.Group>
 
               {/* <Stack.Screen name="Login" component={Login} />

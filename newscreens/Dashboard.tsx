@@ -1,4 +1,4 @@
-import { useFocusEffect } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { StatusBar, View, Text, TouchableOpacity, Platform, StyleSheet, Image, Dimensions } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { css } from '../objects/commonCSS';
@@ -11,9 +11,10 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { URLAccess } from '../objects/URLAccess';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Snackbar from 'react-native-snackbar';
+import BottomNavigation from '../components/BottomNavigation';
 
 const DashboardScreen = ({ navigation }: any) => {
-
+    const Navigation = useNavigation();
     const [locale, setLocale] = React.useState(i18n.locale);
 
     useFocusEffect(
@@ -29,15 +30,20 @@ const DashboardScreen = ({ navigation }: any) => {
     }, []);
 
     const checktoken = async () => {
-        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "CheckToken", { "Content-Type": "application/json" },
+        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/CheckToken", { "Content-Type": "application/json" },
             JSON.stringify({
                 "token": await AsyncStorage.getItem('fcmtoken'),
-                "username": await AsyncStorage.getItem('username')
+                "username": await AsyncStorage.getItem('username'),
+                "service": await AsyncStorage.getItem('service')
             })).then(async (res) => {
                 if (await res.json().isSuccess == true) {
                     AsyncStorage.getItem('fcmtoken').then((token) => {
                         console.log("Token:", token)
                     })
+                    AsyncStorage.getItem('service').then((service) => {
+                        console.log("Service:", service)
+                    })
+                    console.log(res.json().message)
                 }
                 else {
                     Snackbar.show({
@@ -91,7 +97,13 @@ const DashboardScreen = ({ navigation }: any) => {
                 {/*Scroll Horizontal Container*/}
                 <View style={styles.scrollView}>
                     <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-                        <TouchableOpacity>
+                        <TouchableOpacity onPress={() => Navigation.navigate(BottomNavigation as never)}>
+                            <View style={styles.ScrollViewButton}>
+                                <Text style={styles.ButtonText}>Message</Text>
+                                <Image source={require('../assets/DomainUIDesign/comments.png')} style={styles.ButtonIcon} />
+                            </View>
+                        </TouchableOpacity>
+                        {/* <TouchableOpacity>
                             <View style={styles.ScrollViewButton}>
                                 <Text style={styles.ButtonText}>Example</Text>
                                 <Image source={require('../assets/Example.png')} style={styles.ButtonIcon} />
@@ -108,13 +120,7 @@ const DashboardScreen = ({ navigation }: any) => {
                                 <Text style={styles.ButtonText}>Example</Text>
                                 <Image source={require('../assets/Example.png')} style={styles.ButtonIcon} />
                             </View>
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                            <View style={styles.ScrollViewButton}>
-                                <Text style={styles.ButtonText}>Example</Text>
-                                <Image source={require('../assets/Example.png')} style={styles.ButtonIcon} />
-                            </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </ScrollView>
                 </View>
 
@@ -122,7 +128,7 @@ const DashboardScreen = ({ navigation }: any) => {
                 <Image source={require('../assets/Advetiser.png')} style={styles.Advetiser} resizeMode='contain' />
 
                 {/** Bottom Button Container */}
-                <View style={{ alignSelf: 'flex-start', flex: 1 }}>
+                {/* <View style={{ alignSelf: 'flex-start', flex: 1 }}>
                     <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: '3%', marginLeft: '5%' }}>Component</Text>
                     <ScrollView style={{ flex: 1 }}>
                         <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1 }}>
@@ -176,7 +182,7 @@ const DashboardScreen = ({ navigation }: any) => {
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
-                </View>
+                </View> */}
             </LinearGradient>
         </MainContainer >
     )

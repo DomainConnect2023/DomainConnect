@@ -25,13 +25,15 @@ const SessionManagement = async (setLoading: React.Dispatch<React.SetStateAction
             // Storage Username and Password to AsyncStorage
             await AsyncStorage.setItem('username', username);
             await AsyncStorage.setItem('password', password);
-
+            const service = await AsyncStorage.getItem('service');
+            
             // Auto Login when have user name and password
-            RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "Login", { 'Content-Type': 'application/json' },
+            RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/Login", { 'Content-Type': 'application/json' },
                 JSON.stringify({
                     "username": username,
                     "password": password,
-                    "token": await AsyncStorage.getItem("fcmtoken")
+                    "token": await AsyncStorage.getItem("fcmtoken"),
+                    "service": await AsyncStorage.getItem('service')
                 })).then(async (res) => {
                     if (await res.json().isSuccess == true) {
 
@@ -40,7 +42,7 @@ const SessionManagement = async (setLoading: React.Dispatch<React.SetStateAction
 
                         // Set the Initial Route to Custom Drawer (Dashboard)
                         setInitialRouteName("CustomDrawer");
-                        console.log('Login Successful:', username, password);
+                        console.log('Login Successful:', username, password, service);
 
                         // Close Loading
                         setLoading(false);
