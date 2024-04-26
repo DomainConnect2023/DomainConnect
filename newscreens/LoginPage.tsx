@@ -20,6 +20,7 @@ import { URLAccess } from '../objects/URLAccess';
 import Verify from './Verify';
 import { CommonActions } from '@react-navigation/native';
 import { HmsPushInstanceId } from '@hmscore/react-native-hms-push';
+import DeviceInfo from 'react-native-device-info';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -32,6 +33,8 @@ const Login = () => {
     const [usernameHelperText, setusernameHelperText] = useState(false);
     const [passwordHelperText, setpasswordHelperText] = useState(false);
     const [token, setToken] = useState("");
+    
+
     useFocusEffect(
         React.useCallback(() => {
             setLocale(i18n.locale);
@@ -92,6 +95,8 @@ const Login = () => {
                     const Credential = await getGenericPassword()
                     await AsyncStorage.setItem('username', username);
                     await AsyncStorage.setItem('password', password);
+                    await AsyncStorage.setItem('display', res.json().display);
+                    await AsyncStorage.setItem('company', res.json().company);
                     await AsyncStorage.setItem('firstLauncher', 'false')
                     navigation.dispatch(
                         CommonActions.reset({
@@ -123,6 +128,7 @@ const Login = () => {
 
     return (
         <MainContainer>
+                    <StatusBar animated={true} backgroundColor="white" barStyle={'dark-content'} />
             {loading ? (
                 <View style={{ flex: 1, marginVertical: Dimensions.get('screen').height / 100 * 50 }}>
                     <ActivityIndicator size={80} color="#000000" />
@@ -170,9 +176,12 @@ const Login = () => {
                                 />
                                 {passwordHelperText && <HelperText type="error">Password can't be empty</HelperText>}
                             </View>
-                            <TouchableOpacity onPress={() => { }}>
+                            {/* Forgot Password */}
+
+                            {/* <TouchableOpacity onPress={() => { }}>
                                 <Text style={{ textAlign: "right", width: "95%", fontWeight: "bold", fontSize: 14, }}>Forgot Password?</Text>
-                            </TouchableOpacity>
+                            </TouchableOpacity> */}
+
                             {/* navigation.navigate(CustomDrawer as never) */}
                             <TouchableOpacity style={styles.ButtonLogin} onPress={() => { checkEmpty() }}>
                                 <Text style={styles.fonth2}>
@@ -194,7 +203,8 @@ const Login = () => {
                         </View>
                         {/* End Login Information */}
 
-                        <Text>{token}</Text>
+
+
                         {/* Footer */}
                         <View style={{ justifyContent: "flex-end" }}>
                             <View style={styles.blackline} />

@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Button, Dimensions, Platform, AppState, Alert, Image, Keyboard, KeyboardAvoidingView, } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, Button, Dimensions, Platform, AppState, Alert, Image, Keyboard, KeyboardAvoidingView, StatusBar, } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { datepickerCSS, styles } from '../objects/commonCSS';
 import { HelperText, TextInput } from 'react-native-paper';
@@ -251,13 +251,11 @@ const Register = () => {
     // Confirm whether the stage 1 data is correct 
     const IsInputCorrect = async (stage: any) => {
         let allInputsCorrect = true;
-        setLoading(true);
 
         inputs.forEach(input => {
             if (isInputEmpty(input.value)) {
                 input.setHelperText(true);
                 allInputsCorrect = false;
-                setLoading(false);
                 return;
             }
             else {
@@ -270,7 +268,6 @@ const Register = () => {
         if (!isUsernameAvailable) {
             setUserDuplicateHelperText(true);
             allInputsCorrect = false;
-            setLoading(false);
             return;
         } else {
             setUserDuplicateHelperText(false);
@@ -281,7 +278,6 @@ const Register = () => {
         if (!isEmailAvailable) {
             setEmailDuplicateHelperText(true);
             allInputsCorrect = false;
-            setLoading(false);
             return;
         } else {
             setEmailDuplicateHelperText(false);
@@ -293,7 +289,6 @@ const Register = () => {
             if (checkEmailFormat == false) {
                 setEmailFormatHelperText(true);
                 allInputsCorrect = false;
-                setLoading(false);
                 return;
             } else {
                 setEmailFormatHelperText(false);
@@ -304,7 +299,6 @@ const Register = () => {
         if (Password !== Retypepass) {
             setRetypeHelperText(true);
             allInputsCorrect = false;
-            setLoading(false);
             return;
         } else {
             setRetypeHelperText(false)
@@ -314,7 +308,6 @@ const Register = () => {
 
         if (stage === 1 && allInputsCorrect) {
             setstage(2);
-            setLoading(false);
         }
     }
 
@@ -454,13 +447,14 @@ const Register = () => {
 
     return (
         <MainContainer>
+        <StatusBar animated={true} backgroundColor="white" barStyle={'dark-content'} />
             {loading ? (
                 <View style={{ flex: 1, marginVertical: Dimensions.get('screen').height / 100 * 50 }}>
                     <ActivityIndicator size={80} color="#000000" />
                 </View>
             ) : (
-                // <KeyboardAvoidWrapper>
-                <KeyboardAvoidingView behavior="padding" style={{ flex: 1, paddingTop: 15 }}>
+                <KeyboardAvoidWrapper>
+                
 
                     {/* Header */}
                     <View style={{ height: Dimensions.get("screen").height / 100 * 90 }}>
@@ -786,8 +780,7 @@ const Register = () => {
 
                         {/* End Footer */}
                     </View>
-                </KeyboardAvoidingView>
-                // </KeyboardAvoidWrapper>
+                </KeyboardAvoidWrapper>
             )}
         </MainContainer >
     );

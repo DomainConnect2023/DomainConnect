@@ -6,17 +6,19 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { ScrollView } from 'react-native-gesture-handler';
 import i18n from '../language/i18n';
-import React, { useEffect } from 'react';
+import React, { useEffect ,useState} from 'react';
 import RNFetchBlob from 'rn-fetch-blob';
 import { URLAccess } from '../objects/URLAccess';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Snackbar from 'react-native-snackbar';
 import BottomNavigation from '../components/BottomNavigation';
 
+
 const DashboardScreen = ({ navigation }: any) => {
     const Navigation = useNavigation();
     const [locale, setLocale] = React.useState(i18n.locale);
-
+    const [displayname,setdisplayname] = useState('');
+    const [company,setcompany] = useState('');
     useFocusEffect(
         React.useCallback(() => {
             setLocale(i18n.locale);
@@ -26,6 +28,8 @@ const DashboardScreen = ({ navigation }: any) => {
     useEffect(() => {
         (async () => {
             checktoken();
+            setdisplayname(await AsyncStorage.getItem('display') ?? '') 
+            setcompany(await AsyncStorage.getItem('company') ?? '') 
         })();
     }, []);
 
@@ -90,13 +94,13 @@ const DashboardScreen = ({ navigation }: any) => {
                     <View style={styles.UserImageContainer}>
                         <Image source={require('../assets/profile.png')} style={styles.UserImage} />
                     </View>
-                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000000', marginTop: 20 }}>Mr. Anonymous</Text>
-                    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#696969', marginTop: 10 }}>Domain Connect Sdn Bhd</Text>
+                    <Text style={{ fontSize: 20, fontWeight: 'bold', color: '#000000', marginTop: 20 }}>{displayname}</Text>
+                    <Text style={{ fontSize: 14, fontWeight: 'bold', color: '#696969', marginTop: 10 }}>{company}</Text>
                 </LinearGradient>
 
                 {/*Scroll Horizontal Container*/}
                 <View style={styles.scrollView}>
-                    <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
+                    {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
                         <TouchableOpacity onPress={() => Navigation.navigate(BottomNavigation as never)}>
                             <View style={styles.ScrollViewButton}>
                                 <Text style={styles.ButtonText}>Message</Text>
@@ -121,7 +125,7 @@ const DashboardScreen = ({ navigation }: any) => {
                                 <Image source={require('../assets/Example.png')} style={styles.ButtonIcon} />
                             </View>
                         </TouchableOpacity> */}
-                    </ScrollView>
+                    {/* </ScrollView> */}
                 </View>
 
                 {/** Advetiser Container */}

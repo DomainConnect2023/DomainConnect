@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Platform, Image, Dimensions, StyleSheet, TouchableOpacity, StatusBar, Alert } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { useIsFocused } from '@react-navigation/native';
@@ -6,7 +6,7 @@ import { css } from '../objects/commonCSS';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { Switch } from 'react-native-paper';
+import { Divider, Switch } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import i18n from '../language/i18n';
 import EditProfileScreen from './EditProfile';
@@ -16,6 +16,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 
 const STORAGE_KEY = '@app_language';
 const SettingScreen = ({ navigation }: any) => {
+
+    const [displayname, setdisplayname] = useState('');
+    const [company, setcompany] = useState('');
+
+
+
 
     // Check if the application is currently in dark mode
     const [isDarkMode, setIsDarkMode] = useState(false);
@@ -28,7 +34,16 @@ const SettingScreen = ({ navigation }: any) => {
     // Call the loadLanguage function when the component is focused
     React.useEffect(() => {
         loadLanguage();
+
     }, [isFocused]);
+
+    useEffect(() => {
+        (async () => {
+            setdisplayname(await AsyncStorage.getItem('display') ?? '')
+            setcompany(await AsyncStorage.getItem('company') ?? '')
+        })();
+    }, []);
+
 
     // Load the user's selected language
     const loadLanguage = async () => {
@@ -125,26 +140,33 @@ const SettingScreen = ({ navigation }: any) => {
                     <View style={styles.container}>
                         <ScrollView>
                             {/** User Profile Container */}
-                            <View style={styles.UserInfo}>
-                                <Image source={require('../assets/profile.png')} style={styles.UserImage} />
-                                <View style={styles.User}>
-                                    <Text style={{ fontWeight: 'bold', fontSize: 16 }}>Mr. Anonymous</Text>
-                                    <Text style={{ fontWeight: 'bold', fontSize: 16, color: '#676767' }}>Domain Connect Sdn Bhd</Text>
+                            <View style={{flex:1,flexDirection:"row"}}>
+                                <View style={styles.UserInfo}>
+                                    <Image source={require('../assets/profile.png')} style={styles.UserImage} />
+                                    <View style={styles.User}>
+                                        <Text style={{ fontWeight: 'bold', fontSize: 16 }}>{displayname}</Text>
+                                        <Text style={{ fontWeight: 'bold', fontSize: 16, color: '#676767' }}>{company}</Text>
+                                    </View>
                                 </View>
-                            </View>
-
-                            {/** Edit Profile Container */}
-                            <View style={styles.Edit}>
-                                <View style={{ flex: 1, flexDirection: 'row' }}>
-                                    <FontAwesome5 name='edit' size={30} color='#000000' />
-                                    <Text style={{ marginLeft: 15, fontSize: 15, lineHeight: 30 }}>Edit Profile</Text>
-                                </View>
-                                <TouchableOpacity onPress={() => { navigation.navigate(EditProfileScreen as never) }}>
+                                <TouchableOpacity onPress={() => { navigation.navigate(EditProfileScreen as never) }} style={{alignSelf:"center",paddingHorizontal:20}}>
                                     <View style={styles.EditButton}>
                                         <Text style={{ fontSize: 16, color: '#FFFFFF', textAlign: 'center', fontWeight: 'bold', marginVertical: 5 }}>Edit</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
+
+
+                            {/** Edit Profile Container */}
+                            <Divider />
+
+                            {/* <View style={styles.Edit}>
+                                <View style={{ flex: 1, flexDirection: 'row' }}>
+                                    <FontAwesome5 name='edit' size={30} color='#000000' />
+                                    <Text style={{ marginLeft: 15, fontSize: 15, lineHeight: 30 }}>Edit Profile</Text>
+                                </View>
+
+                            </View>
+                            <Divider /> */}
 
                             {/** Other Function Container */}
                             <View style={styles.OtherContainer}>
@@ -232,13 +254,14 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: '#DEDEDE',
+        // backgroundColor: '#DEDEDE',
     },
     UserInfo: {
         backgroundColor: '#FFFFFF',
         padding: 10,
         flexDirection: 'row',
-        flex: 1
+        flex: 1,
+
     },
     UserImage: {
         width: Dimensions.get('screen').width / 100 * 15,
@@ -249,7 +272,7 @@ const styles = StyleSheet.create({
         paddingVertical: 15,
     },
     Edit: {
-        marginTop: Dimensions.get('screen').height / 100 * 4,
+        marginTop: 5,
         backgroundColor: '#FFFFFF',
         flex: 1,
         justifyContent: 'space-between',
@@ -263,7 +286,7 @@ const styles = StyleSheet.create({
         borderRadius: 10,
     },
     OtherContainer: {
-        marginTop: Dimensions.get('screen').height / 100 * 4,
+        marginTop: Dimensions.get('screen').height / 100 * 1,
         backgroundColor: '#FFFFFF',
         flex: 1,
         padding: 25,

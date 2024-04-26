@@ -14,6 +14,7 @@ import { resetGenericPassword } from 'react-native-keychain';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import DashboardScreen from '../newscreens/Dashboard';
 import SettingScreen from '../newscreens/Setting';
+import DeviceInfo from 'react-native-device-info';
 // Remember install gesturehandler and reanimated
 
 const Drawer = createDrawerNavigator();
@@ -21,6 +22,7 @@ const Drawer = createDrawerNavigator();
 
 function CustomDrawerContent(props: any) {
   const navigation = useNavigation();
+  const version = DeviceInfo.getVersion();
   const [loggedOut, setLoggedOut] = React.useState(false);
 
   const handleLogout = () => {
@@ -63,6 +65,9 @@ function CustomDrawerContent(props: any) {
       </DrawerContentScrollView>
 
       <View style={{ justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+      
+      <Text style={{color:"gray" , fontSize:10}}> Version : {version}</Text>
+                        
         <Text style={styles.fontsmall}>Develop by Domain Connect @2024</Text>
 
       </View>
@@ -120,7 +125,7 @@ export function CustomDrawer() {
           drawerIcon: ({ focused, size }) => (<FontAwesome name="user-tie" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
         }} /> */}
 
-      <Drawer.Screen name={i18n.t('Left-Navigation.Setting')} component={SettingScreen}
+      <Drawer.Screen name={i18n.t('Left-Navigation.Setting')} component={SettingScreen}  
         options={{
           headerTitle: i18n.t('Left-Navigation.Setting'),
           headerRight: () => (

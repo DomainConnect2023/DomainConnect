@@ -167,7 +167,15 @@ const Verify = () => {
                 "Birth_Date": await AsyncStorage.getItem("BirthDate")
             })).then(async (res) => {
                 if (await res.json().isSuccess == true) {
-                    AsyncStorage.clear();
+                    AsyncStorage.removeItem("Status");
+                    AsyncStorage.removeItem("Username"),
+                    AsyncStorage.removeItem("Password"),
+                    AsyncStorage.removeItem("Email"),
+                    AsyncStorage.removeItem("Company"),
+                    AsyncStorage.removeItem("Vehicle"),
+                    AsyncStorage.removeItem("MobileNo"),
+                    AsyncStorage.removeItem("BirthDate")
+                    // AsyncStorage.clear();
 
                     setModalVisible(true)
 
