@@ -28,7 +28,7 @@ const SessionManagement = async (setLoading: React.Dispatch<React.SetStateAction
             const service = await AsyncStorage.getItem('service');
             
             // Auto Login when have user name and password
-            RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "Login", { 'Content-Type': 'application/json' },
+            RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/Login", { 'Content-Type': 'application/json' },
                 JSON.stringify({
                     "username": username,
                     "password": password,

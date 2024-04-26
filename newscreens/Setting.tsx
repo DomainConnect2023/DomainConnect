@@ -192,7 +192,7 @@ const SettingScreen = ({ navigation }: any) => {
                                 </Collapsible>
 
                                 {/** Dark Mode Container */}
-                                <View style={{ flex: 1, flexDirection: 'row', paddingTop: 20, justifyContent: 'space-between' }}>
+                                {/* <View style={{ flex: 1, flexDirection: 'row', paddingTop: 20, justifyContent: 'space-between' }}>
                                     <View style={{ flexDirection: 'row' }}>
                                         <Ionicons name='moon-outline' size={30} color='#000000' />
                                         <Text style={{ marginLeft: 15, fontSize: 15, lineHeight: 30 }}>{i18n.t('SettingPage.Dark-Mode')}</Text>
@@ -200,13 +200,13 @@ const SettingScreen = ({ navigation }: any) => {
                                     <View style={{ padding: 10, alignItems: "center" }}>
                                         <Switch style={styles.switch} value={isDarkMode} onValueChange={onToggleSwitch} />
                                     </View>
-                                </View>
+                                </View> */}
 
                                 {/** Other Content Container */}
-                                <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#6E6E6E', marginTop: 20 }}>Content</Text>
+                                {/* <Text style={{ fontSize: 18, fontWeight: 'bold', color: '#6E6E6E', marginTop: 20 }}>Content</Text> */}
 
                                 {/** Content Container */}
-                                <View style={{ flex: 1, flexDirection: 'row', paddingTop: 20, justifyContent: 'space-between' }}>
+                                {/* <View style={{ flex: 1, flexDirection: 'row', paddingTop: 20, justifyContent: 'space-between' }}>
                                     <View style={{ flexDirection: 'row' }}>
                                         <FontAwesome5 name='question' size={30} color='#000000' />
                                         <Text style={{ marginLeft: 15, fontSize: 15, lineHeight: 30 }}>Example</Text>
@@ -216,7 +216,7 @@ const SettingScreen = ({ navigation }: any) => {
                                             <AntDesign name={'right'} size={30} color={"black"} />
                                         </View>
                                     </TouchableOpacity>
-                                </View>
+                                </View> */}
                             </View>
                         </ScrollView>
                     </View>

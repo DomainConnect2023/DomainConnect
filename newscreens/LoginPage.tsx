@@ -80,7 +80,7 @@ const Login = () => {
 
     const LoginApi = async () => {
         setLoading(true)
-        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "Login", { "Content-Type": "application/json" },
+        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/Login", { "Content-Type": "application/json" },
             JSON.stringify({
                 "username": username,
                 "password": password,

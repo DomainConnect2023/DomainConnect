@@ -95,7 +95,7 @@ const Register = () => {
     // Check the email and username are duplicated
     const isInputDuplicated = async (Username: String, Email: String) => {
         try {
-            const response = await RNFetchBlob.config({ trusty: true }).fetch('POST', URLAccess.Url + 'CheckCrediential', { "Content-Type": "application/json" },
+            const response = await RNFetchBlob.config({ trusty: true }).fetch('POST', URLAccess.Url + 'api/CheckCrediential', { "Content-Type": "application/json" },
                 JSON.stringify({
                     "username": Username,
                     "Email": Email
@@ -420,7 +420,7 @@ const Register = () => {
             await AsyncStorage.setItem("BirthDate", "");
             await AsyncStorage.setItem("Vehicle", "");
         }
-        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "GetOTP", { "Content-Type": "application/json" },
+        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/GetOTP", { "Content-Type": "application/json" },
             JSON.stringify({
                 "Email": Email
             })).then(async (res) => {

@@ -10,7 +10,7 @@ import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { Notification } from "../objects/objects";
 
 const Message = ({ navigation }: any) => {
-    const [loading, setLoading] = React.useState(false);
+    const [loading, setLoading] = useState(true);
     const [itemFinish, setItemFinish] = useState(false);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [refreshing, setRefreshing] = useState(false);
@@ -18,7 +18,7 @@ const Message = ({ navigation }: any) => {
 
     useEffect(() => {
         (async () => {
-            setLoading(true);
+            
             await FetchNotificationData(currentPage);
             setLoading(false);
         })();
@@ -60,15 +60,18 @@ const Message = ({ navigation }: any) => {
 
     const FetchNotificationData = async (page: number) => {
         const username = await AsyncStorage.getItem('username');
+        
         await RNFetchBlob.config({
             trusty: true
-        }).fetch('POST', URLAccess.Url + 'NotificationLog', { 'Content-Type': "application/json", },
+        }).fetch('POST', URLAccess.Url + 'api/NotificationLog', { 'Content-Type': "application/json", },
             JSON.stringify({
                 "username": username,
                 "page": page.toString()
             })).then(async res => {
+                
                 setFetchedData((prevData) => [...prevData, ...JSON.parse(res.data)]);
-                console.log(fetchedData)
+                
+
             })
             .catch(error => {
                 console.log(error);
@@ -265,7 +268,7 @@ const Message = ({ navigation }: any) => {
                 </View>
             ) : (
                 <View style={{ flex: 1, flexDirection: 'column' }}>
-                    <ScrollView>
+                    
                         <View style={{ flex: 1, flexDirection: 'column' }}>
                             <FlatList
                                 data={flatListTodayData}
@@ -292,14 +295,15 @@ const Message = ({ navigation }: any) => {
                                         </View>
                                     </View>
                                 )}
-                                onEndReached={loadMore}
+                                onEndReached={()=>{console.log('1'),loadMore()}}
                                 refreshControl={<RefreshControl
                                     refreshing={refreshing}
                                     onRefresh={onRefresh}
+
                                 />}
                             />
                         </View>
-                    </ScrollView>
+                    
                 </View>
             )}
         </MainContainer>

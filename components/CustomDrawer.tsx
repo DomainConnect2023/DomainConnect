@@ -106,7 +106,7 @@ export function CustomDrawer() {
           drawerIcon: ({ focused, size }) => (<Ionicons name="home" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
         }} />
 
-      <Drawer.Screen name={i18n.t('Left-Navigation.Admin')} component={Admin}
+      {/* <Drawer.Screen name={i18n.t('Left-Navigation.Admin')} component={Admin}
         options={{
           headerTitle: i18n.t('Left-Navigation.Admin'),
           headerRight: () => (
@@ -118,7 +118,7 @@ export function CustomDrawer() {
             </View>
           ),
           drawerIcon: ({ focused, size }) => (<FontAwesome name="user-tie" size={35} color="black" style={{ marginLeft: 5, marginRight: 5 }} />),
-        }} />
+        }} /> */}
 
       <Drawer.Screen name={i18n.t('Left-Navigation.Setting')} component={SettingScreen}
         options={{

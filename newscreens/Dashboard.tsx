@@ -30,7 +30,7 @@ const DashboardScreen = ({ navigation }: any) => {
     }, []);
 
     const checktoken = async () => {
-        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "CheckToken", { "Content-Type": "application/json" },
+        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/CheckToken", { "Content-Type": "application/json" },
             JSON.stringify({
                 "token": await AsyncStorage.getItem('fcmtoken'),
                 "username": await AsyncStorage.getItem('username'),
@@ -103,7 +103,7 @@ const DashboardScreen = ({ navigation }: any) => {
                                 <Image source={require('../assets/DomainUIDesign/comments.png')} style={styles.ButtonIcon} />
                             </View>
                         </TouchableOpacity>
-                        <TouchableOpacity>
+                        {/* <TouchableOpacity>
                             <View style={styles.ScrollViewButton}>
                                 <Text style={styles.ButtonText}>Example</Text>
                                 <Image source={require('../assets/Example.png')} style={styles.ButtonIcon} />
@@ -120,7 +120,7 @@ const DashboardScreen = ({ navigation }: any) => {
                                 <Text style={styles.ButtonText}>Example</Text>
                                 <Image source={require('../assets/Example.png')} style={styles.ButtonIcon} />
                             </View>
-                        </TouchableOpacity>
+                        </TouchableOpacity> */}
                     </ScrollView>
                 </View>
 
@@ -128,7 +128,7 @@ const DashboardScreen = ({ navigation }: any) => {
                 <Image source={require('../assets/Advetiser.png')} style={styles.Advetiser} resizeMode='contain' />
 
                 {/** Bottom Button Container */}
-                <View style={{ alignSelf: 'flex-start', flex: 1 }}>
+                {/* <View style={{ alignSelf: 'flex-start', flex: 1 }}>
                     <Text style={{ fontWeight: 'bold', fontSize: 16, marginTop: '3%', marginLeft: '5%' }}>Component</Text>
                     <ScrollView style={{ flex: 1 }}>
                         <View style={{ flexDirection: 'row', flexWrap: 'wrap', flex: 1 }}>
@@ -182,7 +182,7 @@ const DashboardScreen = ({ navigation }: any) => {
                             </TouchableOpacity>
                         </View>
                     </ScrollView>
-                </View>
+                </View> */}
             </LinearGradient>
         </MainContainer >
     )
