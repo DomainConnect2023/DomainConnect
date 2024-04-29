@@ -222,6 +222,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
         paddingVertical: 20,
+        overflow:'visible'
     },
     scrollView: {
         width: '100%',
