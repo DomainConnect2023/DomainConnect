@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { View, Text, TouchableOpacity, StatusBar, Image } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { styles } from '../objects/commonCSS';
@@ -9,6 +9,7 @@ import i18n from '../language/i18n';
 
 const Welcome = () => {
     const navigation = useNavigation();
+
 
     return (
         <MainContainer>

@@ -207,7 +207,7 @@ const Register = () => {
 
         // Check Password Match
         const checkPassword = async () => {
-            if (Password !== '' && Retypepass !== '') {
+            if (Password.length !== 0 && Retypepass.length !== 0) {
                 if (isPasswordNotSame()) {
                     setRetypeHelperText(true);
                 } else {

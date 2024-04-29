@@ -21,6 +21,7 @@ import Verify from './Verify';
 import { CommonActions } from '@react-navigation/native';
 import { HmsPushInstanceId } from '@hmscore/react-native-hms-push';
 import DeviceInfo from 'react-native-device-info';
+import { requestUserPermission } from '../components/pushNotification';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -46,7 +47,8 @@ const Login = () => {
         const unsubscribe = navigation.addListener('focus', () => {
             setusername('');
             setpassword('');
-        });
+        }
+    );
 
         return unsubscribe;
     }, [navigation]);
@@ -79,6 +81,7 @@ const Login = () => {
         if (password) {
             setpasswordHelperText(false)
         }
+
     })
 
     const LoginApi = async () => {

@@ -3,11 +3,13 @@ import messaging from '@react-native-firebase/messaging';
 import Login from '../screens/LoginPage';
 import { useNavigation } from '@react-navigation/native';
 import TabNavigation from '../screens/TabNavigation';
+import { PermissionsAndroid } from 'react-native';
 
 
 
 export async function requestUserPermission() {
     const authStatus = await messaging().requestPermission();
+    PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.POST_NOTIFICATIONS);
     const enabled =
         authStatus === messaging.AuthorizationStatus.AUTHORIZED ||
         authStatus === messaging.AuthorizationStatus.PROVISIONAL;
