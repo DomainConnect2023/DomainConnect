@@ -84,7 +84,7 @@
         "Name": "Nama",
         "Company": "Syarikat",
         "Notification": "Pemberitahuan",
-        "Msg": "Msg",
+        "Msg": "Mesej",
         "Time": "Masa",
         "No-Notification": "Tiada Pemberitahuan",
         "No-Data": "Tiada data",
@@ -146,6 +146,21 @@
         }
     },
     "VerifyPage":{
-        "Verify_The_Code":"Verify the Code"
+        "Verify_The_Code":"Verify the Code",
+        "Enter Verification Code":"Masukkan Kode Verifikasi",
+        "Send Code to":"mengirim Kode ke",
+        "Please enter Verification Code":"Silakan masukkan Kode Verifikasi",
+        "Didt Receive the Code?":"Tidak Menerima Kode?",
+        "Resend":"Mengirim ulang",
+        "Register Successful !":"Pendaftaran Berhasil!",
+        "Login":"Masuk"
+    },
+    "Message":{
+        "Today" :"Hari ini",
+        "Message":"Mesej",
+        "Message-detail":"Butiran Mesej",
+        "Collected":"Penanda",
+        "Not-Collected":"Anda belum mengumpul mesej itu!",
+        "No-More":"Tiada Data lagi"
     }
 }

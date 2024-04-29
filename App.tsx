@@ -4,8 +4,6 @@ import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { LogBox, Platform, SafeAreaView, ActivityIndicator, View, Dimensions, Alert } from 'react-native';
 import Login from './newscreens/LoginPage';
 import Register from './newscreens/RegisterPage';
-// import TestDashboardScreen from './newscreens/TestDashboard';
-// import TestSettingScreen from './newscreens/TestSetting';
 import TestTabNavigation from './newscreens/TestNavigation';
 import EditProfileScreen from './newscreens/EditProfile';
 import { GetFCMToken, NotificationListner, requestUserPermission } from './components/pushNotification';
@@ -29,9 +27,13 @@ import { hmsToken } from './components/hmsPushNotification';
 import MessageDetail from './newscreens/MessageDetail';
 import localStorage from './components/localStorage';
 import CustomBottomTabNavigator from './components/BottomNavigation';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import i18n from '../DomainConnect/language/i18n';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator();
 const isSimulator = DeviceInfo.isEmulatorSync();
+const STORAGE_KEY = '@app_language';
 const initializeFirebase = async () => {
   // const credentials = { ... }; // Your Firebase credentials
 
@@ -55,6 +57,19 @@ function App(): JSX.Element {
       const hmsAvailable = await DeviceInfo.hasHms();
       setHasHms(hmsAvailable);
     };
+    const loadLanguage = async () => {
+      try {
+          const language = await AsyncStorage.getItem(STORAGE_KEY);
+          if (language) {
+              i18n.locale = language;
+              setLocale(language);
+          }
+      } catch (error) {
+          console.error('Failed to load language', error);
+      }
+  };
+
+  loadLanguage();
     checkHms();
   }, []);
 
@@ -75,11 +90,12 @@ function App(): JSX.Element {
 
   useEffect(() => {
     checkMobileService()
-    localStorage()
+    // localStorage()
   })
 
   const [loading, setLoading] = React.useState(true);
   const [initialRouteName, setInitialRouteName] = React.useState("Welcome");
+  const [locale, setLocale] = React.useState(i18n.locale);
 
   // Call SessionManagement function
   React.useEffect(() => {

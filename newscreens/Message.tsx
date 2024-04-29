@@ -4,10 +4,13 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { css } from "../objects/commonCSS"
 import React, { useEffect, useState, useRef } from 'react';
 import RNFetchBlob from "rn-fetch-blob";
+import i18n from '../language/i18n';
 import { URLAccess } from "../objects/URLAccess";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
 import { Notification } from "../objects/objects";
+import { useFocusEffect } from "@react-navigation/native";
+
 
 const Message = ({ navigation }: any) => {
     const [loading, setLoading] = useState(true);
@@ -15,6 +18,13 @@ const Message = ({ navigation }: any) => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [refreshing, setRefreshing] = useState(false);
     const [fetchedData, setFetchedData] = useState<Notification[]>([]);
+    const [locale, setLocale] = React.useState(i18n.locale);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setLocale(i18n.locale);
+        }, [])
+    );
 
     useEffect(() => {
         (async () => {
@@ -24,7 +34,6 @@ const Message = ({ navigation }: any) => {
         })();
         if (Platform.OS === 'ios') {
             const listener = AppState.addEventListener('change', appcheck);
-            PushNotificationIOS.setApplicationIconBadgeNumber(0);
             return () => {
                 listener.remove();
             }
@@ -34,7 +43,6 @@ const Message = ({ navigation }: any) => {
 
             return () => {
                 listener.remove();
-                console.log("APPSTATE REMOVE");
             }
         }
     }, []);
@@ -44,9 +52,6 @@ const Message = ({ navigation }: any) => {
             if (nextAppState == 'active') {
                 console.log("APPSTATE OPEN IOS");
                 onRefresh();
-            }
-            else if (nextAppState != 'Active') {
-                PushNotificationIOS.setApplicationIconBadgeNumber(0);
             }
         }
         else {
@@ -120,7 +125,7 @@ const Message = ({ navigation }: any) => {
     const renderTodayData = ({ item }: any) => {
         if (item.type === 'monthYear') {
             return (
-                <Text style={styles.Time}>Today</Text>
+                <Text style={styles.Time}>{i18n.t('Message.Today')}</Text>
             );
         } else {
             const date = item.created_at
@@ -249,7 +254,7 @@ const Message = ({ navigation }: any) => {
                         <Ionicons name="arrow-back" size={26} color={"black"} />
                     </TouchableOpacity>
                     <View style={css.HeaderView}>
-                        <Text style={[css.PageName, { color: '#000000' }]}>Message</Text>
+                        <Text style={[css.PageName, { color: '#000000' }]}>{i18n.t('Message.Message')}</Text>
                     </View>
                 </View>
             ) : (
@@ -258,7 +263,7 @@ const Message = ({ navigation }: any) => {
                         <Ionicons name="arrow-back" size={26} color={"black"} />
                     </TouchableOpacity>
                     <View style={css.HeaderView}>
-                        <Text style={[css.PageName, { color: '#000000' }]}>Message</Text>
+                        <Text style={[css.PageName, { color: '#000000' }]}>{i18n.t('Message.Message')}</Text>
                     </View>
                 </View>
             )}
@@ -283,14 +288,14 @@ const Message = ({ navigation }: any) => {
                                     <View style={{ flex: 1, flexDirection: 'column' }}>
                                         <Image source={require("../assets/DomainUIDesign/inbox.png")} style={{ width: 200, height: 200, alignSelf: 'center', marginTop: 100 }} />
                                         <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 10 }}>Oops!</Text>
-                                        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>You have not collected the message!</Text>
+                                        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>{i18n.t('Message.Not-Collected')}</Text>
                                     </View>
                                 )}
                                 ListFooterComponent={() => itemFinish && (
                                     <View style={[css.listItem]}>
                                         <View style={css.cardBody}>
                                             <Text style={[css.textHeader, { textAlign: 'center', fontWeight: "normal" }]}>
-                                                No more Data
+                                            {i18n.t('Message.No-More')}
                                             </Text>
                                         </View>
                                     </View>
@@ -343,3 +348,4 @@ const styles = StyleSheet.create({
 })
 
 export default Message;
+

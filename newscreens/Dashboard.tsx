@@ -74,7 +74,7 @@ const DashboardScreen = ({ navigation }: any) => {
                             <Ionicons name="menu" size={26} color={"white"} />
                         </TouchableOpacity>
                         <View style={css.HeaderView}>
-                            <Text style={css.PageName}>Dashboard</Text>
+                            <Text style={css.PageName}>{i18n.t('DashboardPage.Dashboard')}</Text>
                         </View>
                     </View>
                 ) : (
@@ -83,7 +83,7 @@ const DashboardScreen = ({ navigation }: any) => {
                             <Ionicons name="menu" size={26} color={"white"} />
                         </TouchableOpacity>
                         <View style={css.HeaderView}>
-                            <Text style={css.PageName}>Dashboard</Text>
+                            <Text style={css.PageName}>{i18n.t('DashboardPage.Dashboard')}</Text>
                         </View>
                     </View>
                 )}
@@ -103,7 +103,7 @@ const DashboardScreen = ({ navigation }: any) => {
                     {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
                         <TouchableOpacity onPress={() => Navigation.navigate(BottomNavigation as never)}>
                             <View style={styles.ScrollViewButton}>
-                                <Text style={styles.ButtonText}>Message</Text>
+                                <Text style={styles.ButtonText}>{i18n.t('DashboardPage.Msg')}</Text>
                                 <Image source={require('../assets/DomainUIDesign/comments.png')} style={styles.ButtonIcon} />
                             </View>
                         </TouchableOpacity>

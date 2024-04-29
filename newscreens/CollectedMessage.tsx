@@ -6,10 +6,19 @@ import React, { useState } from "react";
 import SQLite from 'react-native-sqlite-storage';
 import { Image } from "react-native-animatable";
 import CustomDrawer from "../components/CustomDrawer";
+import i18n from '../language/i18n';
+import { useFocusEffect } from "@react-navigation/native";
 
 const CollectedMessage = ({ navigation }: any) => {
     const [messages, setMessages] = useState<{ logID: number; header: string; created_at: string; textValue: string; }[]>([]);
     const [loading, setLoading] = useState(false);
+    const [locale, setLocale] = React.useState(i18n.locale);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setLocale(i18n.locale);
+        }, [])
+    );
 
     React.useEffect(() => {
         const unsubscribe = navigation.addListener('focus', () => {
@@ -18,7 +27,7 @@ const CollectedMessage = ({ navigation }: any) => {
                 const db = await SQLite.openDatabase({ name: 'Collected.db', createFromLocation: 1 });
                 db.transaction((tx) => {
                     tx.executeSql(
-                        'SELECT * FROM messages;',
+                        'SELECT * FROM messages order by created_at desc;',
                         [],
                         (tx, results) => {
                             const len = results.rows.length;
@@ -64,7 +73,7 @@ const CollectedMessage = ({ navigation }: any) => {
                 <View style={{ flex: 1, flexDirection: 'column' }}>
                     <Image source={require("../assets/DomainUIDesign/inbox.png")} style={{ width: 200, height: 200, alignSelf: 'center', marginTop: 100 }} />
                     <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 10 }}>Oops!</Text>
-                    <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>You have not collected the message!</Text>
+                    <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>{i18n.t('Message.Not-Collected')}</Text>
                 </View>
             )
         }
@@ -79,7 +88,7 @@ const CollectedMessage = ({ navigation }: any) => {
                         <Ionicons name="arrow-back" size={26} color={"black"} />
                     </TouchableOpacity>
                     <View style={css.HeaderView}>
-                        <Text style={[css.PageName, { color: '#000000' }]}>Collected</Text>
+                        <Text style={[css.PageName, { color: '#000000' }]}>{i18n.t('Message.Collected')}</Text>
                     </View>
                 </View>
             ) : (
@@ -88,7 +97,7 @@ const CollectedMessage = ({ navigation }: any) => {
                         <Ionicons name="arrow-back" size={26} color={"black"} />
                     </TouchableOpacity>
                     <View style={css.HeaderView}>
-                        <Text style={[css.PageName, { color: '#000000' }]}>Collected</Text>
+                        <Text style={[css.PageName, { color: '#000000' }]}>{i18n.t('Message.Collected')}</Text>
                     </View>
                 </View>
             )}

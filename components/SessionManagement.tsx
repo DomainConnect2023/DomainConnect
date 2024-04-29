@@ -4,6 +4,9 @@ import RNFetchBlob from 'rn-fetch-blob';
 import Snackbar from 'react-native-snackbar';
 import { setCredentials } from './keychainService';
 import { URLAccess } from '../objects/URLAccess';
+import React,{ useEffect } from 'react';
+
+
 
 const SessionManagement = async (setLoading: React.Dispatch<React.SetStateAction<boolean>>, setInitialRouteName: React.Dispatch<React.SetStateAction<string>>) => {
     setLoading(true);
@@ -56,6 +59,10 @@ const SessionManagement = async (setLoading: React.Dispatch<React.SetStateAction
                         console.log("Error");
                         setLoading(false);
                     }
+                }).catch(error => {
+                    console.log(error.message)
+                    setInitialRouteName("Login");
+                    setLoading(false);
                 });
         } else {
             // Go to Login page when no data into keychain

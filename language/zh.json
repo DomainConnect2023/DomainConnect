@@ -80,7 +80,7 @@
         "Cancel": "取消"
     },
     "DashboardPage": {
-        "Dashboard": "仪表盘",
+        "Dashboard": "主页",
         "Name": "名字",
         "Company": "公司",
         "Notification": "通知",
@@ -101,7 +101,7 @@
         "LogOut": "登出"
     },
     "Bottom-Navigation": {
-        "Dashboard": "仪表盘",
+        "Dashboard": "主页",
         "Setting": "设置"
     },
     "Admin": {
@@ -118,7 +118,7 @@
         "Send-Notification": "发送通知"
     },
     "Left-Navigation": {
-        "Dashboard": "仪表盘",
+        "Dashboard": "主页",
         "Admin": "管理员",
         "Setting":"设置",
         "LogOut": "登出"
@@ -146,6 +146,21 @@
         }
     },
     "VerifyPage":{
-        "Verify_The_Code":"验证号码"
+        "Verify_The_Code":"验证号码",
+        "Enter Verification Code":"输入验证号码",
+        "Send Code to":"发送验证号码至",
+        "Please enter Verification Code":"请输入验证号码",
+        "Didt Receive the Code?":"没有收到号码?",
+        "Resend":"重新发送",
+        "Register Successful !":"注册成功 !",
+        "Login":"登录"
+    },
+    "Message":{
+        "Today" :"今日",
+        "Message":"消息",
+        "Message-detail":"消息详情",
+        "Collected":"收藏",
+        "Not-Collected":"你還沒收藏任何消息！",
+        "No-More":"沒有更多數據"
     }
 }

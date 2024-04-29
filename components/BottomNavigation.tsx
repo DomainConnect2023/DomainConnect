@@ -2,10 +2,18 @@ import React from 'react';
 import { createMaterialBottomTabNavigator } from '@react-navigation/material-bottom-tabs';
 import Message from '../newscreens/Message';
 import CollectedMessage from '../newscreens/CollectedMessage';
+import i18n from '../language/i18n';
+import { useFocusEffect } from '@react-navigation/native';
 
 const Tab = createMaterialBottomTabNavigator();
 
 function CustomBottomTabNavigator() {
+    const [locale, setLocale] = React.useState(i18n.locale);
+    useFocusEffect(
+        React.useCallback(() => {
+            setLocale(i18n.locale);
+        }, [])
+    );
 
     return (
         <Tab.Navigator
@@ -20,7 +28,7 @@ function CustomBottomTabNavigator() {
                 component={Message}
 
                 options={{
-                    title: 'Message',
+                    title: i18n.t('Message.Message'),
                     tabBarIcon: 'message',
                 }}
             />
@@ -28,7 +36,7 @@ function CustomBottomTabNavigator() {
                 name="Collected"
                 component={CollectedMessage}
                 options={{
-                    title: 'Collected',
+                    title: i18n.t('Message.Collected'),
                     tabBarIcon: 'bookmark-outline',
                 }}
             />

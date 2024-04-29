@@ -83,9 +83,10 @@ const Login = () => {
 
     const LoginApi = async () => {
         setLoading(true)
+        
         RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/Login", { "Content-Type": "application/json" },
             JSON.stringify({
-                "username": username,
+                "username": username.split(' ')[0],
                 "password": password,
                 "token": await AsyncStorage.getItem("fcmtoken"),
                 "service": await AsyncStorage.getItem("service"),
@@ -109,12 +110,12 @@ const Login = () => {
                     setLoading(false)
                 }
                 else {
-                    setLoading(false)
                     Snackbar.show({
                         text: "Login Fail, Please Check Your credential and try again later.",
                         duration: Snackbar.LENGTH_LONG
                     })
                     console.log("Error")
+                    setLoading(false)
                 }
                 
             }).catch(err => {
@@ -124,6 +125,7 @@ const Login = () => {
                 })
                 setLoading(false)
             })
+        
     }
 
     return (

@@ -1,4 +1,4 @@
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
 import { View, Text, TouchableOpacity, StatusBar, Image, TextInput, Dimensions, Keyboard, ActivityIndicator, Alert, Modal, Pressable, StyleSheet } from 'react-native';
 import MainContainer from '../components/MainContainer';
@@ -17,6 +17,13 @@ const Verify = () => {
     const [loading, setLoading] = React.useState(false);
     const [errorOccurred, setErrorOccurred] = useState(true);
     const [modalVisible, setModalVisible] = useState(false);
+    const [locale, setLocale] = React.useState(i18n.locale);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setLocale(i18n.locale);
+        }, [])
+    );
 
     const [email, setemail] = useState<String | null>('')
     const [number1, setnumber1] = useState('');
@@ -210,12 +217,12 @@ const Verify = () => {
                     <StatusBar animated={true} backgroundColor="white" barStyle={'dark-content'} />
                     <View style={{ height: Dimensions.get("screen").height / 100 * 90 }}>
                         <View style={{ flex: 0.7, alignSelf: "center", justifyContent: "center" }}>
-                            <Text style={{ fontWeight: "bold", fontSize: 24 }}>Enter Verification Code</Text>
+                            <Text style={{ fontWeight: "bold", fontSize: 24 }}>{i18n.t('VerifyPage.Enter Verification Code')}</Text>
                         </View>
                         <View style={{ flex: 2.5, alignItems: "center", alignSelf: "center" }}>
                             <Image source={require('../assets/professional-email-icon.png')} style={{ resizeMode: "contain", width: 300, height: 300 }} />
-                            <Text style={{ marginTop: 20, color: 'grey' }}>Send Email to {email} .</Text>
-                            <Text style={{ color: 'grey' }}>Please enter Verification Code</Text>
+                            <Text style={{ marginTop: 20, color: 'grey' }}>{i18n.t('VerifyPage.Send Code to')} {email} .</Text>
+                            <Text style={{ color: 'grey' }}>{i18n.t('VerifyPage.Please enter Verification Code')}</Text>
                         </View>
 
                         <View style={{ flex: 0.5, flexDirection: "row", justifyContent: "center", alignSelf: "center" }}>
@@ -294,12 +301,12 @@ const Verify = () => {
                         <View style={{ flex: 1 }}>
                             <View style={{ flexDirection: "row", justifyContent: "center" }}>
                                 <Text style={{ color: 'grey' }}>
-                                    Did't Receive the Code?
+                                    {i18n.t('VerifyPage.Didt Receive the Code?')}
                                 </Text>
                                 <TouchableOpacity style={{ paddingLeft: 10 }}>
                                     <Text style={{ color: 'blue' }} onPress={() => {
                                         GETOTP();
-                                    }}>Resend</Text>
+                                    }}>{i18n.t('VerifyPage.Resend')}</Text>
                                 </TouchableOpacity>
                             </View>
 
@@ -329,11 +336,11 @@ const Verify = () => {
                                 <View style={styles.centeredView}>
                                     <View style={styles.modalView}>
                                         <Feather name='check' size={50} color={'#FFFFFF'} style={{ backgroundColor: 'green', borderRadius: 50, padding: 10 }}></Feather>
-                                        <Text style={styles.modalText}>Register Successful !</Text>
+                                        <Text style={styles.modalText}>{i18n.t('VerifyPage.Register Successful !')}</Text>
                                         <Pressable
                                             style={[styles.buttonClose]}
                                             onPress={() => navigation.navigate(Login as never)}>
-                                            <Text style={styles.textStyle}>Login</Text>
+                                            <Text style={styles.textStyle}>{i18n.t('VerifyPage.Login')}</Text>
                                         </Pressable>
                                     </View>
                                 </View>

@@ -33,19 +33,19 @@ function CustomDrawerContent(props: any) {
     setLoggedOut(true);
   };
 
-  React.useEffect(() => {
-    const backAction = () => {
-      BackHandler.exitApp();
-      return true;
-    };
+  // React.useEffect(() => {
+  //   const backAction = () => {
+  //     BackHandler.exitApp();
+  //     return true;
+  //   };
 
-    const backHandler = BackHandler.addEventListener(
-      'hardwareBackPress',
-      backAction
-    );
+  //   const backHandler = BackHandler.addEventListener(
+  //     'hardwareBackPress',
+  //     backAction
+  //   );
 
-    return () => backHandler.remove();
-  }, []);
+  //   return () => backHandler.remove();
+  // }, []);
 
   return (
     <View style={{ height: Dimensions.get("screen").height / 100 * 93 }}>

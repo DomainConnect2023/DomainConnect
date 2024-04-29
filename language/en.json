@@ -85,7 +85,7 @@
         "Name": "Name",
         "Company": "Company",
         "Notification": "Notification",
-        "Msg": "Msg",
+        "Msg": "Message",
         "Time": "Time",
         "No-Notification": "No Notification",
         "No-Data": "No Data",
@@ -147,6 +147,21 @@
         }
     },
     "VerifyPage":{
-        "Verify_The_Code":"Verify the Code"
+        "Verify_The_Code":"Verify the Code",
+        "Enter Verification Code":"Enter Verification Code",
+        "Send Code to":"Send Code to",
+        "Please enter Verification Code":"Please enter Verification Code",
+        "Didt Receive the Code?":"Did't Receive the Code?",
+        "Resend":"Resend",
+        "Register Successful !":"Register Successful !",
+        "Login":"Login"
+    },
+    "Message":{
+        "Today" :"Today",
+        "Message":"Message",
+        "Message-detail":"Message-detail",
+        "Collected":"Collected",
+        "Not-Collected":"You have not collected the message!",
+        "No-More":"No more Data"
     }
 }

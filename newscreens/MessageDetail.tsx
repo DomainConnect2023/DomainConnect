@@ -3,10 +3,11 @@ import { View, Text, Platform, StatusBar, ScrollView, Alert } from 'react-native
 import MainContainer from '../components/MainContainer';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { css } from '../objects/commonCSS';
-import { useNavigation, useRoute } from '@react-navigation/native';
+import { useFocusEffect, useNavigation, useRoute } from '@react-navigation/native';
 import { StyleSheet } from 'react-native';
 import SQLite from 'react-native-sqlite-storage';
 import Snackbar from 'react-native-snackbar';
+import i18n from '../language/i18n';
 import { Notification } from '../objects/objects';
 interface RouteParams {
     item: Notification;
@@ -18,6 +19,13 @@ const MessageDetail = () => {
     const navigation = useNavigation();
 
     const [isFilled, setIsFilled] = useState(false);
+    const [locale, setLocale] = React.useState(i18n.locale);
+
+    useFocusEffect(
+        React.useCallback(() => {
+            setLocale(i18n.locale);
+        }, [])
+    );
 
     useEffect(() => {
         const checkIfFilled = async () => {
@@ -109,7 +117,7 @@ const MessageDetail = () => {
                             size={30}
                             color="#000000"
                             onPress={() => [navigation.goBack()]} />
-                        <Text style={{ color: "#000000", fontSize: 20, marginLeft: 20, fontWeight: 'bold' }}>Message Detail</Text>
+                        <Text style={{ color: "#000000", fontSize: 20, marginLeft: 20, fontWeight: 'bold' }}>{i18n.t('Message.Message-detail')}</Text>
                     </View>
                 </View>
             ) : (
@@ -123,7 +131,7 @@ const MessageDetail = () => {
                     </View>
                 </View>
             )}
-            <View style={{ flex: 8, flexDirection: 'column' }}>
+            <View style={{ flex: 5, flexDirection: 'column' }}>
                 <View style={styles.titleBox}>
                     <Text style={styles.title}>{item.header}</Text>
                     <Text style={{ alignSelf: 'center', fontSize: 12, marginRight: 10, color: '#646464' }}>{item.created_at}</Text>
