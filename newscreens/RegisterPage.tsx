@@ -655,7 +655,7 @@ const Register = () => {
                                         defaultValue={mobileValue}
                                         defaultCode={mobileCountry as any}
                                         layout="second"
-
+                                        placeholder={i18n.t('RegisterPage.Mobile.Mobile-Number')}
                                         onChangeText={(text) => {
                                             setMobileValue(text)
                                             handleInputChanges2('mobile', text)
@@ -690,7 +690,7 @@ const Register = () => {
                                         mode="outlined"
                                         value={birthDate}
                                         onChangeText={setBirthDate}
-                                        label={"Birth Date"}
+                                        label={i18n.t('RegisterPage.BirthDate.BirthDate')}
                                         editable={false}
                                         right={
                                             <TextInput.Icon icon={require('../assets/calendar_3.png')} onPress={tonggleDatePicker} />

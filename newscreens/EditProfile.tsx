@@ -7,7 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import { URLAccess } from '../objects/URLAccess';
 import { css } from '../objects/commonCSS';
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
-import { TextInput } from 'react-native-paper';
+import { HelperText, TextInput } from 'react-native-paper';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import PhoneInput from 'react-native-phone-number-input';
 import Snackbar from 'react-native-snackbar';
@@ -21,7 +21,7 @@ const EditProfileScreen = () => {
 
     const phoneInput = useRef<PhoneInput>(null);
     const [mobileValue, setMobileValue] = useState('');
-    const [mobileCountry, setMobileCountry] = useState<string | null>('');
+    const [mobileCountry, setMobileCountry] = useState<string | null>('MY');
     const [locale, setLocale] = React.useState(i18n.locale);
 
     useFocusEffect(
@@ -78,18 +78,18 @@ const EditProfileScreen = () => {
                         </TouchableOpacity>
                     </View>
                     <View style={{ flex: 1 }}>
-                        <Text style={styles.Title}>General Information</Text>
+                        <Text style={styles.Title}>{i18n.t('ProfilePage.Title2')}</Text>
                         <View style={styles.TextInputContainer}>
                             <View style={styles.HalfInput}>
                                 <TextInput
                                     mode="outlined"
-                                    label={'User Name'}
+                                    label={i18n.t('ProfilePage.UserName')}
                                 />
                             </View>
                             <View style={styles.HalfInput}>
                                 <TextInput
                                     mode="outlined"
-                                    label={'Display Name'}
+                                    label={i18n.t('ProfilePage.Display-Name')}
                                 />
                             </View>
                         </View>
@@ -97,40 +97,47 @@ const EditProfileScreen = () => {
                             <TextInput
                                 style={styles.WholeInput}
                                 mode="outlined"
-                                label={'Email'}
+                                label={i18n.t('ProfilePage.Email')}
                             />
                         </View>
                         <View style={styles.TextInputContainer}>
                             <View style={styles.HalfInput}>
                                 <TextInput
                                     mode="outlined"
-                                    label={'Password'}
+                                    label={i18n.t('ProfilePage.Password')}
                                 />
                             </View>
                             <View style={styles.HalfInput}>
                                 <TextInput
                                     mode="outlined"
-                                    label={'Confirm Password'}
+                                    label={i18n.t('ProfilePage.Confirm-Password')}
                                 />
                             </View>
                         </View>
-                        <Text style={styles.Title}>Additional Information</Text>
+
+                        <Text style={styles.Title2}>{i18n.t('ProfilePage.Title3')}</Text>
                         <View style={styles.TextInputContainer}>
                             <TextInput
                                 style={styles.WholeInput}
                                 mode="outlined"
-                                label={'Vehicle Number'}
+                                label={i18n.t('ProfilePage.Vehicle-Number')}
                             />
                         </View>
                         <View style={styles.TextInputContainer}>
                             <PhoneInput
+                                textContainerStyle={{
+                                    borderLeftWidth: 1,
+                                    borderBottomWidth: 0.5,
+                                    backgroundColor: "white"
+                                }}
                                 ref={phoneInput}
                                 defaultValue={mobileValue}
                                 defaultCode={mobileCountry as any}
                                 layout="second"
-                                containerStyle={[styles.WholeInput, {borderWidth: 1, borderRadius: 5, height: 50}]}
-                                codeTextStyle={{fontSize: 16}}
-                                textInputStyle={{fontSize: 16, height: 50}}
+                                containerStyle={[styles.WholeInput, { borderWidth: 1, borderRadius: 5, height: 50 }]}
+                                codeTextStyle={{ fontSize: 16 }}
+                                placeholder={i18n.t('ProfilePage.Phone-Number')}
+                                textInputStyle={{ fontSize: 16, height: 50 }}
                                 onChangeText={(text) => {
                                     console.log(text);
                                 }}
@@ -146,12 +153,13 @@ const EditProfileScreen = () => {
                             <TextInput
                                 style={styles.WholeInput}
                                 mode="outlined"
-                                label={'Birth Date'}
+                                label={i18n.t('ProfilePage.Birth-Date')}
                             />
                         </View>
+                        <Text style={{fontSize:14,textAlign:"center",marginTop:5,color:"red"}}>*Edit Page has not any Function in this version</Text>
                         <TouchableOpacity>
                             <View style={styles.SaveButton}>
-                                <Text style={{ textAlign: 'center', lineHeight: Dimensions.get('screen').width / 100 * 15, fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>Save Changes</Text>
+                                <Text style={{ textAlign: 'center', lineHeight: Dimensions.get('screen').width / 100 * 15, fontSize: 16, fontWeight: 'bold', color: '#FFFFFF' }}>{i18n.t('ProfilePage.Save-Changes-Button')}</Text>
                             </View>
                         </TouchableOpacity>
                     </View>
@@ -194,7 +202,13 @@ const styles = StyleSheet.create({
     Title: {
         fontSize: 18,
         fontWeight: 'bold',
-        marginTop: Dimensions.get('screen').width / 100 * 13,
+        marginTop: Dimensions.get('screen').width / 100 * 12,
+        marginLeft: Dimensions.get('screen').width / 100 * 6,
+    },
+    Title2: {
+        fontSize: 18,
+        fontWeight: 'bold',
+        marginTop: Dimensions.get('screen').width / 100 * 4,
         marginLeft: Dimensions.get('screen').width / 100 * 6,
     },
     TextInputContainer: {
