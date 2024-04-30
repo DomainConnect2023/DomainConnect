@@ -98,7 +98,8 @@
         "Preference": "Keutamaan",
         "Language": "Bahasa",
         "Dark-Mode": "Mod Gelap",
-        "LogOut": "Log Keluar"
+        "LogOut": "Log Keluar",
+        "Edit":"Edit"
     },
     "Bottom-Navigation": {
         "Dashboard": "Papan Pemuka",
@@ -160,7 +161,25 @@
         "Message":"Mesej",
         "Message-detail":"Butiran Mesej",
         "Collected":"Penanda",
+        "Not-Message":"Anda tidak mempunyai Mesej atau Sesuatu mempunyai ralat!",
         "Not-Collected":"Anda belum mengumpul mesej itu!",
         "No-More":"Tiada Data lagi"
+    },
+    "HelperText":{
+        "UsernameLogin":"Nama Pengguna tidak boleh kosong",
+        "PasswordLogin":"Kata sandi tidak boleh kosong",
+        "CompanyRegister":"Perusahaan tidak valid!",
+        "UsernameRegisterDuplicate":"Nama Pengguna Diduplikasi",
+        "UsernameRegisterInvalid":"Nama Pengguna tidak valid!",
+        "EmailRegisterInvalid":"Alamat email tidak valid!",
+        "EmailRegistered":"Email ini telah terdaftar!",
+        "EmailRegisterFormat":"Silakan ikuti format email!",
+        "PasswordRegister":"Diperlukan kata sandi!",
+        "RetypePasswordRegister":"Silakan periksa ketik ulang kata sandi",
+        "PhoneRegisterInvalid":"Nomor telepon tidak valid",
+        "PhoneRegisterFormat":"Sila ikuti format nomor telepon!",
+        "BirthDateRegister":"Tanggal Lahir tidak valid",
+        "VehicleRegister":"Kendaraan No tidak valid"
+
     }
 }

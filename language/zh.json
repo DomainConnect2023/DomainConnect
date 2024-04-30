@@ -98,7 +98,8 @@
         "Preference": "偏好设置",
         "Language": "语言",
         "Dark-Mode": "深色模式",
-        "LogOut": "登出"
+        "LogOut": "登出",
+        "Edit":"修改"
     },
     "Bottom-Navigation": {
         "Dashboard": "主页",
@@ -160,7 +161,25 @@
         "Message":"消息",
         "Message-detail":"消息详情",
         "Collected":"收藏",
+        "Not-Message":"您没有任何消息或发生了错误！",
         "Not-Collected":"你還沒收藏任何消息！",
         "No-More":"沒有更多數據"
+    },
+    "HelperText":{
+        "UsernameLogin":"用户名不能为空",
+        "PasswordLogin":"密码不能为空",
+        "CompanyRegister":"公司名不合格！",
+        "UsernameRegisterDuplicate":"用户名重复",
+        "UsernameRegisterInvalid":"用户名不合格！",
+        "EmailRegisterInvalid":"邮箱不合格！",
+        "EmailRegistered":"此邮箱已经注册",
+        "EmailRegisterFormat":"请跟随邮箱格式！",
+        "PasswordRegister":"密码不能为空！",
+        "RetypePasswordRegister":"密码不一致！",
+        "PhoneRegisterInvalid":"电话号码不合格！",
+        "PhoneRegisterFormat":"请跟随电话号码格式！",
+        "BirthDateRegister":"生日不合格！",
+        "VehicleRegister":"车牌号码不合格！"
+
     }
 }

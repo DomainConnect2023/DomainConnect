@@ -9,8 +9,6 @@ import EditProfileScreen from './newscreens/EditProfile';
 import { GetFCMToken, NotificationListner, requestUserPermission } from './components/pushNotification';
 import TabNavigationScreen from './screens/TabNavigation';
 import 'react-native-gesture-handler';
-import ProfileScreen from './screens/Profile';
-import viewImage from './screens/viewImage';
 import messaging from '@react-native-firebase/messaging';
 import DeviceInfo from 'react-native-device-info';
 import { PaperProvider } from 'react-native-paper';
@@ -90,8 +88,8 @@ function App(): JSX.Element {
 
   useEffect(() => {
     checkMobileService()
-    // localStorage()
-  })
+    localStorage()
+  },[])
 
   const [loading, setLoading] = React.useState(true);
   const [initialRouteName, setInitialRouteName] = React.useState("Welcome");

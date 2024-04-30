@@ -134,7 +134,7 @@ const MessageDetail = () => {
             <View style={{ flex: 5, flexDirection: 'column' }}>
                 <View style={styles.titleBox}>
                     <Text style={styles.title}>{item.header}</Text>
-                    <Text style={{ alignSelf: 'center', fontSize: 12, marginRight: 10, color: '#646464' }}>{item.created_at}</Text>
+                    <Text style={{ alignSelf: 'center', fontSize: 12, marginRight: 10, color: '#646464' }}>{new Date(item.created_at).toLocaleString("en-US",{hour12:true,year:'numeric',month:"2-digit",day:'2-digit',hour:'numeric',minute:'numeric'})}</Text>
                 </View>
                 <ScrollView style={styles.messageBox}>
                     <Text style={styles.message}>{item.textValue}</Text>

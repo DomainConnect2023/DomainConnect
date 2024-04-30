@@ -222,7 +222,7 @@ const Message = ({ navigation }: any) => {
                         <View style={styles.UserName}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
                                 <Text style={{ fontSize: 16, fontWeight: 'bold', color: '#000000' }}>{item.header}</Text>
-                                <Text style={{ fontSize: 12, alignSelf: 'center', fontWeight: 'bold', color: '#646464', marginRight: 10 }}>{time}</Text>
+                                <Text style={{ fontSize: 12, alignSelf: 'center', fontWeight: 'bold', color: '#646464', marginRight: 10 }}>{new Date(item.created_at).toLocaleString("en-US",{hour12:true,year:'numeric',month:"2-digit",day:'2-digit',hour:'numeric',minute:'numeric'})}</Text>
                             </View>
                             <Text style={{ fontSize: 14, color: '#808080', width: '90%' }} numberOfLines={1} ellipsizeMode="tail" >{item.textValue}</Text>
                         </View>
@@ -288,7 +288,7 @@ const Message = ({ navigation }: any) => {
                                     <View style={{ flex: 1, flexDirection: 'column' }}>
                                         <Image source={require("../assets/DomainUIDesign/inbox.png")} style={{ width: 200, height: 200, alignSelf: 'center', marginTop: 100 }} />
                                         <Text style={{ fontSize: 20, fontWeight: 'bold', textAlign: 'center', marginTop: 10 }}>Oops!</Text>
-                                        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>{i18n.t('Message.Not-Collected')}</Text>
+                                        <Text style={{ fontSize: 16, fontWeight: 'bold', textAlign: 'center' }}>{i18n.t('Message.Not-Message')}</Text>
                                     </View>
                                 )}
                                 ListFooterComponent={() => itemFinish && (
@@ -300,7 +300,7 @@ const Message = ({ navigation }: any) => {
                                         </View>
                                     </View>
                                 )}
-                                onEndReached={()=>{console.log('1'),loadMore()}}
+                                onEndReached={()=>{loadMore()}}
                                 refreshControl={<RefreshControl
                                     refreshing={refreshing}
                                     onRefresh={onRefresh}

@@ -150,7 +150,7 @@ const SettingScreen = ({ navigation }: any) => {
                                 </View>
                                 <TouchableOpacity onPress={() => { navigation.navigate(EditProfileScreen as never) }} style={{alignSelf:"center",paddingHorizontal:20}}>
                                     <View style={styles.EditButton}>
-                                        <Text style={{ fontSize: 16, color: '#FFFFFF', textAlign: 'center', fontWeight: 'bold', marginVertical: 5 }}>Edit</Text>
+                                        <Text style={{ fontSize: 16, color: '#FFFFFF', textAlign: 'center', fontWeight: 'bold', marginVertical: 5 }}>{i18n.t('SettingPage.Edit')}</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>

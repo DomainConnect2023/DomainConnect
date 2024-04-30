@@ -99,7 +99,8 @@
         "Preference": "Preference",
         "Language": "Language",
         "Dark-Mode": "Dark Mode",
-        "LogOut": "Log Out"
+        "LogOut": "Log Out",
+        "Edit":"Edit"
     },
     "Bottom-Navigation": {
         "Dashboard": "Dashboard",
@@ -161,7 +162,25 @@
         "Message":"Message",
         "Message-detail":"Message-detail",
         "Collected":"Collected",
+        "Not-Message":"You have not any Message or Something error!",
         "Not-Collected":"You have not collected the message!",
         "No-More":"No more Data"
+    },
+    "HelperText":{
+        "UsernameLogin":"User Name can't be empty",
+        "PasswordLogin":"Password can't be empty",
+        "CompanyRegister":"Company Name is invalid!",
+        "UsernameRegisterDuplicate":"UserName is Duplicated",
+        "UsernameRegisterInvalid":"UserName is invalid!",
+        "EmailRegisterInvalid":"Email address is invalid!",
+        "EmailRegistered":"This Email has been registered!",
+        "EmailRegisterFormat":"Please follow the email format!",
+        "PasswordRegister":"Password is required!",
+        "RetypePasswordRegister":"Please check retype password",
+        "PhoneRegisterInvalid":"Phone number is invalid",
+        "PhoneRegisterFormat":"Please follow the phone number format!",
+        "BirthDateRegister":"Birth Date is invalid",
+        "VehicleRegister":"Vehicle No is invalid"
+
     }
 }

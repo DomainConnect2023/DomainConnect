@@ -5,10 +5,7 @@ import MainContainer from '../components/MainContainer';
 import { styles } from '../objects/commonCSS';
 import { TextInput, HelperText } from 'react-native-paper';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import Octicons from 'react-native-vector-icons/Octicons'
 import Register from './RegisterPage';
-import { CustomDrawer } from '../components/CustomDrawer';
 import i18n from '../language/i18n';
 import { useFocusEffect } from '@react-navigation/native';
 import RNFetchBlob from "rn-fetch-blob";
@@ -17,11 +14,7 @@ import { setCredentials } from '../components/keychainService';
 import Snackbar from 'react-native-snackbar';
 import { getGenericPassword } from 'react-native-keychain';
 import { URLAccess } from '../objects/URLAccess';
-import Verify from './Verify';
 import { CommonActions } from '@react-navigation/native';
-import { HmsPushInstanceId } from '@hmscore/react-native-hms-push';
-import DeviceInfo from 'react-native-device-info';
-import { requestUserPermission } from '../components/pushNotification';
 
 const Login = () => {
     const navigation = useNavigation();
@@ -133,6 +126,7 @@ const Login = () => {
 
     return (
         <MainContainer>
+            <KeyboardAvoidWrapper>
                     <StatusBar animated={true} backgroundColor="white" barStyle={'dark-content'} />
             {loading ? (
                 <View style={{ flex: 1, marginVertical: Dimensions.get('screen').height / 100 * 50 }}>
@@ -165,7 +159,7 @@ const Login = () => {
                                     returnKeyType="next"
                                     onSubmitEditing={() => passwordInputRef.current?.focus()}
                                 />
-                                {usernameHelperText && <HelperText type="error">User Name can't be empty</HelperText>}
+                                {usernameHelperText && <HelperText type="error">{i18n.t('HelperText.UsernameLogin')}</HelperText>}
                             </View>
                             <View style={styles.InputRange}>
                                 <TextInput
@@ -179,7 +173,7 @@ const Login = () => {
                                     right={ishide ? <TextInput.Icon icon="eye" onPress={value => setishide(false)} />
                                         : <TextInput.Icon icon="eye-off" onPress={value => setishide(true)} />}
                                 />
-                                {passwordHelperText && <HelperText type="error">Password can't be empty</HelperText>}
+                                {passwordHelperText && <HelperText type="error">{i18n.t('HelperText.PasswordLogin')}</HelperText>}
                             </View>
                             {/* Forgot Password */}
 
@@ -199,11 +193,11 @@ const Login = () => {
                             {/* <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                             <Text style={{ fontWeight: "bold", fontSize: 14, }}>{i18n.t('LoginPage.Or-Login-With')}</Text>
                             <View>
-                                <TouchableOpacity onPress={() => }>
+                                <TouchableOpacity onPress={() => navigation.navigate('Verify' as never)}>
                                     <MaterialIcons name="fingerprint" size={65} style={{ marginTop: 20 }} />
                                 </TouchableOpacity>
-                            </View>
-                        </View> */}
+                            </View> */}
+                        {/* </View>  */}
 
                         </View>
                         {/* End Login Information */}
@@ -223,6 +217,7 @@ const Login = () => {
                 </KeyboardAvoidingView>
                 // </KeyboardAvoidWrapper>
             )}
+            </KeyboardAvoidWrapper>
         </MainContainer>
     );
 }

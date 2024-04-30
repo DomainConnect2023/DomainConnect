@@ -169,20 +169,31 @@ const Register = () => {
     useEffect(() => {
         // Check User Name Duplicated
         const checkUserAvailability = async () => {
-            const { isUsernameAvailable } = await isInputDuplicated(Username, Email);
-            if (!isUsernameAvailable) {
-                setUserDuplicateHelperText(true);
-            } else {
+            if (Username.length>2){
+                const { isUsernameAvailable } = await isInputDuplicated(Username, Email);
+                if (!isUsernameAvailable) {
+                    setUserDuplicateHelperText(true);
+                } else {
+                    setUserDuplicateHelperText(false);
+                }
+            }
+            else{
                 setUserDuplicateHelperText(false);
             }
+
         };
 
         // Check Email Duplicated
         const checkEmailAvailable = async () => {
-            const { isEmailAvailable } = await isInputDuplicated(Username, Email);
-            if (!isEmailAvailable) {
-                setEmailDuplicateHelperText(true);
-            } else {
+            if(Email.length>2){
+                const { isEmailAvailable } = await isInputDuplicated(Username, Email);
+                if (!isEmailAvailable) {
+                    setEmailDuplicateHelperText(true);
+                } else {
+                    setEmailDuplicateHelperText(false);
+                }
+            }
+            else{
                 setEmailDuplicateHelperText(false);
             }
         }
@@ -296,13 +307,16 @@ const Register = () => {
         }
 
         // Check Password Match
-        if (Password !== Retypepass) {
-            setRetypeHelperText(true);
-            allInputsCorrect = false;
-            return;
-        } else {
-            setRetypeHelperText(false)
+        if(Password.length>0){
+            if (Password !== Retypepass) {
+                setRetypeHelperText(true);
+                allInputsCorrect = false;
+                return;
+            } else {
+                setRetypeHelperText(false)
+            }
         }
+
 
         setToNextStage(allInputsCorrect);
 
@@ -427,12 +441,11 @@ const Register = () => {
                         text: res.json().message,
                         duration: Snackbar.LENGTH_LONG
                     })
-                    console.log("Error")
                 }
                 setLoading(false);
             }).catch(err => {
                 Snackbar.show({
-                    text: err.message,
+                    text: "Fail to Connect the server ,Pls Check Your Internet Connection.",
                     duration: Snackbar.LENGTH_LONG
                 })
                 setLoading(false);
@@ -490,7 +503,7 @@ const Register = () => {
                                             onSubmitEditing={() => usernameInputRef.current?.focus()}
                                             onChangeText={text => handleInputChanges('company', text)} />
                                         {companyHelperText && <HelperText type="error" style={{ height: 30 }}>
-                                            Company is invalid!
+                                            {i18n.t('HelperText.CompanyRegister')}
                                         </HelperText>}
                                     </View>
                                     <View style={styles.InputRange}>
@@ -505,10 +518,10 @@ const Register = () => {
                                             onChangeText={text => handleInputChanges('userID', text)}
                                         />
                                         {UserDuplicateHelperText && <HelperText type="error">
-                                            UserName is Duplicated
+                                        {i18n.t('HelperText.UsernameRegisterDuplicate')}
                                         </HelperText>}
                                         {UserIDHelperText && <HelperText type="error">
-                                            UserName is invalid!
+                                        {i18n.t('HelperText.UsernameRegisterInvalid')}
                                         </HelperText>}
 
                                     </View>
@@ -525,13 +538,13 @@ const Register = () => {
                                             keyboardType='email-address'
                                         />
                                         {EmailHelperText && <HelperText type="error">
-                                            Email address is invalid!
+                                        {i18n.t('HelperText.EmailRegisterInvalid')}
                                         </HelperText>}
                                         {EmailDuplicateHelperText && <HelperText type="error">
-                                            This Email has been registered!
+                                        {i18n.t('HelperText.EmailRegistered')}
                                         </HelperText>}
                                         {EmailFormatHelperText && <HelperText type="error">
-                                            Please follow the email format!
+                                        {i18n.t('HelperText.EmailRegisterFormat')}
                                         </HelperText>}
                                     </View>
                                     <View style={styles.InputRange}>
@@ -571,7 +584,7 @@ const Register = () => {
                                             }
                                         />
                                         {PasswordHelperText && <HelperText type="error" style={{ height: 30 }}>
-                                            Password is required!
+                                        {i18n.t('HelperText.PasswordRegister')}
                                         </HelperText>}
                                     </View>
                                     <View style={styles.InputRange}>
@@ -603,7 +616,7 @@ const Register = () => {
                                             right={retypeishide ? <TextInput.Icon icon="eye" onPress={value => setretypeishide(false)} />
                                                 : <TextInput.Icon icon="eye-off" onPress={value => setretypeishide(true)} />}
                                         />
-                                        {RetypeHelperText && <HelperText type="error">Please check retype password</HelperText>}
+                                        {RetypeHelperText && <HelperText type="error">{i18n.t('HelperText.RetypePasswordRegister')}</HelperText>}
                                     </View>
                                     <TouchableOpacity style={RetypeHelperText ? styles.ButtonLogin_NoMargin : styles.ButtonLogin} onPress={() => { IsInputCorrect(1) }}>
                                         <Text style={styles.fonth2}>
@@ -651,8 +664,8 @@ const Register = () => {
                                             setformatmobileValue(text)
                                         }}
                                     />
-                                    {phoneHelperText && <HelperText type="error">Phone number is invalid</HelperText>}
-                                    {phoneFormatHelperText && <HelperText type="error">Please follow the phone number format!</HelperText>}
+                                    {phoneHelperText && <HelperText type="error">{i18n.t('HelperText.PhoneRegisterInvalid')}</HelperText>}
+                                    {phoneFormatHelperText && <HelperText type="error">{i18n.t('HelperText.PhoneRegisterFormat')}</HelperText>}
                                 </View>
                                 <View style={styles.InputRange}>
                                     {showPicker && <DateTimePicker
@@ -684,7 +697,7 @@ const Register = () => {
                                         }
                                     />
 
-                                    {dateHelperText && <HelperText type="error" >Birth Date is invalid</HelperText>}
+                                    {dateHelperText && <HelperText type="error" >{i18n.t('HelperText.BirthDateRegister')}</HelperText>}
                                 </View>
                                 <View style={styles.InputRange}>
                                     <TextInput
@@ -696,7 +709,7 @@ const Register = () => {
                                             handleInputChanges2('vehicle', text)
                                         }}
                                         label={i18n.t('RegisterPage.Vehicle')} />
-                                    {vehicleHelperText && <HelperText type="error" >Vehicle is invalid</HelperText>}
+                                    {vehicleHelperText && <HelperText type="error" >{i18n.t('HelperText.VehicleRegister')}</HelperText>}
                                 </View>
                                 <View style={{ justifyContent: "center", flexDirection: "row" }}>
                                     <View style={{ width: "20%", height: 1, backgroundColor: "black", alignSelf: 'center', marginHorizontal: 20 }} />

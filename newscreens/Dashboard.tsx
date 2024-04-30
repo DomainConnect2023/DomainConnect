@@ -6,7 +6,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import LinearGradient from 'react-native-linear-gradient';
 import { ScrollView } from 'react-native-gesture-handler';
 import i18n from '../language/i18n';
-import React, { useEffect ,useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import RNFetchBlob from 'rn-fetch-blob';
 import { URLAccess } from '../objects/URLAccess';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -17,8 +17,8 @@ import BottomNavigation from '../components/BottomNavigation';
 const DashboardScreen = ({ navigation }: any) => {
     const Navigation = useNavigation();
     const [locale, setLocale] = React.useState(i18n.locale);
-    const [displayname,setdisplayname] = useState('');
-    const [company,setcompany] = useState('');
+    const [displayname, setdisplayname] = useState('');
+    const [company, setcompany] = useState('');
     useFocusEffect(
         React.useCallback(() => {
             setLocale(i18n.locale);
@@ -28,8 +28,8 @@ const DashboardScreen = ({ navigation }: any) => {
     useEffect(() => {
         (async () => {
             checktoken();
-            setdisplayname(await AsyncStorage.getItem('display') ?? '') 
-            setcompany(await AsyncStorage.getItem('company') ?? '') 
+            setdisplayname(await AsyncStorage.getItem('display') ?? '')
+            setcompany(await AsyncStorage.getItem('company') ?? '')
         })();
     }, []);
 
@@ -101,13 +101,15 @@ const DashboardScreen = ({ navigation }: any) => {
                 {/*Scroll Horizontal Container*/}
                 <View style={styles.scrollView}>
                     {/* <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}> */}
+
+                    <View style={styles.ScrollViewButton}>
                         <TouchableOpacity onPress={() => Navigation.navigate(BottomNavigation as never)}>
-                            <View style={styles.ScrollViewButton}>
-                                <Text style={styles.ButtonText}>{i18n.t('DashboardPage.Msg')}</Text>
-                                <Image source={require('../assets/DomainUIDesign/comments.png')} style={styles.ButtonIcon} />
-                            </View>
+                            <Text style={styles.ButtonText}>{i18n.t('DashboardPage.Msg')}</Text>
+                            <Image source={require('../assets/DomainUIDesign/comments.png')} style={styles.ButtonIcon} />
                         </TouchableOpacity>
-                        {/* <TouchableOpacity>
+                    </View>
+
+                    {/* <TouchableOpacity>
                             <View style={styles.ScrollViewButton}>
                                 <Text style={styles.ButtonText}>Example</Text>
                                 <Image source={require('../assets/Example.png')} style={styles.ButtonIcon} />
@@ -222,7 +224,7 @@ const styles = StyleSheet.create({
         backgroundColor: '#FFFFFF',
         alignItems: 'center',
         paddingVertical: 20,
-        overflow:'visible'
+        overflow: 'visible'
     },
     scrollView: {
         width: '100%',
@@ -234,7 +236,8 @@ const styles = StyleSheet.create({
         width: Dimensions.get('screen').width / 100 * 25,
         padding: 10,
         borderRadius: 10,
-        marginRight: 10
+        marginRight: 10,
+
     },
     ButtonText: {
         fontSize: 12,
