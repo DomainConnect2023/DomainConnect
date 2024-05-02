@@ -78,7 +78,7 @@ const DashboardScreen = ({ navigation }: any) => {
                         </View>
                     </View>
                 ) : (
-                    <View style={[css.mainView]}>
+                    <View style={[css.mainView, { backgroundColor: 'transparent' }]}>
                         <TouchableOpacity style={{ paddingLeft: 20, }} onPress={() => { navigation.openDrawer() }} >
                             <Ionicons name="menu" size={26} color={"white"} />
                         </TouchableOpacity>

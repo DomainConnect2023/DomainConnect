@@ -109,7 +109,10 @@ function App(): JSX.Element {
           </View>
         ) : (
           <NavigationContainer>
-            <Stack.Navigator initialRouteName={initialRouteName} screenOptions={{ headerShown: false, navigationBarColor: "white" }}>
+            {/* <Stack.Navigator initialRouteName={initialRouteName} screenOptions={{ headerShown: false, navigationBarColor: "white" }}> */}
+            {/* <Stack.Screen name="Verify" component={Verify} / */}
+            <Stack.Navigator initialRouteName={'Verify'} screenOptions={{ headerShown: false, navigationBarColor: "white" }}>
+            
               <Stack.Screen name="Welcome" component={Welcome} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Register" component={Register} />
@@ -125,7 +128,7 @@ function App(): JSX.Element {
                 <Stack.Screen name="CustomBottomTabNavigator" component={CustomBottomTabNavigator} />
                 <Stack.Screen name="MessageDetail" component={MessageDetail} />
   
-              </Stack.Group>
+              </Stack.Group> 
 
               {/* <Stack.Screen name="Login" component={Login} />
             <Stack.Screen name="Register" component={Register} />
