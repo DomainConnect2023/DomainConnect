@@ -6,6 +6,7 @@ import { styles } from '../objects/commonCSS';
 import { TextInput, HelperText } from 'react-native-paper';
 import KeyboardAvoidWrapper from '../components/KeyboardAvoidWrapper';
 import Register from './RegisterPage';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import i18n from '../language/i18n';
 import { useFocusEffect } from '@react-navigation/native';
 import RNFetchBlob from "rn-fetch-blob";
@@ -190,14 +191,14 @@ const Login = () => {
 
                             {/* Fingerprint Login */}
 
-                            {/* <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                             <Text style={{ fontWeight: "bold", fontSize: 14, }}>{i18n.t('LoginPage.Or-Login-With')}</Text>
                             <View>
                                 <TouchableOpacity onPress={() => navigation.navigate('Verify' as never)}>
                                     <MaterialIcons name="fingerprint" size={65} style={{ marginTop: 20 }} />
                                 </TouchableOpacity>
-                            </View> */}
-                        {/* </View>  */}
+                            </View>
+                        </View> 
 
                         </View>
                         {/* End Login Information */}
