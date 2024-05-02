@@ -49,8 +49,6 @@ const Verify = () => {
         })();
     }, []);
 
-    const focuscontrol = () => {
-    }
     const GETOTP = async () => {
         setLoading(true);
         console.log("Start")
