@@ -191,14 +191,14 @@ const Login = () => {
 
                             {/* Fingerprint Login */}
 
-                            <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                            {/* <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
                             <Text style={{ fontWeight: "bold", fontSize: 14, }}>{i18n.t('LoginPage.Or-Login-With')}</Text>
                             <View>
                                 <TouchableOpacity onPress={() => navigation.navigate('Verify' as never)}>
                                     <MaterialIcons name="fingerprint" size={65} style={{ marginTop: 20 }} />
                                 </TouchableOpacity>
                             </View>
-                        </View> 
+                        </View>  */}
 
                         </View>
                         {/* End Login Information */}
