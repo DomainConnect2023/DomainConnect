@@ -1,6 +1,6 @@
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, TouchableOpacity, StatusBar, Image, TextInput, Dimensions, Keyboard, ActivityIndicator, Alert, Modal, Pressable, StyleSheet, KeyboardAvoidingView } from 'react-native';
+import { View, Text, TouchableOpacity, StatusBar, Image, TextInput, Dimensions, Keyboard, ActivityIndicator, Alert, Modal, Pressable, StyleSheet, KeyboardAvoidingView, NativeSyntheticEvent, TextInputKeyPressEventData } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { styles } from '../objects/commonCSS';
 import i18n from '../language/i18n';
@@ -32,6 +32,7 @@ const Verify = () => {
     const [number4, setnumber4] = useState('');
     const [number5, setnumber5] = useState('');
     const [number6, setnumber6] = useState('');
+    let latesttime=Date.now();
     const input_ref_1 = useRef<any>();
     const input_ref_2 = useRef<any>();
     const input_ref_3 = useRef<any>();
@@ -79,11 +80,40 @@ const Verify = () => {
             })
     }
 
-   
-    const handleKeyPress = (e: any) => {
+    const handleKeyPressing =(e:  { nativeEvent: { key: string; };timeStamp:any})=>{
+        if(e.nativeEvent.key !== 'Backspace'){
+        latesttime=Date.now()
+        switch (e.nativeEvent.key){
+                case '1': case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':case '0':
+                if(currentFocus=='input_ref_6'){
+                    setnumber6(e.nativeEvent.key)
+                    Keyboard.dismiss()
+                }else if(currentFocus == 'input_ref_5'){
+                    setnumber5(e.nativeEvent.key)
+                    input_ref_6.current.focus()
+                }
+                else if(currentFocus == 'input_ref_4'){
+                    setnumber4(e.nativeEvent.key)
+                    input_ref_5.current.focus()
+                }
+                else if(currentFocus == 'input_ref_3'){
+                    setnumber3(e.nativeEvent.key)
+                    input_ref_4.current.focus()
+                }
+                else if(currentFocus == 'input_ref_2'){
+                    setnumber2(e.nativeEvent.key)
+                    input_ref_3.current.focus()
+                }else{
+                    setnumber1(e.nativeEvent.key)
+                    input_ref_2.current.focus()
+                };
+                break;
+        }
+        }
 
-        switch (e) {
-            case '': 
+        if(e.nativeEvent.key === 'Backspace' && Date.now() -latesttime >50){
+            switch (e.nativeEvent.key){
+                case 'Backspace': 
             if(currentFocus=='input_ref_6'){
                 setnumber6('')
                 input_ref_5.current.focus()
@@ -107,30 +137,8 @@ const Verify = () => {
 
             }
             ;break;
-            case '1': case '2':case '3':case '4':case '5':case '6':case '7':case '8':case '9':case '0':
-                if(currentFocus=='input_ref_6'){
-                    setnumber6(e)
-                    Keyboard.dismiss()
-                }else if(currentFocus == 'input_ref_5'){
-                    setnumber5(e)
-                    input_ref_6.current.focus()
-                }
-                else if(currentFocus == 'input_ref_4'){
-                    setnumber4(e)
-                    input_ref_5.current.focus()
-                }
-                else if(currentFocus == 'input_ref_3'){
-                    setnumber3(e)
-                    input_ref_4.current.focus()
-                }
-                else if(currentFocus == 'input_ref_2'){
-                    setnumber2(e)
-                    input_ref_3.current.focus()
-                }else{
-                    setnumber1(e)
-                    input_ref_2.current.focus()
-                };
-                break;
+            }
+            
         }
     }
 
@@ -209,11 +217,10 @@ const Verify = () => {
                                 style={styles.NumberInput}
                                 ref={input_ref_1}
                                 keyboardType={"numeric"}
-                                onChangeText={(item) => { handleKeyPress(item) }}
                                 returnKeyType={"next"}
                                 maxLength={1}
                                 textAlign={'center'}
-                            // onKeyPress={(item)=>{handleKeyPress(item)}}
+                                onKeyPress={(item)=>{handleKeyPressing(item)}}
                             />
                             <TextInput
                                 onFocus={() => { setCurrentFocus('input_ref_2') }}
@@ -221,10 +228,11 @@ const Verify = () => {
                                 value={number2}
                                 ref={input_ref_2}
                                 keyboardType={"numeric"}
-                                onChangeText={(item) => { handleKeyPress(item) }}
+                                
                                 returnKeyType={"next"}
                                 maxLength={1}
                                 textAlign={'center'}
+                                onKeyPress={(item)=>{handleKeyPressing(item)}}
                                 
                             />
                             <TextInput
@@ -233,10 +241,11 @@ const Verify = () => {
                                 value={number3}
                                 ref={input_ref_3}
                                 keyboardType={"numeric"}
-                                onChangeText={(item) => { handleKeyPress(item) }}
+                                
                                 returnKeyType={"next"}
                                 maxLength={1}
                                 textAlign={'center'}
+                                onKeyPress={(item)=>{handleKeyPressing(item)}}
 
                                
                             />
@@ -246,11 +255,11 @@ const Verify = () => {
                                 value={number4}
                                 ref={input_ref_4}
                                 keyboardType={"numeric"}
-                                onChangeText={(item) => { handleKeyPress(item) }}
+                                
                                 returnKeyType={"next"}
                                 maxLength={1}
                                 textAlign={'center'}
-                                
+                                onKeyPress={(item)=>{handleKeyPressing(item)}}
                             />
                             <TextInput
                                 onFocus={() => { setCurrentFocus('input_ref_5') }}
@@ -258,11 +267,11 @@ const Verify = () => {
                                 value={number5}
                                 ref={input_ref_5}
                                 keyboardType={"numeric"}
-                                onChangeText={(item) => { handleKeyPress(item) }}
+                                
                                 returnKeyType={"next"}
                                 maxLength={1}
                                 textAlign={'center'}
-
+                                onKeyPress={(item)=>{handleKeyPressing(item)}}
                                 
                             />
                             <TextInput
@@ -271,11 +280,11 @@ const Verify = () => {
                                 value={number6}
                                 ref={input_ref_6}
                                 keyboardType={"numeric"}
-                                onChangeText={(item) => { handleKeyPress(item) }}
+                                
                                 returnKeyType={"next"}
                                 maxLength={1}
                                 textAlign={'center'}
-
+                                onKeyPress={(item)=>{handleKeyPressing(item)}}
                                 
                             />
                         </View>
