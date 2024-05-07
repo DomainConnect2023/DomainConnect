@@ -128,6 +128,7 @@ const MessageDetail = () => {
                             size={30}
                             color="#000000"
                             onPress={() => [navigation.goBack()]} />
+                            <Text style={{ color: "#000000", fontSize: 20, marginLeft: 20, fontWeight: 'bold' }}>{i18n.t('Message.Message-detail')}</Text>
                     </View>
                 </View>
             )}
