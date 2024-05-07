@@ -33,20 +33,6 @@ function CustomDrawerContent(props: any) {
     setLoggedOut(true);
   };
 
-  // React.useEffect(() => {
-  //   const backAction = () => {
-  //     BackHandler.exitApp();
-  //     return true;
-  //   };
-
-  //   const backHandler = BackHandler.addEventListener(
-  //     'hardwareBackPress',
-  //     backAction
-  //   );
-
-  //   return () => backHandler.remove();
-  // }, []);
-
   return (
     <View style={{ height: Dimensions.get("screen").height / 100 * 93 }}>
       <View style={{ flex: 0.25, flexDirection: "row", paddingTop: 10 }}>
@@ -64,7 +50,7 @@ function CustomDrawerContent(props: any) {
         />
       </DrawerContentScrollView>
 
-      <View style={{ justifyContent: "center", alignItems: "center", alignSelf: "center" }}>
+      <View style={{ justifyContent: "center", alignItems: "center", alignSelf: "center" ,flex:0.2}}>
       
       <Text style={{color:"gray" , fontSize:10}}> Version : {version}</Text>
                         
