@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { NavigationContainer, useNavigation } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { LogBox, Platform, SafeAreaView, ActivityIndicator, View, Dimensions, Alert } from 'react-native';
+import { LogBox, Platform, SafeAreaView, ActivityIndicator, View, Dimensions, Alert, NativeModules } from 'react-native';
 import Login from './newscreens/LoginPage';
 import Register from './newscreens/RegisterPage';
 import TestTabNavigation from './newscreens/TestNavigation';
@@ -28,6 +28,13 @@ import CustomBottomTabNavigator from './components/BottomNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import i18n from '../DomainConnect/language/i18n';
 import { useFocusEffect } from '@react-navigation/native';
+import { URLAccess } from './objects/URLAccess';
+import RNFetchBlob from 'rn-fetch-blob';
+
+export interface ApiResponse {
+  ipAddress: string;
+  isSuccess: string;
+}
 
 const Stack = createNativeStackNavigator();
 const isSimulator = DeviceInfo.isEmulatorSync();
@@ -69,6 +76,7 @@ function App(): JSX.Element {
 
   loadLanguage();
     checkHms();
+    SessionManagement(setLoading, setInitialRouteName);
   }, []);
 
   const gmsToken = async () => {
@@ -96,9 +104,32 @@ function App(): JSX.Element {
   const [locale, setLocale] = React.useState(i18n.locale);
 
   // Call SessionManagement function
-  React.useEffect(() => {
-    SessionManagement(setLoading, setInitialRouteName);
+  useEffect(() => {
+    (async()=>{
+      await getIPAdd();
+  })();
+    
   }, []);
+
+  const [branch, setbranch] = useState("");
+    const [IPaddress, setIPadress] = useState("");
+
+  const getIPAdd = async() =>{
+    try{
+        console.log(NativeModules.RNDeviceInfo.bundleId)
+        let url =(URLAccess.getIPAddress+NativeModules.RNDeviceInfo?.bundleId+"&branch="+branch);
+        let result = await RNFetchBlob.config({trusty:true}).fetch('get',url);
+        let responses: ApiResponse = JSON.parse(result.data);
+        setIPadress(responses.ipAddress);
+        AsyncStorage.setItem("IpAddress",responses.ipAddress);
+
+        console.log("Login API: " + responses.ipAddress);
+
+    }
+    catch (error) {
+        console.error(error);
+    }
+};
 
   return (
     <PaperProvider theme={whiteTheme}>
@@ -110,9 +141,6 @@ function App(): JSX.Element {
         ) : (
           <NavigationContainer>
             <Stack.Navigator initialRouteName={initialRouteName} screenOptions={{ headerShown: false, navigationBarColor: "white" }}>
-            {/* <Stack.Screen name="Verify" component={Verify} / */}
-    
-          
               <Stack.Screen name="Welcome" component={Welcome} />
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Register" component={Register} />
@@ -129,13 +157,6 @@ function App(): JSX.Element {
                 <Stack.Screen name="MessageDetail" component={MessageDetail} />
   
               </Stack.Group> 
-
-              {/* <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="Register" component={Register} />
-            <Stack.Screen name="TabNavigation" component={TabNavigationScreen} />
-            <Stack.Screen name="Dashboard" component={DashboardScreen} />
-            <Stack.Screen name="viewImage" component={viewImage} />
-            <Stack.Screen name="Profile" component={ProfileScreen} /> */}
             </Stack.Navigator>
           </NavigationContainer>
         )}

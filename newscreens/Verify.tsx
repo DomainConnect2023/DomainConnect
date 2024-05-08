@@ -52,9 +52,10 @@ const Verify = () => {
 
     const GETOTP = async () => {
         setLoading(true);
+        let link =await AsyncStorage.getItem('IpAddress');
         console.log("Start")
 
-        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/GetOTP", { "Content-Type": "application/json" },
+        RNFetchBlob.config({ trusty: true }).fetch("POST", 'https://'+link + "/api/GetOTP", { "Content-Type": "application/json" },
             JSON.stringify({
                 "Email": email
             })).then(async (res) => {
@@ -143,8 +144,9 @@ const Verify = () => {
     }
 
     const RegisterUser = async () => {
+        let link =await AsyncStorage.getItem('IpAddress');
         setLoading(true);
-        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/RegisterUser", { "Content-Type": "application/json" },
+        RNFetchBlob.config({ trusty: true }).fetch("POST", 'https://'+link + "/api/RegisterUser", { "Content-Type": "application/json" },
             JSON.stringify({
                 "status": await AsyncStorage.getItem("Status"),
                 "OTP_Number": (number1 + number2 + number3 + number4 + number5 + number6),

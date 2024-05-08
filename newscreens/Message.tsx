@@ -64,11 +64,12 @@ const Message = ({ navigation }: any) => {
     }
 
     const FetchNotificationData = async (page: number) => {
+        let link =await AsyncStorage.getItem('IpAddress');
         const username = await AsyncStorage.getItem('username');
         
         await RNFetchBlob.config({
             trusty: true
-        }).fetch('POST', URLAccess.Url + 'api/NotificationLog', { 'Content-Type': "application/json", },
+        }).fetch('POST', "https://"+link + '/api/NotificationLog', { 'Content-Type': "application/json", },
             JSON.stringify({
                 "username": username,
                 "page": page.toString()

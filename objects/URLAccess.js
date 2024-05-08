@@ -5,6 +5,7 @@ export const URLAccess = {
 
     imgUrl: `https://domainconnect.my/domain_app/mobile/notificationImage/`,
     Url:'https://domain.zapto.org:9299/',
+    getIPAddress: 'https://124.217.225.19:8233/Api/GetIP?packageName=',
     // Url:'https://1.9.181.104:9299/',
     // Url:'https://192.168.1.124:3983/Api/',
 

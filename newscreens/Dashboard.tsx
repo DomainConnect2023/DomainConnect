@@ -34,7 +34,8 @@ const DashboardScreen = ({ navigation }: any) => {
     }, []);
 
     const checktoken = async () => {
-        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/CheckToken", { "Content-Type": "application/json" },
+        let link =await AsyncStorage.getItem('IpAddress');
+        RNFetchBlob.config({ trusty: true }).fetch("POST", "https://"+link + "/api/CheckToken", { "Content-Type": "application/json" },
             JSON.stringify({
                 "token": await AsyncStorage.getItem('fcmtoken'),
                 "username": await AsyncStorage.getItem('username'),

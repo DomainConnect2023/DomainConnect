@@ -79,9 +79,10 @@ const Login = () => {
     })
 
     const LoginApi = async () => {
+        let link =await AsyncStorage.getItem('IpAddress');
         setLoading(true)
         
-        RNFetchBlob.config({ trusty: true }).fetch("POST", URLAccess.Url + "api/Login", { "Content-Type": "application/json" },
+        RNFetchBlob.config({ trusty: true }).fetch("POST", "https://"+link + "/api/Login", { "Content-Type": "application/json" },
             JSON.stringify({
                 "username": username.split(' ')[0],
                 "password": password,
