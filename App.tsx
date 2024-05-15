@@ -26,7 +26,7 @@ import MessageDetail from './newscreens/MessageDetail';
 import localStorage from './components/localStorage';
 import CustomBottomTabNavigator from './components/BottomNavigation';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import i18n from '../DomainConnect/language/i18n';
+import i18n from './language/i18n';
 import { useFocusEffect } from '@react-navigation/native';
 import { URLAccess } from './objects/URLAccess';
 import RNFetchBlob from 'rn-fetch-blob';
@@ -59,8 +59,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     const checkHms = async () => {
-      const hmsAvailable = await DeviceInfo.hasHms();
-      setHasHms(hmsAvailable);
+      await DeviceInfo.hasHms().then((res)=>{setHasHms(res);});
     };
     const loadLanguage = async () => {
       try {
@@ -77,33 +76,33 @@ function App(): JSX.Element {
   loadLanguage();
     checkHms();
     SessionManagement(setLoading, setInitialRouteName);
+    checkMobileService()
+    localStorage()
   }, []);
 
   const gmsToken = async () => {
-    GetFCMToken();
     requestUserPermission();
+    GetFCMToken();
     NotificationListner();
     initializeFirebase();
   }
 
   const checkMobileService = async () => {
     if (hasHms == true) {
+      console.log("Has HMS")
       hmsToken()
     } else {
+      console.log("Has GMS")
       gmsToken()
     }
   }
 
-  useEffect(() => {
-    checkMobileService()
-    localStorage()
-  },[])
 
   const [loading, setLoading] = React.useState(true);
   const [initialRouteName, setInitialRouteName] = React.useState("Welcome");
   const [locale, setLocale] = React.useState(i18n.locale);
 
-  // Call SessionManagement function
+  
   useEffect(() => {
     (async()=>{
       await getIPAdd();

@@ -9,8 +9,7 @@ export async function hmsToken() {
             const tokenObject = JSON.parse(tokenJson);
             const tokenResult = tokenObject.result;
             console.log('Token:', tokenResult);
-            const service = 'HMS';
-            await AsyncStorage.setItem('service', service);
+            await AsyncStorage.setItem('service', 'HMS');
             await AsyncStorage.setItem('fcmtoken', tokenResult);
         }
     } catch (error) {
