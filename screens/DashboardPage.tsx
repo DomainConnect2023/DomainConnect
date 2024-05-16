@@ -86,7 +86,9 @@ const DashboardScreen = () => {
 
     // logout
     const logout = () => {
+        AsyncStorage.removeItem('fcmtoken')
         navigation.navigate(Login as never);
+
     }
 
     // set data to Flatlist

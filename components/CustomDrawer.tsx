@@ -30,6 +30,7 @@ function CustomDrawerContent(props: any) {
     navigation.navigate(Login as never);
     AsyncStorage.removeItem('username');
     AsyncStorage.removeItem('password');
+    AsyncStorage.removeItem('fcmtoken');
     setLoggedOut(true);
   };
 

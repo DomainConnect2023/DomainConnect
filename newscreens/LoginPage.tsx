@@ -1,6 +1,6 @@
 import { useNavigation } from '@react-navigation/native';
 import React, { useEffect, useRef, useState } from 'react';
-import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Dimensions, Platform, AppState, Alert, StatusBar, Image, KeyboardAvoidingView } from 'react-native';
+import { View, Text, FlatList, TouchableOpacity, ActivityIndicator, RefreshControl, Dimensions, Platform, AppState, Alert, StatusBar, Image, KeyboardAvoidingView, BackHandler } from 'react-native';
 import MainContainer from '../components/MainContainer';
 import { styles } from '../objects/commonCSS';
 import { TextInput, HelperText } from 'react-native-paper';
@@ -75,6 +75,17 @@ const Login = () => {
         if (password) {
             setpasswordHelperText(false)
         }
+        const backAction = () => {
+            BackHandler.exitApp();
+            return true;
+          };
+      
+          const backHandler = BackHandler.addEventListener(
+            'hardwareBackPress',
+            backAction
+          );
+      
+          return () => backHandler.remove();
 
     })
 

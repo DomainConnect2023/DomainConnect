@@ -59,7 +59,7 @@ function App(): JSX.Element {
 
   useEffect(() => {
     const checkHms = async () => {
-      await DeviceInfo.hasHms().then((res)=>{setHasHms(res);});
+      await DeviceInfo.hasHms().then((res)=>{setHasHms(res)});
     };
     const loadLanguage = async () => {
       try {
@@ -90,6 +90,7 @@ function App(): JSX.Element {
   const checkMobileService = async () => {
     if (hasHms == true) {
       console.log("Has HMS")
+      requestUserPermission();
       hmsToken()
     } else {
       console.log("Has GMS")

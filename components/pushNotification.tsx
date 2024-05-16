@@ -20,22 +20,20 @@ export async function requestUserPermission() {
 }
 
 export async function GetFCMToken() {
-    // console.log("run token step");
-    let FCMToken = await AsyncStorage.getItem("fcmtoken");
-    // console.log(FCMToken,"old token");
-    if (!FCMToken) {
         try {
             const FCMToken = await messaging().getToken();
             if (FCMToken) {
-                console.log(FCMToken, "new token");
+                console.log(FCMToken, "token");
                 await AsyncStorage.setItem("service", 'GMS');
                 await AsyncStorage.setItem("fcmtoken", FCMToken);
             }
         } catch (error) {
             console.log(error);
         }
-    }
+    
 }
+
+
 
 export const NotificationListner = async () => {
     messaging().onNotificationOpenedApp(async remoteMessage => {
