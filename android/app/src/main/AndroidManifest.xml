@@ -28,19 +28,20 @@
             <action android:name="android.intent.action.DOWNLOAD_COMPLETE"/>
         </intent-filter>
       </activity>
-      <service
+       <service
       android:name=".CustomPushService"
       android:exported="false">
         <intent-filter>
           <action android:name="com.huawei.push.action.MESSAGING_EVENT" />
         </intent-filter>
       </service>
+      <!--
       <service
     android:name=".java.MyFirebaseMessagingService"
     android:exported="false">
     <intent-filter>
         <action android:name="com.google.firebase.MESSAGING_EVENT" />
     </intent-filter>
-</service>
+</service> -->
     </application>
 </manifest>

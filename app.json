@@ -4,8 +4,10 @@
   "expo": {
     "extra": {
       "eas": {
-        "projectId": "cecbaef2-b081-4b79-b295-0fbc52e3520f"
+        "projectId": "11cea63e-07af-44ba-b9df-6efced99e6a9"
       }
-    }
+    },
+    "owner": "domainconnect2023",
+    "slug": "domainapp"
   }
 }
