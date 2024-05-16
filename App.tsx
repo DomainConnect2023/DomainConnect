@@ -116,14 +116,27 @@ function App(): JSX.Element {
 
   const getIPAdd = async() =>{
     try{
-        console.log(NativeModules.RNDeviceInfo.bundleId)
-        let url =(URLAccess.getIPAddress+NativeModules.RNDeviceInfo?.bundleId+"&branch="+branch);
-        let result = await RNFetchBlob.config({trusty:true}).fetch('get',url);
-        let responses: ApiResponse = JSON.parse(result.data);
-        setIPadress(responses.ipAddress);
-        AsyncStorage.setItem("IpAddress",responses.ipAddress);
+        if(Platform.OS === 'ios'){
+          let url = (URLAccess.getIPAddress+"com.domainproject"+"&branch="+branch);
+          let result = await RNFetchBlob.config({trusty:true}).fetch('get',url);
+          let responses: ApiResponse = JSON.parse(result.data);
+          setIPadress(responses.ipAddress);
+          AsyncStorage.setItem("IpAddress",responses.ipAddress);
+  
+          console.log("Login API: " + responses.ipAddress);
+        }
+        else{
+          let url =(URLAccess.getIPAddress+NativeModules.RNDeviceInfo?.bundleId+"&branch="+branch);
+          let result = await RNFetchBlob.config({trusty:true}).fetch('get',url);
+          let responses: ApiResponse = JSON.parse(result.data);
+          setIPadress(responses.ipAddress);
+          AsyncStorage.setItem("IpAddress",responses.ipAddress);
+  
+          console.log("Login API: " + responses.ipAddress);
+        }
+        
 
-        console.log("Login API: " + responses.ipAddress);
+
 
     }
     catch (error) {

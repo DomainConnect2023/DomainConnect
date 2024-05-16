@@ -32,6 +32,13 @@
 		<true/>
 		<key>NSExceptionDomains</key>
 		<dict>
+			<key>124.217.225.19</key>
+			<dict>
+				<key>NSExceptionAllowsInsecureHTTPLoads</key>
+				<true/>
+				<key>NSIncludesSubdomains</key>
+				<true/>
+			</dict>
 			<key>domain.zapto.org</key>
 			<dict>
 				<key>NSExceptionAllowsInsecureHTTPLoads</key>

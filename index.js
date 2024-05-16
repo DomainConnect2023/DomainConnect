@@ -24,7 +24,8 @@ messaging().setBackgroundMessageHandler(async remoteMessage => {
     }
 });
 
-HmsPushMessaging.setBackgroundMessageHandler((dataMessage) => {
+if(Platform.OS === "android"){
+  HmsPushMessaging.setBackgroundMessageHandler((dataMessage) => {
     HmsLocalNotification.localNotification({
       [HmsLocalNotification.Attr.title]: "[Headless] DataMessage Received",
       [HmsLocalNotification.Attr.message]: new RNRemoteMessage(
@@ -42,6 +43,8 @@ HmsPushMessaging.setBackgroundMessageHandler((dataMessage) => {
   
     return Promise.resolve();
   });
+
+}
 
 AppRegistry.registerComponent(appName, () => App);
 
