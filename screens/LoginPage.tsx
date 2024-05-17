@@ -17,9 +17,9 @@ import Snackbar from 'react-native-snackbar';
 import { URLAccess } from '../objects/URLAccess';
 import { requestNotifications } from 'react-native-permissions';
 import ReactNativeBiometrics from 'react-native-biometrics'
-import { TextInput } from 'react-native-paper';
+import { Switch, TextInput } from 'react-native-paper';
 import PushNotificationIOS from "@react-native-community/push-notification-ios";
-import PushNotification from "react-native-push-notification";
+// import PushNotification from "react-native-push-notification";
 
 
 type UserData = {
@@ -29,6 +29,7 @@ type UserData = {
 };
 
 const { width } = Dimensions.get("window");
+
 
 const Login = () => {
     const navigation = useNavigation();
@@ -40,7 +41,8 @@ const Login = () => {
     const [processData, setProcessData] = useState(false);
     const [isModalVisible, setModalVisible] = useState(false);
     const [userEmail, setUserEmail] = useState("");
-    
+    const [rememberMe, setRememberMe] = useState(false);
+    const toogleRmemberMe = () => setRememberMe(!rememberMe);
 
     //appState
     const appState = useRef(AppState.currentState);
@@ -65,12 +67,15 @@ const Login = () => {
             if (Platform.OS === "ios") {
                 const listener=AppState.addEventListener('change',appcheck);
                 PushNotificationIOS.setApplicationIconBadgeNumber(0);
-                
-
                 return()=>{
                     listener.remove();
                 }
             }
+            // const savedUserID = await AsyncStorage.getItem('userID');
+            // if(savedUserID != "")
+            // {
+            //     navigation.navigate(TabNavigation as never);
+            // }
             // PushNotification.removeAllDeliveredNotifications();
         })();
     }, [])
@@ -119,16 +124,14 @@ const Login = () => {
                                 { text: 'No', onPress: () => console.log('nothing happened.') },
                             ]);
                         }
-                        AsyncStorage.setItem('userID', response.data.userID);
-                        navigation.navigate(TabNavigation as never);
                     } else {
                         Alert.alert('Set the finger Print?', 'Do you want to use the finger print function? ', [
                             { text: 'OK', onPress: () => setCredentials(username, password) },
                             { text: 'No', onPress: () => console.log('nothing happened.') },
                         ]);
-                        AsyncStorage.setItem('userID', response.data.userID);
-                        navigation.navigate(TabNavigation as never);
                     }
+                    AsyncStorage.setItem('userID', response.data.userID);
+                    navigation.navigate(TabNavigation as never);
                 } else {
                     Snackbar.show({
                         text: 'Login Failed, Your email or password is incorrect!',
@@ -318,6 +321,13 @@ const Login = () => {
                             </View>
                         </TouchableOpacity>
                     </View>
+                    {/* <View style = {{flex:1, flexDirection: 'row'}}>
+                        <Switch
+                            value={rememberMe}
+                            onValueChange={toogleRmemberMe}
+                        />
+                        <Text>Remember Me</Text>
+                    </View> */}
                     <TouchableOpacity style={{ width: "85%" }} onPress={() => { navigation.navigate(RegisterScreen as never) }}>
                         <View>
                             <Text style={styles.registerFont}>Register</Text>

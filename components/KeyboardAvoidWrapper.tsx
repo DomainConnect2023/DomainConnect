@@ -1,5 +1,5 @@
 import React from "react";
-import { KeyboardAvoidingView, Keyboard, Pressable, Platform, ScrollView, StyleSheet} from "react-native";
+import { KeyboardAvoidingView, Keyboard, Pressable, Platform, ScrollView, StyleSheet,View} from "react-native";
 import { IProps } from "../auth-app";
 
 const KeyboardAvoidWrapper: React.FC<IProps> = ({ children }) => {
@@ -7,10 +7,10 @@ const KeyboardAvoidWrapper: React.FC<IProps> = ({ children }) => {
     <KeyboardAvoidingView
       style={styles.settheKeyboardView}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={60}
+      keyboardVerticalOffset={0}
     >
       <ScrollView style={styles.setScrollView} showsVerticalScrollIndicator={false}>
-        <Pressable onPress={Keyboard.dismiss}>{children}</Pressable>
+        <View>{children}</View>
       </ScrollView>
     </KeyboardAvoidingView>
   );
@@ -19,10 +19,12 @@ const KeyboardAvoidWrapper: React.FC<IProps> = ({ children }) => {
 const styles = StyleSheet.create({
   settheKeyboardView: {
     flex: 1,
-    backgroundColor: 'transparent'
+    backgroundColor: 'transparent',
   },
   setScrollView: {
     flex: 1,
+
+    // backgroundColor:"red"
   }
 })
 

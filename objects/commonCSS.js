@@ -7,32 +7,31 @@ export const css = StyleSheet.create({
         alignItems: 'center',
         padding: 20,
     },
-    mainView:{
+    mainView: {
         width: '100%',
-        height: 60, 
+        height: Dimensions.get("screen").height / 100 * 8,
         flexDirection: 'row',
-        alignItems: 'center', 
-        backgroundColor: "#666699",
-        
+        alignItems: 'center',
+        backgroundColor: "#7174F8",
     },
-    HeaderView :{
-        flex: 1, 
+    HeaderView: {
+        flex: 1,
         padding: 10,
-        gap: 4, 
-        justifyContent: 'flex-start', 
-        alignItems: 'flex-start', 
+        gap: 4,
+        justifyContent: 'flex-start',
+        alignItems: 'flex-start',
         marginHorizontal: 4,
     },
     PageName: {
         color: "#FFFFFF",
-        fontSize: 18,
+        fontSize: 20,
         fontWeight: "bold",
     },
     listThing: {
         width: 40,
-        height: 40, 
-        backgroundColor: '#666699', 
-        justifyContent: 'center', 
+        height: 40,
+        backgroundColor: '#666699',
+        justifyContent: 'center',
         alignItems: 'center',
         borderRadius: 20,
         marginRight: 15,
@@ -51,10 +50,8 @@ export const css = StyleSheet.create({
     cardBody: {
         flexGrow: 1,
         paddingHorizontal: 12,
-        width: "95%",
     },
-    textHeader: { 
-        fontStyle: "italic",
+    textHeader: {
         fontSize: 14,
         color: '#000000',
         fontWeight: 'bold',
@@ -67,19 +64,9 @@ export const css = StyleSheet.create({
     },
     textTitle: {
         fontStyle: "italic",
-        fontSize:18, 
-        color:"black", 
-        fontWeight:"bold"
-    },
-    circle: {
-        width: 20,
-        height: 20,
-        borderRadius: 50, 
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    text: {
-        color: 'white',
+        fontSize: 18,
+        color: "black",
+        fontWeight: "bold"
     },
     button: {
         width: "85%",
@@ -101,9 +88,9 @@ export const css = StyleSheet.create({
         color: 'white',
     },
     typeButton: {
-        margin:5,
-        width:"50%",
-        height:30,
+        margin: 5,
+        width: "50%",
+        height: 30,
         alignItems: 'center',
         justifyContent: 'center',
         borderRadius: 4,
@@ -111,15 +98,15 @@ export const css = StyleSheet.create({
     },
     Title: {
         width: "30%",
-        color:"#404040",
-        padding:10,
-        fontSize:14,
+        color: "#404040",
+        padding: 10,
+        fontSize: 14,
     },
     subTitle: {
         width: "60%",
-        color:"#404040",
-        padding:10,
-        fontWeight:"bold",
+        color: "#404040",
+        padding: 10,
+        fontWeight: "bold",
         fontSize: 14,
     },
     animatedview: {
@@ -165,8 +152,8 @@ export const css = StyleSheet.create({
         width: "30%",
         justifyContent: 'center',
         alignItems: 'center',
-        color:"#404040",
-        fontSize:16
+        color: "#404040",
+        fontSize: 16
     },
     input: {
         width: '60%',
@@ -195,15 +182,15 @@ export const datepickerCSS = StyleSheet.create({
     },
     datePicker: {
         height: 120,
-        marginTop: -10,
+        marginTop: 10,
     },
     textInput: {
-        color: "#000", 
-        textAlign: "center", 
-        fontSize:14, 
-        fontWeight:"bold", 
-        height:25,
-        padding:0,
+        color: "#000",
+        textAlign: "center",
+        fontSize: 14,
+        fontWeight: "bold",
+        height: 25,
+        padding: 0,
     }
 });
 
@@ -222,7 +209,7 @@ export const dropdownCSS = StyleSheet.create({
     },
     selectedTextStyle: {
         fontSize: 16,
-        color:"red",
+        color: "red",
     },
     iconStyle: {
         width: 20,
@@ -241,9 +228,152 @@ export const dropdownCSS = StyleSheet.create({
 const whiteTheme = {
     ...DefaultTheme,
     colors: {
-      ...DefaultTheme.colors,
-      background: 'white',
+        ...DefaultTheme.colors,
+        background: 'white',
     },
-  };
-  
-  export default whiteTheme;
+};
+
+
+export const styles = StyleSheet.create({
+    //Welcome Page
+    Test: {
+        flex: 1,
+        backgroundColor: "green"
+    },
+    Button: {
+        alignSelf: "center",
+        backgroundColor: "#D9D9D9",
+        marginBottom: 10,
+        borderRadius: 5,
+        width: "80%",
+        height: "30%",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    WelcomeView: {
+        flex: 4,
+        backgroundColor: "white"
+    },
+    fonth1: {
+        fontWeight: "bold",
+        fontSize: 20,
+        alignSelf: "center"
+    },
+    fonth2: {
+        fontWeight: "bold",
+        fontSize: 16,
+        alignSelf: "center",
+    },
+    fonth3: {
+        alignSelf: "center",
+        fontSize: 12
+    },
+    // Login Page
+    Header: {
+        flex: 2,
+        alignSelf: "center",
+        fontWeight: "bold",
+        fontSize: 16,
+
+    },
+    fontLogin: {
+        marginLeft: 10,
+        fontWeight: "bold",
+        fontSize: 20,
+        alignSelf: "flex-start"
+    },
+    fontsmall: {
+        marginLeft: 10,
+        marginTop: 10,
+        fontWeight: "bold",
+        fontSize: 12,
+        alignSelf: "flex-start"
+    },
+    blackline: {
+        width: "90%",
+        height: 1,
+        backgroundColor: "black",
+        alignSelf: 'center',
+        marginBottom: 5,
+    },
+    InputRange: {
+        width: "90%",
+        alignSelf: "center",
+
+    },
+    Textinput: {
+        alignSelf: "center",
+        marginTop: 20,
+        width: "100%",
+        borderRadius: 5,
+    },
+    Textinput_NoMargin:
+    {
+        alignSelf: "center",
+        width: "100%",
+        borderRadius: 5,
+    },
+    ButtonLogin: {
+        alignSelf: "center",
+        backgroundColor: "#D9D9D9",
+        marginBottom: 10,
+        borderRadius: 5,
+        width: "80%",
+        height: "10%",
+        alignItems: "center",
+        justifyContent: "center",
+        marginTop: 20,
+    },
+    ButtonLogin_NoMargin: {
+        alignSelf: "center",
+        backgroundColor: "#D9D9D9",
+        marginBottom: 10,
+        borderRadius: 5,
+        width: "80%",
+        height: "10%",
+        alignItems: "center",
+        justifyContent: "center",
+    },
+    //Verify Page
+    NumberInput: {
+        borderWidth: 1,
+        borderRadius: 10,
+        margin: 5,
+        width: 50,
+        height: 50,
+        fontSize: 20
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#00000080'
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        alignItems: 'center',
+    },
+    buttonClose: {
+        backgroundColor: '#2196F3',
+        padding: 10,
+        paddingHorizontal: 40,
+        borderRadius: 20
+    },
+    textStyle: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
+        fontSize: 16
+    },
+    modalText: {
+        marginVertical: 15,
+        textAlign: 'center',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+})
+
+export default whiteTheme;
