@@ -82,8 +82,8 @@ android {
         applicationId "com.domainproject"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 27
-        versionName "1.6.1"
+        versionCode 28
+        versionName "1.6.2"
     }
 
 
