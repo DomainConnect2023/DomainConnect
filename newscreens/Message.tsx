@@ -15,7 +15,11 @@ import { useFocusEffect } from "@react-navigation/native";
 const Message = ({ navigation }: any) => {
     const [loading, setLoading] = useState(true);
     const [itemFinish, setItemFinish] = useState(false);
+<<<<<<< Updated upstream
     const [currentPage, setCurrentPage] = useState<number>(1);
+=======
+    const [currentPage, setCurrentPage] = useState<number>(0);
+>>>>>>> Stashed changes
     const [refreshing, setRefreshing] = useState(false);
     const [fetchedData, setFetchedData] = useState<Notification[]>([]);
     const [locale, setLocale] = React.useState(i18n.locale);
@@ -64,6 +68,10 @@ const Message = ({ navigation }: any) => {
     }
 
     const FetchNotificationData = async (page: number) => {
+<<<<<<< Updated upstream
+=======
+        
+>>>>>>> Stashed changes
         let link =await AsyncStorage.getItem('IpAddress');
         const username = await AsyncStorage.getItem('username');
         
@@ -81,13 +89,24 @@ const Message = ({ navigation }: any) => {
             })
             .catch(error => {
                 console.log(error);
+<<<<<<< Updated upstream
             })
+=======
+                
+            })
+
+        
+>>>>>>> Stashed changes
     }
 
     const onRefresh = async () => {
         setRefreshing(true);
         setFetchedData([]);
+<<<<<<< Updated upstream
         setCurrentPage(0);
+=======
+        setCurrentPage(-1);
+>>>>>>> Stashed changes
         setItemFinish(false);
         setRefreshing(false);
     };
